@@ -44,7 +44,27 @@ string Tru(string a, string b) {
     return ketqua;
 
 }
+
+string Multi (string a,string b) {
+    string U="";
+    string R=b;
+    for (int i=a.size()-1;i>=0;i--) {           ///Số chữ số của số A
+        R=b;
+        for (int j=0;j<=a.size()-i;j++){        ///Vị trí của chữ số thứ i trong A
+            R=R+"0";
+        }
+        for (int j=1;j<=(a[i]-48);j++) {
+            U=Cong(U,R);
+            //cout << j << " ";
+        }
+    }
+    U=U.substr(0,U.size()-2);
+    return U;
+}
 int main () {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
     string A,B,P="",M="",S="";
     cin >> A >> B;
 
@@ -73,7 +93,7 @@ int main () {
     }
 
     P=Cong(A,B);
-    for (int i=1;i<=stoi(A);i++) S=Cong(S,B);
+    S=Multi(A,B);
     while (A.size() < B.size()) A = "0" + A;
     while (B.size() < A.size()) B = "0" + B;
     if (A>=B) M=Tru(A,B);
