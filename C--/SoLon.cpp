@@ -45,21 +45,25 @@ string Tru(string a, string b) {
 
 }
 
-string Multi (string a,string b) {
-    string U="";
-    string R=b;
-    for (int i=a.size()-1;i>=0;i--) {           ///Số chữ số của số A
-        R=b;
-        for (int j=0;j<=a.size()-i;j++){        ///Vị trí của chữ số thứ i trong A
-            R=R+"0";
+string Multi (string solon1,string solon2) {
+
+    string ketqua = "";
+    //string dem_0 = "0";
+    for (int i=solon1.size()-1;i>=0;i--) {           ///Số chữ số của số A
+
+        for (int j=1;j<=(solon1[i]-48);j++) {
+            ketqua=Cong(ketqua,solon2);
+
         }
-        for (int j=1;j<=(a[i]-48);j++) {
-            U=Cong(U,R);
-            //cout << j << " ";
-        }
+        solon2=solon2+"0";
     }
-    U=U.substr(0,U.size()-2);
-    return U;
+    //ketqua=ketqua.substr(0,ketqua.size()-2);
+    return ketqua;
+}
+long long TongChuSo (string solon) {
+    long long ketqua=0;
+    for (int i=0;i+1<solon.size();i++) ketqua+=(solon[i]-48);
+    return ketqua;
 }
 int main () {
     ios_base::sync_with_stdio(false);
@@ -93,7 +97,8 @@ int main () {
     }
 
     P=Cong(A,B);
-    S=Multi(A,B);
+    if (TongChuSo(A)>=TongChuSo(B)) S=Multi(B,A);
+    else S=Multi(A,B);
     while (A.size() < B.size()) A = "0" + A;
     while (B.size() < A.size()) B = "0" + B;
     if (A>=B) M=Tru(A,B);
