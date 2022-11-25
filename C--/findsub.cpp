@@ -10,7 +10,7 @@ int main () {
     int a[n];
     long long S=0;
     long long maxa=0;
-    for (int i=0;i<n;i++) {         ///Tinh tong o vi tri thu i
+    for (int i=1;i<n;i++) {         ///Tinh tong o vi tri thu i
         cin >> a[i];
         S+=a[i];
         m[i]=S;
@@ -22,12 +22,13 @@ int main () {
             mp2[a[i]]=i;
         }
         if (mp2[a[i]]!=0) {
-            ///if (mp[a[i]]==1 && a[1]==a[0]) mp[a[i]]=0;
-            maxa=m[mp2[a[i]]]-m[mp[a[i-1]]];
+            if (mp[a[i]]==1 && a[1]==a[0]) maxa=m[mp2[a[i]]];
+            else {
+            maxa=m[mp2[a[i]]]-m[mp[a[i]]]+a[i];
             S2.push_back(maxa);
+            }
         }
     }
-    S=0;
     sort(S2.begin(),S2.end());
     /*for (int i=0;i<n;i++) {         ///Xu li tong cua doan i j
         if (mp2[a[i]]!=0) {
