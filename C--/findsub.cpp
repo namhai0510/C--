@@ -10,7 +10,7 @@ int main () {
     int a[n];
     long long S=0;
     long long maxa=0;
-    for (int i=1;i<n;i++) {         ///Tinh tong o vi tri thu i
+    for (int i=1;i<=n;i++) {         ///Tinh tong o vi tri thu i
         cin >> a[i];
         S+=a[i];
         m[i]=S;
