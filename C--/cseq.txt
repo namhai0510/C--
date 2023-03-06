@@ -1,0 +1,51 @@
+cseq.cpp
+
+De bai:
+Cho dãy số x1, x2, . . . , xn. Hãy đếm số lượng dãy con (có ít nhất một phần tử, có thể không liên tiếp)
+có trung bình cộng (tổng giá trị các phần tử chia cho số lượng phần tử) đúng bằng a. Vì đáp án có thể
+rất lớn nên bạn được yêu cầu đưa ra phần dư của số lượng dãy con sao khi chia cho 109 + 7.
+Input:
+Dòng đầu tiên ghi số nguyên dương T – số bộ dữ liệu vào. Mỗi bộ dữ liệu vào có định dạng như sau:
+- Dòng thứ nhất ghi hai số nguyên n, a (1 ≤ n, a ≤ 200) – số phần tử của dãy số và giá trị a trên
+đề bài.
+- Dòng thứ hai ghi n số nguyên dương x1, x2, . . . , xn (xi ≤ 200) mô tả dãy số.
+Output: Một số nguyên duy nhất là số dãy con khi chia lấy dư cho 109 + 7
+
+-------------------------------------------------------------------------------------------
+
+#include<bits/stdc++.h>
+using namespace std;
+#define hydrogen ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+#define se second
+const ll maxa = 2e3 + 3;
+const int maxn = 1e6 + 3;
+const ll mod = 1e9 + 7;
+ll n,t,a;
+ll d[205];
+ll f[maxa][maxa];
+
+void Solve() {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            
+        }
+    }
+}
+
+void Input() {
+    cin >> t;
+    while (t--) {
+        cin >> n >> a;
+        for (int i = 1; i <= n; i++) {
+            cin >> d[i];
+        }
+        Solve();
+    }
+}
+int main () {
+    freopen("SS.INP","r",stdin);
+    freopen("SS.OUT","w",stdout);
+    hydrogen;
+    Input();
+}
