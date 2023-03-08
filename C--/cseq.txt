@@ -26,11 +26,17 @@ ll d[205];
 ll f[maxa][maxa];
 
 void Solve() {
+    memset(f, 0, sizeof(f));
+    f[0][r] = 1;
     for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            
+        for (int j = -r; j <= r; j++) {
+            f[i][j + r] = f[i - 1][j + r];
+            /*if (d[i] > j)*/ 
+            f[i][j + r] += f[i - 1][j - d[i] + r];
+            f[i][j + r] = f[i][j + r] % mod;
         }
     }
+    cout << f[n][r] - 1 << endl;
 }
 
 void Input() {
