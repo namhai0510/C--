@@ -1,0 +1,70 @@
+sobathuong.cpp
+Bờm rất thích số học. Mới đây Bờm tìm được một tài liệu định nghĩa số bất thường như sau: Một
+số được coi là bất thường, nếu tổng các chữ số và tổng bình phương các chữ số (trong hệ thập
+phân) của nó nguyên tố cùng nhau.Ví dụ: số 23, số 41 … là các số bất thường.
+Bờm rất thích thú với định nghĩa số bất thường này và Bờm muốn nhờ các bạn xác định số
+lượng số bất thường trong đoạn [L,R]
+Input: gồm hai số nguyên L và R (1<=L, R<=1018).
+Output:gồm 1 số nguyên là kết quả cần tìm.
+
+------------------------------------------------------------------------------------------------
+
+#include<bits/stdc++.h>
+using namespace std;
+#define hydrogen ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define SS ""
+#define ll long long
+#define se second
+const ll maxa = 2e3 + 3;
+const int maxn = 1e6 + 3;
+const ll mod = 1e9 + 7;
+string SL,SR;
+int minj, maxj, n;
+ll f[103][203][2003][2][2];
+
+int check_coprime(int x, int y) {
+    if (gcd(x,y) == 1) return 1;
+    return 0;
+}
+
+void Input() {
+    cin >> SL >> SR;
+    while (SL.size() < SR.size()) SL = "0" + SL;
+    n = SR.size();
+    SL = "#" + SL;
+    SR = "#" + SR;
+    memset(f, -1, sizeof(f));
+}
+
+ll Solve(int i, int t1, int t2, int bigger, int smaller) {
+    if (i > n) return check_coprime(t1,t2);
+    //------------//
+    if (f[i][t1][t2][bigger][smaller] != -1) return f[i][t1][t2][bigger][smaller];
+    //-----------//
+    if (bigger) minj = 0;
+        else minj = SL[i] - 48;
+    if (smaller) maxj = 9;
+        else maxj = SR[i] - 48;
+    //-----------//
+    ll ans = 0;
+    for (int j = minj; j <= maxj; j++) {
+        ans += Solve(i + 1, t1 + j, t2 + j*j, bigger | (j > minj), smaller | (j < maxj));
+    }
+    //-----------//
+    f[i][t1][t2][bigger][smaller] = ans;
+    return ans;
+}
+
+void Output() {
+    cout << Solve(1, 0, 0, 0, 0);
+}
+
+int main () {
+    if (fopen(SS".inp", "r")) {
+        freopen(SS".inp", "r", stdin);
+        freopen(SS".out", "w", stdout);
+    }
+    hydrogen;
+    Input();
+    Output();
+}
