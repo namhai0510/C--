@@ -19,8 +19,8 @@ const ll maxa = 2e3 + 3;
 const int maxn = 1e6 + 3;
 const ll mod = 1e9 + 7;
 string SL,SR;
-int minj, maxj, n;
-ll f[103][203][2003][2][2];
+int n;
+ll f[50][143][1003][2][2];
 
 int check_coprime(int x, int y) {
     if (gcd(x,y) == 1) return 1;
@@ -37,20 +37,24 @@ void Input() {
 }
 
 ll Solve(int i, int t1, int t2, int bigger, int smaller) {
+    int maxj,minj;
     if (i > n) return check_coprime(t1,t2);
-    //------------//
+    //------------//------------//
+    //------------//------------//
     if (f[i][t1][t2][bigger][smaller] != -1) return f[i][t1][t2][bigger][smaller];
     //-----------//
     if (bigger) minj = 0;
         else minj = SL[i] - 48;
     if (smaller) maxj = 9;
         else maxj = SR[i] - 48;
-    //-----------//
+    //-----------//------------//
+    //------------//------------//
     ll ans = 0;
     for (int j = minj; j <= maxj; j++) {
-        ans += Solve(i + 1, t1 + j, t2 + j*j, bigger | (j > minj), smaller | (j < maxj));
+        ans += Solve(i + 1, t1 + j, t2 + j * j, bigger | (j > minj), smaller | (j < maxj));
     }
-    //-----------//
+    //-----------//------------//
+    //------------//------------//
     f[i][t1][t2][bigger][smaller] = ans;
     return ans;
 }
@@ -60,10 +64,10 @@ void Output() {
 }
 
 int main () {
-    if (fopen(SS".inp", "r")) {
+    /*if (fopen(SS".inp", "r")) {
         freopen(SS".inp", "r", stdin);
         freopen(SS".out", "w", stdout);
-    }
+    }*/
     hydrogen;
     Input();
     Output();
