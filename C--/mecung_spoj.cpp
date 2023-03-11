@@ -1,4 +1,4 @@
-Trong một chuyến thám hiểm mạo hiểm, một đoàn thám hiểm không may lọt vào mê cung với rất nhiều cạm bẫy. 
+/*Trong một chuyến thám hiểm mạo hiểm, một đoàn thám hiểm không may lọt vào mê cung với rất nhiều cạm bẫy. 
 Trong mê cung đó chỉ có một lối ra duy nhất, lối ra bao gồm các ô hình vuông, được xếp thành một hàng dài. 
 Muốn đi được ra ngoài, mọi người phải bước qua một hang các ô hình vuông đó và phải bước theo quy tắc sau:
 -Quy tắc 1: Mỗi bước đi chỉ có thể bước một ô, hai ô hoặc ba ô.
@@ -11,7 +11,7 @@ Dữ liệu vào:
 
 Dữ liệu ra:
 -Một dòng duy nhất là kết quả của bài toán.
-----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------*/
 #include<bits/stdc++.h>
 using namespace std;
 #define hydrogen ios_base::sync_with_stdio(0); cin.tie(nullptr);
@@ -39,9 +39,9 @@ void Solve() {
 
 void Output() {
     //cout << min({f[1][n], f[2][n], f[3][n]}) - 1<< endl;
-    cout << f[1][n] - 1 << endl;
-    cout << f[2][n] - 1 << endl;
-    cout << f[3][n] - 1 << endl;
+    //cout << f[1][n] - 1 << endl;
+    //cout << f[2][n] - 1 << endl;
+    cout << m - f[3][n] << endl;
 }
 
 int main() {
@@ -51,3 +51,4 @@ int main() {
     Output();
     return 0;
 }
+
