@@ -38,8 +38,10 @@ void Solve() {
 void Truyvet() {
     
 }
+
 void Output() {
-    cout << m - f[n] << endl;
+    if (m >= f[n]) cout << m - f[n] << endl;
+    else cout << "0" << endl;
 }
 
 int main() {
