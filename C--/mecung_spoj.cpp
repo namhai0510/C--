@@ -21,27 +21,25 @@ using namespace std;
 const ll mod = 1e9 + 7;
 const int maxn = 1e6 + 3;
 const int maxa = 1e3 + 3;
-ll m; int n;
-int f[4][maxa];
+ll m; ll n;
+ll f[maxn];
 
 void Input() {
     cin >> m >> n;
 }
 
 void Solve() {
-    f[1][1] = 1;
-    for (int i = 1; i <= 3; i++) {
-        for (int j = 1; j <= n; j++) {
-            f[i][j] = f[i - 1][j - 1] + (i >= 2 ? f[i - 1][j - 2] : 1) + (i >= 3 ? f[i - 1][j - 3] : 1);
-        }
+    f[1] = 1; f[2] = 2; f[3] = 4;
+    for (int i = 4; i <= n; i++) {
+        f[i] = f[i - 1] + f[i - 2] + f[i - 3];
     }
 }
 
+void Truyvet() {
+    
+}
 void Output() {
-    //cout << min({f[1][n], f[2][n], f[3][n]}) - 1<< endl;
-    //cout << f[1][n] - 1 << endl;
-    //cout << f[2][n] - 1 << endl;
-    cout << m - f[3][n] << endl;
+    cout << m - f[n] << endl;
 }
 
 int main() {
@@ -51,4 +49,3 @@ int main() {
     Output();
     return 0;
 }
-
