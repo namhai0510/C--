@@ -1,0 +1,85 @@
+Một xâu gọi là xâu đối xứng (palindrom) nếu xâu đó đọc từ trái sang phải hay từ phải sang
+trái đều như nhau. Cho một xâu S, hãy tìm số kí tự ít nhất cần thêm vào S để S trở thành xâu
+đối xứng.
+--------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define hydrogen ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+#define fi first
+#define se second
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 3;
+const int maxa = 1e3 + 3;
+int d[maxn];
+int dp[maxa][maxa];
+string S,P;
+int a,b;
+
+void Input() {
+    cin >> S;
+    P = S;
+    reverse(P.begin(),P.end());
+    a = S.length();
+    b = P.length();
+    S = '#' + S;
+    P = '#' + P;
+}
+
+void Solve() {
+    for (int i = 0; i <= a; i++) {
+        dp[i][0] = 0;
+    }
+    for (int j = 0; j <= b; j++) {
+        dp[0][j] = 0;
+    }
+    for (int i = 1; i <= a; i++) {
+        for (int j = 1; j <= b; j++) {
+            if (S[i] == P[j]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            }
+            else dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+        }
+    }
+}
+
+void TruyVet(int i, int j) {
+    memset(d, 0, sizeof(a));
+    if (i == 0 || j == 0) return;
+    if (S[i] == P[j]) {
+        TruyVet(i - 1, j - 1);
+        //cout << S[i];
+        d[i] = 1; //d[j] = 0;
+    }
+    else {
+        if (dp[i][j] == dp[i - 1][j]) {
+            TruyVet(i - 1, j);
+        }
+        else {
+            TruyVet(i, j - 1);
+        }
+    }
+}
+
+void Output() {
+    cout << a - dp[a][b] << endl;
+    TruyVet(a, b);
+    cout << endl;
+    for (int i = 1; i <= a; i++) {
+        if (d[i] == 0) {
+            if (i != a/2 || a - i != a/2) {
+                if (i < a/2) cout << S[i] << " " << ((i < a/2 - 1) ? i : i + 1) << endl;
+                else cout << S[i] << " " << ((i > a/2 + 1) ? a - i : a - i - 1) << endl;
+            }
+        }
+    }
+}
+
+int main() {
+    hydrogen;
+    Input();
+    Solve();
+    Output();
+    return 0;
+}
+
