@@ -78,13 +78,24 @@ void Output() {
             }
         }
     }
-    cout << it << " " << length << endl;
-    for (int i = 1; i <= 2*it; i++) {
-        if (luu[i] == 0) {
-            if (2*it - i > 0) cout << S[i] << " " << 2*it - i << endl; //them vao khong cap nhat
-            //cout << S[i] << " " << 2*it - i << endl; // them vao co cap nhat
-            luu[i] = 1; luu[2*it - i] = 1;
+    if (it > a/2) {
+        for (int i = 1; i <= 2*it; i++) {
+            if (luu[i] == 0) {
+                if (2*it - i > 0) cout << S[i] << " " << 2*it - i << endl;
+                luu[i] = 1; luu[2*it - i] = 1;
+            }
         }
+    }
+    else {
+        int it2 = it + a;
+        cout << luu[5] << endl;
+        for (int i = it2; i >= a - it; i--){
+            //cout << i - it << " ";
+            if (luu[i - it] == 0) {
+                cout << S[i - it] << " " << i - a - 1 << endl;
+                luu[i - it] = 1; //luu[2*it - i] = 1;
+            }
+        } 
     }
 }
 
@@ -95,6 +106,7 @@ int main() {
     Output();
     return 0;
 }
+
 
 
 
