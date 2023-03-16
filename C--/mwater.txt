@@ -1,0 +1,47 @@
+Bờm đang nghiên cứu mực nước biển ở hành tinh Quạt Mo. Sau nhiều ngày theo dõi, Bờm nhận
+thấy rằng quy luật của mực nước biển là: mực nước biển của một ngày bất kì bằng trung bình
+cộng mực nước biển của ngày hôm trước và ngày hôm sau. Dựa vào ghi chép mực nước biển hai
+ngày đầu của Bờm, hãy tính toán mực nước biển ngày thứ N.
+Dữ liệu:
+- Dòng 1: chứa 2 số nguyên a, b là mực nước biển 2 ngày đầu (-100 ≤ a, b ≤ 100).
+- Dòng 2: chứa số nguyên dương N (3 ≤ N ≤ 109
+).
+Kết quả: mực nước biển ngày thứ N.
+-----------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+using namespace std;
+#define hydrogen ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+#define maxn 1005
+#define pii pair<int, int>
+
+ll a,b,n;
+ll m1,m2,m;
+
+void Input() {
+    cin >> a >> b >> n;
+    m1 = a;
+    m2 = b;
+}
+
+void Solve() {
+    for (int i = 1; i <= n - 2; i++) {
+        m = m2*2 - m1;
+        m1 = m2;
+        m2 = m;
+        //cout << m << " ";
+    }
+    cout << endl;
+}
+
+void Output() {
+    cout << m;
+}
+
+int main() {
+	hydrogen;
+	Input();
+	Solve();
+	Output();
+	return 0;
+}
