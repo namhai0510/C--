@@ -1,0 +1,48 @@
+Cho dãy số (𝑎𝑛) được xác định bằng phương pháp truy hồi như sau:
+𝑎0 = 1, 𝑎1 = 6
+𝑎𝑛 = 6𝑎𝑛−1 − 9𝑎𝑛−2 𝑣ớ𝑖 𝑛 ≥ 2
+Với hai số nguyên dương 𝑛, 𝑚 cho trước. Hãy tìm số dư khi chia 𝑎𝑛 cho 𝑚.
+Dữ liệu: Vào từ file văn bản SEQ.INP: Một dòng duy nhất chứa hai số nguyên dương
+𝑛 và 𝑚 (𝑛, 𝑚 ≤ 1018) được ghi cách nhau bởi dấu cách.
+Kết quả: Ghi ra file văn bản SEQ.OUT trên một dòng, một số nguyên duy nhất là kết quả theo
+yêu cầu của bài toán.
+---------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define hydrogen ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define ll long long
+#define ull unsigned long long
+const int maxn = 1e7 + 5;
+const int maxa = 1e3 + 5;
+ull n,m,res;
+ull nhan(ull a, ull b, ull mod) {
+    if (b == 0) return 0;
+    ull t = nhan(a, b / 2, mod);      
+    t = (t + t) % mod; 
+    if (b % 2 == 1) t = (t + a) % mod;
+    return t;
+} 
+ull power(ull a, ull b, ull mod) {
+    if (b == 0) return 1;
+    ull t = power(a, b / 2, mod);         
+    t = nhan(t, t, mod) % mod; 
+    if (b % 2 == 1) t = nhan(t , a, mod);
+    return t;
+} 
+void Input() {
+    cin >> n >> m;
+}
+void Solve() {
+    ull tt = power(3, n, m);
+    res = (n + 1)%m;
+    res = nhan(res, tt, m);
+}
+void Output() {
+    cout << res % m;
+}
+int main () {
+    hydrogen;
+    Input();
+    Solve();
+    Output();
+}
