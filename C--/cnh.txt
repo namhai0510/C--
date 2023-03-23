@@ -1,0 +1,58 @@
+Bạn Vy vừa trúng tuyển vào lớp chuyên tin trường THPT chuyên CNH. Trong niềm vui sướng
+đến trường, Vy luôn để ý đến các từ là CNH. Vy nảy ra một bài toán là trong câu cho trước, có bao
+nhiêu cách chọn ra bộ kí tự CNH khác nhau. Các kí tự được chọn ra phải để theo thứ tự trước sau như
+ban đầu.
+Ví dụ, với câu "CHAO CNH" có 2 bộ kí tự CNH, tính theo vị trí là (1, 7, 8) và (6, 7, 8).
+Dữ liệu vào: Nhập vào từ tệp CNH.INP chứa một xâu văn bản S có tối đa 106
+kí tự. Các kí tự đều là
+chữ in hoa.
+Kết quả: Ghi ra tệp CNH.OUT số cách chọn bộ kí tự CNH
+-------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define hydrogen ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+const int maxn = 1e7 + 5;
+ll n,a[maxn],ans = 0;
+bool PR[maxn];
+void SangNT() {
+    memset(PR, 1 , sizeof(PR));
+    PR[0] = 0; PR[1] = 0;
+    for (int i = 2; i <= sqrt(maxn); i++) {
+        if (PR[i] == 1) {
+            for (int j = i*i; j <= maxn; j += i) {
+                PR[j] = 0;
+            }
+        }
+    }
+}
+void Input() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+}
+void Solve() {
+    for (int i = 1; i <= n; i++) {
+        if (PR[a[i]] == 1) {
+            int k = a[i];
+            int res = 0;
+            while (k > 0) {
+                res += k%10;
+                k = k/10;
+            }
+            if(PR[res + a[i]] == 1) ans++;
+            //cout << res << " " << a[i] << " " << PR[res + ans] << endl;
+        }
+    }
+}
+void Output() {
+    cout << ans;
+}
+int main() {
+    hydrogen;
+    SangNT();
+    Input();
+    Solve();
+    Output();
+}
