@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define hydrogen ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define ll long long
+const int maxn = 1e6 + 5;
+int n,d,m;
+int s[maxn];
+int dem = 0;
+void Input() {
+    cin >> n;
+    s[0] = 0;
+    for (int i = 1; i <= n; i++) {
+        cin >> s[i];
+        s[i] += s[i - 1];
+    }
+    cin >> d >> m;
+}
+void Solve() {
+    for (int i = 1; i <= n - m + 1; i++) {
+        //cout << s[i + m - 1] - s[i - 1] << " " << i << " " << i + m << endl;
+        if (d == (s[i + m - 1] - s[i - 1])) dem++;
+    }
+}
+void Output() {
+    cout << dem;
+}
+int main () {
+    hydrogen;
+    Input();
+    Solve();
+    Output();
+}
+//https://www.hackerrank.com/challenges/the-birthday-bar/problem?isFullScreen=true
