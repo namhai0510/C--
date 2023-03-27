@@ -1,0 +1,59 @@
+Cho một số nguyên dương n, n ≥ 2. Hãy kiểm tra xem tích các ước nguyên tố của n có nhỏ hơn 
+nkhông? Nếu n chỉ có một ước nguyên tố thì tích các ước nguyên tố của n chính là ước nguyên 
+tố duy nhất của n.
+
+-----------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+const int maxn = 1e7 + 5;
+const int maxa = 1e3 + 5;
+const int oo = 1e9;
+bool Prime[maxn];
+ll n;
+void Nhap() {
+    cin >> n;
+}
+
+void SangNT() {
+    memset(Prime, 1, sizeof(Prime));
+    Prime[0] = 0; Prime[1] = 0;
+    for (int i = 2; i <= sqrt(maxn); i++) {
+        if (Prime[i]) {
+            for (int j = i*i; j <= maxn; j += i) {
+                Prime[j] = 0;
+            }
+        }
+    }
+}
+void Solve() {
+    for (int i = 2; i*i*i <= n; i++) {
+        ll t = 0;
+        while (n % i == 0) {
+            t++;
+            n /= i;
+            if (t > 1) {
+                cout << "YES";
+                return;
+            }
+        }
+    }
+    ll u = sqrt(n);
+    if (u*u == n) {
+        cout << "YES";
+    }
+    else cout << "NO";
+}
+
+void InKQ() {
+    
+}
+
+int main() {
+    atami;
+    Nhap();
+    SangNT();
+    Solve();
+    InKQ();
+}
