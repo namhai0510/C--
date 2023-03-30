@@ -1,0 +1,107 @@
+Chủ nhật rảnh, An quyết định đi thăm quan N thành phố, lần lượt từ thành phố thứ 1 đến
+thành phố thứ N. Các thành phố được phân loại theo các con số, từ 1 đến k. Được biết, sau mỗi lần
+di chuyển từ thành phố i đến i+1, nếu hai thành phố được phân loại khác nhau, An sẽ tốn 1 lượng
+tiền. Ngược lại, nếu hai thành phố cùng loại, An sẽ không tốn tiền để di chuyển.
+Vì số lượng tiền là giới hạn, em hãy giúp An tìm đúng một loại thành phố mà An sẽ không
+đi qua để tốn ít tiền nhất có thể.
+Dữ liệu vào từ file văn bản PT.INP:
+- Dòng thứ nhất gồm hai số nguyên N và k (2 ≤ k ≤ N ≤ 105
+), trong đó N là số lượng thành
+phố và k là số lượng các loại thành phố.
+- Dòng thứ hai gồm N số nguyên a1, a2, …, aN, ai là loại của thành phố thứ i (1 ≤ ai ≤ k).
+Kết quả ghi ra file văn bản PT.OUT:
+Một số nguyên duy nhất là loại thành phố mà An sẽ bỏ qua. Nếu có nhiều kết quả, in ra
+số nhỏ nhất.
+Ràng buộc:
+- Có 20% số test ứng với 20% số điểm của bài thỏa mãn: N ≤ 103
+;
+- 30% số test ứng với 30% số điểm của bài trong đó không có hai thành phố nào cùng loại
+đứng cạnh nhau;
+- 50% số test còn lại ứng với 50% số điểm của bài không có ràng buộc gì thêm
+------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+const int maxn = 1e6 + 5;
+ll n, k, res = 0, ans = 1e7;
+ll a[maxn], kq[maxn];
+bool Prime[maxn];
+void Input() {
+    cin >> n >> k; 
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+}
+void Angry() {
+    ll MIN = 1e7;
+    for (int i = 1; i <= k; i++) {
+        vector<ll> t;
+        t.push_back(0);
+        ll dem = 0;
+        for (int j = 1; j <= n; j++) {
+            if (a[j] != i) {
+                t.push_back(a[j]);
+            }
+        }
+        if (t.size() == 2) {
+            cout << "1";
+            return;
+        }
+        for (int j = 1; j <= t.size() - 2; j++) {
+            if (t[j] != t[j + 1]) dem++;
+        }
+        if (MIN > dem) {
+            MIN = dem;
+            ans = i;
+        }
+    }
+    cout << ans;
+}
+void Solve() {
+    if (k == 2) {
+        cout << "1";
+        return;
+    }
+    else if (n <= 1000) {
+        Angry();
+        return;
+    }
+    else {
+        for (int i = 2; i <= n; i++) {
+            if (a[i] != a[i - 1]) res++;
+        }
+        for (int i = 1; i <= n; i++) {
+            kq[i] = res;
+        }
+        for (int i = 1; i <= n; i++) {
+            if (a[i] != a[i - 1] && a[i - 1] == a[i + 1]) {
+                kq[a[i]] -= 2;
+            }
+            else if (a[i] != a[i - 1] && a[i - 1] != a[i + 1]) {
+                kq[a[i]] -= 1;
+            }
+            
+            //cout << kq[i] << endl;
+        }
+        ll MIN = 1e7;
+        for (int i = 1; i <= k; i++) {
+            if (MIN > kq[i]) {
+                MIN = kq[i];
+                ans = i;
+            }
+        }
+        cout << ans;
+    }
+}
+void Output() {
+}
+int main() {
+    //Bai4//
+    atami;
+    //freopen("PT.INP","r",stdin);
+    //freopen("PT.OUT","w",stdout);
+    Input();
+    Solve();
+    Output();
+}
