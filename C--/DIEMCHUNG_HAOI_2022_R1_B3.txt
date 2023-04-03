@@ -1,0 +1,76 @@
+Trên trục số Ox, cho 𝑁 đoạn thẳng, mỗi đoạn thẳng được xác định bởi hai điểm đầu và cuối là hai số nguyên. Một điểm 𝑀 được gọi là nằm trong đoạn thẳng 𝐴𝐵 nếu 𝐴 ≤ 𝑀 ≤ 𝐵.
+
+Yêu cầu: đếm xem có bao nhiêu điểm có toạ độ nguyên nằm trong đúng 𝐾 đoạn thẳng.
+/HAOI2021R1-B3/ -- /De thi HSG tin hoc lop 12 thanh pho Ha Noi nam 2021 bai so 3/
+----------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+#define ull unsigned long long
+#define pb push_back
+#define fi first
+#define se second
+const int maxn = 1e5 + 5;
+const int maxa = 1e3 + 5;
+const ll mod = 1e9 + 7;
+double epsilon = 0.000000001;
+pair<ll,int> a[maxn];
+map<ll,ull> mark;
+vector<pair<ll,ll>> f;
+ll t[maxn];
+ll n, k, pp = 0; 
+void Input() {
+    cin >> n >> k;
+    for (int i = 1; i <= 2*n; i++) {
+        cin >> a[i].fi;
+        a[i].se = i % 2;
+        pp = max(pp, a[i].fi);
+    }
+    for (int i = 1; i <= 2*n; i += 2) {
+        f.pb({a[i].fi, a[i + 1].fi}); 
+    }
+    sort(a + 1, a + 1 + 2*n);
+}
+void TLEIFLARGE() {
+    ll dem = 0;
+    for (int i = 0; i <= f.size() - 1; i++) {
+        for (int j = f[i].fi; j <= f[i].se; j++) {
+            t[j]++;
+        }
+    }
+    for (int i = 0; i <= pp; i++) {
+        if (t[i] == k) dem++;
+    }
+    cout << dem;
+}
+
+void Solve() {
+    ll it = 1;
+    a[0].fi = 0;
+    for (int i = 1; i <= 2*n - 1; i++) {
+        mark[it] += a[i + 1].fi - a[i].fi;
+        if (a[i + 1].se == 1) {
+            mark[it]--;
+            it++;
+        }
+        else if (a[i + 1].se == 0) {
+            mark[it]++;
+            it--;
+        }
+    }
+    // for (int i = 1; i <= n; i++) {
+    //     cout << mark[i] << endl;
+    // }
+    if (k > n) cout << "0";
+    else cout << mark[k];
+}
+int main(){
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    if (pp > 1000) Solve();
+    else {
+        TLEIFLARGE();
+    }
+}
