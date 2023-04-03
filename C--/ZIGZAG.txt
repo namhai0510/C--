@@ -1,0 +1,52 @@
+Cho hai băng giấy ghi hai dãy số nguyên, các số hạng của mỗi dãy đều được đánh chỉ số từ 1 đến
+N. Trò chơi Zich - Zắc (dành cho một người chơi) đòi hỏi người chơi chọn (khoanh tròn) một số
+nào đó các số hạng từ hai dãy theo kiểu Zích - Zắc (thoạt đầu, tất cả các số hạng của hai dãy đều
+chưa bị khoanh tròn). Mỗi lượt chơi của trò chơi này là quá trình người chơi phải chọn ít nhất một
+số hạng theo cách sau:
+- Chọn một số hạng tùy ý (chưa từng bị chọn) từ một trong hai dãy.
+- Giả sử ở bước thứ k người chơi đã chọn số hạng có chỉ số i từ một dãy nào đó và nếu tiếp
+tục chơi ở bước thứ k + 1, người chơi sẽ chọn một số hạng nào (chưa từng bị chọn) từ dãy kia với
+chỉ số j > i
+- Lượt chơi được coi là kết thúc nếu người chơi không thể chọn tiếp được số hạng nào nữa
+(theo cách trên) hoặc người chơi chủ động dừng lượt chơi nếu muốn.
+Điểm số mà người chơi đạt được sau mỗi lượt chơi là tổng của tất cả các số hạng được chọn trong
+lượt chơi đó.
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+#define pb push_back
+#define fi first
+#define se second
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+const ll mod = 1e9 + 7;
+double epsilon = 0.000000001;
+ll a[maxn],b[maxn];
+ll a2[maxn],b2[maxn];
+ll n, s = 0;    
+void Input() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    for (int i = 1; i <= n; i++) {
+        cin >> b[i];
+    }
+}
+void Solve() {
+    a2[1] = a[1]; b2[1] = b[1];
+    for (int i = 2; i <= n; i++) {
+        a2[i] = max(a2[i - 1], b2[i - 1] + a[i]);
+        b2[i] = max(b2[i - 1], a2[i - 1] + b[i]);
+        //cout << a2[i] << " " << b2[i] << endl;
+    }
+    cout << max(a2[n],b2[n]);
+}
+int main(){
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+}
