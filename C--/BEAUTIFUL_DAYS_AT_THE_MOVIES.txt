@@ -1,0 +1,41 @@
+https://www.hackerrank.com/challenges/beautiful-days-at-the-movies/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+int l,r,k,cnt = 0;
+int reverse(int x) {
+    int x2 = 0;
+    while (x > 0) {
+        x2 = x2*10 + x%10;
+        x = x/10;
+    }
+    return x2;
+}
+void Input() {
+    cin >> l >> r >> k;
+}
+void Solve() {
+    for (int i = l; i <= r; i++) {
+        int i2 = reverse(i);
+        if (abs(i - i2) % k == 0) cnt++;
+    }
+    cout << cnt;
+}
+void Output() {
+    
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
