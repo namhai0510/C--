@@ -1,0 +1,36 @@
+https://www.hackerrank.com/challenges/bon-appetit/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+int n,it,s = 0,res;
+int a[maxn];
+void Input() {
+    cin >> n >> it;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        s += a[i];
+    }
+    cin >> res;
+}
+void Solve() {
+    if (res  > (s - a[it])/2) cout << res - (s - a[it])/2;
+    else cout << "Bon Appetit";
+}
+void Output() {
+
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
