@@ -1,0 +1,35 @@
+https://www.hackerrank.com/challenges/cats-and-a-mouse/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+int t,x,y,z;
+int a[maxa],b[maxa];
+void Input() {
+    cin >> t;
+}
+void Solve() {
+    while (t--) {
+        cin >> x >> y >> z;
+        if (abs(x - z) == abs(y - z)) cout << "Mouse C" << el;
+        else if (abs(x - z) < abs(y - z)) cout << "Cat A" << el;
+        else cout << "Cat B" << el;
+    }
+}
+void Output() {
+
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
