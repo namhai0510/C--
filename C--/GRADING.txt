@@ -1,0 +1,26 @@
+https://www.hackerrank.com/challenges/grading/problem?isFullScreen=true
+-----------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+int n;
+void Input() {
+    cin >> n;
+    for (int i  = 1; i <= n; i++) {
+        int x;
+        cin >> x;
+        int j = x;
+        while (j % 5 != 0) j++;
+        if (j - x < 3 && j >= 40) cout << j << el;
+        else cout << x << el;
+    }
+}
+int main() {
+    Input();
+    atami;
+}
