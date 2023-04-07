@@ -1,0 +1,57 @@
+https://www.hackerrank.com/challenges/climbing-the-leaderboard/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+int n,m,r = 1;
+vector<int> a(maxn);
+map<int,int> RANK;
+int b[maxn];
+
+void Input() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    sort(a.begin() + 1, a.begin() + 1 + n);
+    r = 1;
+    RANK[a[n]] = 1;
+    for (int i = n - 1; i >= 1; i--) {
+        if (a[i] < a[i + 1]) r++;
+        RANK[a[i]] = r;
+    }
+    cin >> m;
+    for (int i = 1; i <= m; i++) {
+        cin >> b[i];
+    }
+}
+void Solve() {
+    // for (auto it : RANK) {
+    //     cout << it.fi << " " << it.se << el;
+    // }
+    for (int i = 1; i <= m; i++) {
+        //cout << b[i] << " ";
+        int it = lower_bound(a.begin() + 1, a.begin() + 1 + n, b[i]) - a.begin();
+        if (b[i] == a[it]) cout << RANK[a[it]] << el;
+        else if (b[i] < a[it]) {
+            cout << RANK[a[it]] + 1 << el;
+        }
+        else cout << "1" << el;
+    }
+}
+void Output() {
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
