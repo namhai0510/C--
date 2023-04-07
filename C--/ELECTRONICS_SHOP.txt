@@ -1,0 +1,38 @@
+https://www.hackerrank.com/challenges/electronics-shop/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+int res,n,m,kq = -1;
+int a[maxa],b[maxa];
+void Input() {
+    cin >> res >> n >> m;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    for (int j = 1; j <= m; j++) cin >> b[j];
+}
+void Solve() {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (a[i] + b[j] <= res) {
+                if (a[i] + b[j] >= kq) kq = a[i] + b[j];
+            }
+        }
+    }
+}
+void Output() {
+    cout << kq;
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
