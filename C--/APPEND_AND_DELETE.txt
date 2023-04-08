@@ -1,0 +1,51 @@
+https://www.hackerrank.com/challenges/append-and-delete/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+string A,B;
+int k,a,b,res = 0,a2,b2;
+
+void Input() {
+    cin >> A >> B >> k;
+    a = A.size();
+    b = B.size();
+    
+    A = '#' + A;
+    B = '#' + B;
+}
+
+void Solve() {
+    if (k >= (a + b)) cout << "Yes";
+    else {
+        int m = min(a,b);
+        for (int i = 1; i <= min(a,b); i++) {
+            if (A[i] != B[i]) {
+                m = i - 1;
+                break;
+            }
+        }
+        //cout << a << " " << b << " " << m << el;
+        k -= (a - m); //cout << k << el;
+        k -= (b - m); //cout << k << el;
+        if (k >= 0 && k % 2 == 0) cout << "Yes";
+        else cout << "No";
+    }
+}
+void Output() {
+    
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
