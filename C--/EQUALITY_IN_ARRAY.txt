@@ -1,0 +1,40 @@
+https://www.hackerrank.com/challenges/equality-in-a-array/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+int n, m = 0;
+int a[maxa];
+map<int,int> mark;
+
+void Input() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        mark[a[i]]++;
+        if (mark[a[i]] > m) {
+            m = mark[a[i]];
+        }
+    }
+}
+
+void Solve() {
+    
+}
+void Output() {
+    cout << n - m; 
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
