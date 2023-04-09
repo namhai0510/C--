@@ -1,0 +1,48 @@
+https://www.hackerrank.com/challenges/library-fine/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+int d[2],m[2],y[2];
+void Input() {
+    cin >> d[0] >> m[0] >> y[0] >> d[1] >> m[1] >> y[1];
+}
+void Solve() {
+    if (y[0] > y[1]) {
+        cout << "10000";
+        return;
+    }
+    else if (y[0] < y[1]) {
+        cout << "0";
+        return;
+    }
+    else if (m[0] > m[1]) {
+        cout << 500 * (m[0] - m[1]);
+        return;
+    }
+    else if (m[0] < m[1]) {
+        cout << "0";
+        return;
+    }
+    else if (d[0] > d[1]) {
+        cout << 15 * (d[0] - d[1]);
+        return;
+    }
+    else cout << "0";
+}
+void Output() {
+    
+}
+int main() {
+    atami;
+    Input();
+    Solve();
+    Output();
+}
