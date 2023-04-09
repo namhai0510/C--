@@ -1,0 +1,44 @@
+https://www.hackerrank.com/challenges/the-time-in-words/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+int h,m;
+string minute;
+string HOUR[13] = {"none","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve"};
+string MINUTE[31] = {"o' clock","one","two","three","four","five","six","seven","eight","nine",
+"ten","eleven","twelve","thirteen","fourteen","quarter","sixteen","seventeen","eighteen",
+"nineteen","twenty","twenty one","twenty two","twenty three","twenty four","twenty five",
+"twenty six","twenty seven","twenty eight","twenty nine","half past"};
+
+void Input() {
+    cin >> h >> m;
+}
+
+void Solve() {
+    
+}
+void Output() {
+    if (m == 0) cout << HOUR[h] << " " << MINUTE[m];
+    else if (m == 1) cout << "one minute past " << HOUR[h];
+    else if (m == 15) cout << "quarter past " << HOUR[h];
+    else if (1 < m && m < 30) cout << MINUTE[m] << " minutes past " << HOUR[h];
+    else if (m == 30) cout << MINUTE[30] << " " << HOUR[h];
+    else if (m == 45) cout << "quarter to " << HOUR[h + 1];
+    else if (31 < m && m < 59) cout << MINUTE[60 - m] << " minutes to " << HOUR[h + 1];
+    else if (m == 59) cout << "one minute to " << HOUR[h + 1];
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
