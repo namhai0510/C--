@@ -1,0 +1,50 @@
+https://www.hackerrank.com/challenges/service-lane/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll n,t,width[maxn];
+pair<ll,ll> cases[maxn];
+void Solve();
+void Input() {
+    cin >> n >> t;
+    width[0] = 1e6;
+    for (int i = 1; i <= n; i++) {
+        cin >> width[i];
+        //width[i] = min(width[i - 1], a[i]);
+    }
+    for (int i = 1; i <= t; i++) {
+        cin >> cases[i].fi >> cases[i].se;
+        cases[i].fi++;
+        cases[i].se++;
+    }
+}
+void Solve() {
+    for (int i = 1; i <= t; i++) {
+        ll r = width[cases[i].fi];
+        ll start = cases[i].fi,end = cases[i].se;
+        //cout << cases[i].fi << " " << cases[i].se << " ";
+        for(int j = start; j <= end; j++){
+            r = min(r, width[j]);
+            //cout << r << " ";
+        }
+        cout << r << el;
+    }
+}
+void Output() {
+    
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
