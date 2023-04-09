@@ -1,0 +1,44 @@
+https://www.hackerrank.com/challenges/chocolate-feast/problem?isFullScreen=true&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll t,n,c,m,res = 0,choco;
+void Solve();
+void Input() {
+    cin >> t;
+    while (t--) {
+        cin >> n >> c >> m;
+        Solve();
+    }
+}
+void Solve() {
+    res = n / c; //chocolate eaten
+    choco = res;
+    while (choco > 0) {
+        res += choco / m;
+        ll save = choco / m;;
+        choco = choco % m;
+        choco += save;
+        if (choco < m) break;
+        //cout << res << " " << choco << el;
+    }
+    cout << res << el;
+}
+void Output() {
+    
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    //Solve();
+    Output();
+}
