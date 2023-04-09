@@ -1,0 +1,36 @@
+https://www.hackerrank.com/challenges/repeated-string/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+string s;
+ll n,cnt = 0,si;
+
+void Input() {
+    cin >> s >> n;
+    si = s.size();
+}
+
+void Solve() {
+    
+}
+void Output() {
+    string s2 = s.substr(0, n % si);
+    ll res = count(s2.begin(), s2.end(),'a');
+    ll res2 = (n / si) * (count(s.begin(), s.end(), 'a'));
+    cout << res2 + res;
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
