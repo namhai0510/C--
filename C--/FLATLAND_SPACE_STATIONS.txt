@@ -1,0 +1,44 @@
+https://www.hackerrank.com/challenges/flatland-space-stations/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll n,m,a[maxn],max_dis = 0;
+
+void Input() {
+    cin >> n >> m;
+    for (int i = 1; i <= m; i++) {
+        cin >> a[i];
+        a[i]++;
+    }
+}
+void Solve() {
+    sort(a + 1, a + 1 + m);
+    ll sta = 1;
+    for (int i = 1; i <= n; i++) {
+        if (sta + 1 <= m) {
+            if (abs(a[sta] - i) > abs(a[sta + 1] - i)) {
+                sta++;
+            }
+        }
+        //cout << sta << " " << max_dis << el;
+        max_dis = max(max_dis,abs(a[sta] - i));
+    }
+}
+void Output() {
+    cout << max_dis;
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
