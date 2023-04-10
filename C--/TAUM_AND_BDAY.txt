@@ -1,0 +1,39 @@
+https://www.hackerrank.com/challenges/taum-and-bday/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll t,b,w,bc,wc,z,res1,res2,res3;
+void Solve();
+void Output();
+void Input() {
+    cin >> t;
+    while (t--) {
+        cin >> b >> w >> bc >> wc >> z;
+        Solve();
+        Output();
+    }
+}
+void Solve() {
+    res1 = (bc + z) * w + bc * b;
+    res2 = wc * w + (wc + z) * b;
+    res3 = wc * w + bc * b;
+}
+void Output() {
+    cout << min({res1,res2,res3}) << el;
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    //Solve();
+    //Output();
+}
