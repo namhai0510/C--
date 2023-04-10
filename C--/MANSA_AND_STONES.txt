@@ -1,0 +1,50 @@
+https://www.hackerrank.com/challenges/manasa-and-stones/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll t,n,a,b;
+ll ma,mi;
+vector<ll> res;
+void Solve();
+void Output();
+void Input() {
+    cin >> t;
+    while (t--) {
+        cin >> n >> a >> b;
+        res.clear();
+        Solve();
+        Output();
+    }
+}
+void Solve() {
+    res.pb(0);
+    for (int i = 0; i < n; i++) {
+            ma = max(a,b) * (n - 1 - i);
+            mi = min(a,b) * i;
+            sort(res.begin(),res.end());
+            if (ma + mi != res[res.size() - 1]) res.pb(ma + mi);
+        }
+        sort(res.begin(),res.end());
+}
+void Output() {
+    for (int i = 1; i < res.size(); i++) {
+        cout << res[i] << " ";
+    }
+    cout << el;
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    //Solve();
+    //Output();
+}
