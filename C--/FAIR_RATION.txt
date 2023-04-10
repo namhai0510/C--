@@ -1,0 +1,49 @@
+https://www.hackerrank.com/challenges/fair-rations/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll n,a[maxn],res = 0;
+bool can_give = 1;
+
+void Input() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+}
+void Solve() {
+    for (int i = 1; i <= n; i++) {
+        //cout << a[i] << " ";
+        if (a[i] % 2 == 1) {
+            if (i == n) {
+                can_give = false ;
+                break;
+            }
+            else {
+                a[i]++;
+                a[i + 1]++;
+                res += 2;
+            }
+        }
+    }
+}
+void Output() {
+    //cout << el << can_give;
+    if (can_give == false) cout << "NO";
+    else cout << res;
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
