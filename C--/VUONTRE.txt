@@ -1,0 +1,105 @@
+Trong vườn trẻ có các nhóm trẻ đang chơi ở những sân chơi khác nhau cùng với cô giáo hướng
+dẫn, mỗi sân chỉ cho 1 nhóm, mỗi nhóm chí có 1 cô. Mỗi sân chơi có lỗi đi nối 1 hay nhiều
+sân chơi khác. Một số sân không có học sinh sinh. Có tổng cộng p lối đi
+Có đúng 26 sân chơi được đặt tên từ 'a' đến 'z', sân chơi chính tên là 'z' và theo qui định
+chung không có nhóm trẻ nào được chơi ở đó. Trên bảng theo dõi ở sân chơi chính, sân nào
+hiện đang có 1 nhóm trẻ đang chơi được gán tên là chữ in hoa (sân 'y' có học sinh sẽ được
+gán tên là 'Y')
+Khi có thông báo đến giờ nghỉ của vườn trẻ, các nhóm trẻ sẽ theo cô của mình đi nhanh về sân
+chính bằng các lối đi rồi mới được bố mẹ đón về - các cô luôn tìm ra con đường ngắn nhất để
+dẫn các cháu đi (có thể đi ngang qua những sân chơi khác)
+Giả sử tốc độ đi của các nhóm là như nhau, và lối đi đủ rộng để không có nhóm nào phải tạm
+dừng lại (tránh nhau) khi đi.
+Người ta cần biết sau khi phát thông báo thì nhóm trẻ chơi ở sân nào sẽ về tới sân chính 
+đầu tiên
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+const int maxe = 1e2 + 3;
+ll p;
+vector<pair<int,int>> adj[maxn];
+int save[maxn];
+struct DATA {
+    int x,y;
+    bool operator < (const DATA &o) const {
+        return x > o.x;
+    }
+};
+void Input() {
+    cin >> p;
+    for (int i = 1; i <= p; i++) {
+        char sc1,sc2;
+        int leng;
+        cin >> sc1 >> sc2 >> leng;
+        if (sc1 >= 'A' && sc1 <= 'Z') {
+            if (sc2 >= 'A' && sc2 <= 'Z') {
+                adj[int(sc1) - 'A' + 1].pb({int(sc2) - 'A' + 1,leng});
+                //cout << int(sc1) - 'A' << " " << int(sc2) - 'A' << el;
+            }
+            else if (sc2 >= 'a' && sc2 <= 'z'){
+                adj[int(sc1) - 'A' + 1].pb({int(sc2) - 'a' + 27,leng});
+                //cout << int(sc1) - 'A' << " " << int(sc2) - 'a' + 26 << el;
+            }
+        }
+        else if (sc1 >= 'a' && sc1 <= 'z') {
+            if (sc2 >= 'A' && sc2 <= 'Z') {
+                adj[int(sc1) - 'a' + 27].pb({int(sc2) - 'A' + 1,leng});
+                //cout << int(sc1) - 'a' + 26 << " " << int(sc2) - 'A' << el;
+            }
+            else {
+                adj[int(sc1) - 'a' + 27].pb({int(sc2) - 'a' + 27,leng});    
+                //cout << int(sc1) - 'a' + 26 << " " << int(sc2) - 'a' + 26 << el;
+            }
+        }
+    }
+}
+void Dijkstra(int t) {
+    for (int i = 0; i < maxn; i++) {
+        save[i] = maxn;
+    }
+    priority_queue<DATA> q;
+    save[t] = 0;
+    q.push({0,t});
+    while (!q.empty()) {
+        int c = q.top().x;
+        int u = q.top().y;
+        q.pop();
+        if (c != save[u]) continue;
+        for (auto nein : adj[u]) {
+            if (save[nein.fi] > save[u] + nein.se) {
+                save[nein.fi] = save[u] + nein.se;
+                q.push({save[nein.fi], nein.fi});
+            }
+        }
+    }
+}
+void Solve() {
+    Dijkstra(52);
+}
+void Output() {
+    char it;
+    int res = int(1e18);
+    for (int i = 1; i <= 26; i++) {
+        cout << save[i] << " ";
+        if (res > save[i]) {
+            res = save[i];
+            it = i + 64;
+        }
+    }
+    cout << el;
+    cout << it << " " << res;
+}
+int main() {
+    atami;
+    Input();
+    Solve();
+    Output();
+}
