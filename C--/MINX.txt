@@ -1,0 +1,64 @@
+Cho hai số nguyên dương 1 ≤ L ≤ R ≤ 109
+và số nguyên dương k (k ≤ 109
+). Tìm số X có thứ tự từ
+điển nhỏ nhất thỏa mãn L ≤ X ≤ R và chia hết cho k.
+Dữ liệu vào: từ tệp văn bản MINX.INP
+ Gồm t dòng, mỗi dòng chứa ba số nguyên L, R, k ( t <= 10)
+Dữ liệu ra: Ghi ra tệp văn bản MINX.OUT
+Gồm nhiều dòng, mỗi dòng chứa số X tìm được tương ứng với dữ liệu vào, nếu không tồn tại ghi
+-1. 
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0);cin.tie(nullptr);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll L,R,k;
+ll st,en;
+string res = "999999999";
+vector<string> f;
+void Solve();
+void Output();
+void Input() {
+    while (cin >> L >> R >> k) {
+        res = "999999999";
+        f.clear();
+        Solve();
+        Output();
+    }
+}
+ll ceil (ll x, ll y) {
+    ll tmp = x /y;
+    if (tmp * y == x) return x/y;
+    else return x/y + 1;
+}
+void Solve() {
+    for (ll i = 1; i <= R; i *= 10) {
+        ll x = ceil(max(i,L), k) * k;
+        //cout << x << el;
+        if (x >= L && x <= R) {
+            res = min(res,to_string(x));
+        }
+    }
+}
+void Output() {
+    if (res == "999999999") cout << "-1" << el;
+    else {
+        cout << res << el;
+    }
+}
+int main() {
+    atami;
+    if (fopen("MINX.INP","r")) {
+        freopen("MINX.INP","r",stdin);
+        freopen("MINX.OUT","w",stdout);
+    }
+    Input();
+    //Solve();
+    //Output();
+}
