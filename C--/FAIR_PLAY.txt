@@ -1,0 +1,98 @@
+An giành được rất nhiều huy chương vàng và vị trí nhất bảng trong các cuộc thi Olympic
+Tin học. Năm cuối cùng ở nhà trường An lại có mặt trong đội tuyển của trường tham dự Olympic.
+Trong đội cũng có những bạn ở lớp dưới rất giỏi, nhưng họ không vượt qua được An. Vì vậy, cô
+muốn tặng lại vị trí đầu bảng cho một trong số họ, để các bạn ấy tự tin và đạt được nhiều thành
+tích cao hơn trong các năm sau.
+An có thể không nộp bài, nhưng như vậy là không đẹp và thiếu tính trung thực trong thể
+thao chân chính. Cô quyết định vẫn sẽ làm hết khả năng của mình, nhưng với chiến lược chọn bài
+thích hợp để tổng số điểm nhận được càng thấp càng tốt.
+Đề thi có 𝑛 bài, đánh số từ 1 đến 𝑛, bài thứ 𝑖 có điểm tối đa là 𝑝𝑖
+. Đọc lướt qua các bài An
+xác định ngay được giải thuật và ước lượng là bài thứ 𝑖 cần 𝑡𝑖
+thời gian cài đặt. Liếc nhìn đồng hồ,
+cô thấy còn 𝑇 đơn vị thời gian để làm bài.
+An chọn một trong số các bài chưa làm, giải và nộp chấm. Thời gian nộp chấm là không
+đáng kể. Cô nhận được đầy đủ điểm của bài đã nộp. Nếu còn kịp làm bài khác An sẽ tiếp tục làm
+và nộp chấm. Cô không bao giờ làm các bài mà thời gian còn lại không đủ để viết chương trình.
+Nếu không còn bài nào đủ thời gian làm An chỉ đơn thuần là ngồi chờ hết giờ.
+Với chiến lược làm bài nêu trên An đã nhận được tổng điểm nhỏ nhất một cách trung thực.
+Hãy xác định tổng số điểm của An.
+/INCOMPLETE/
+---------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0);cin.tie(nullptr);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+#define oo 1e6
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+ll n,t,sump = 0, sumt = 0;
+pair<ll,ll> p[maxn];
+ll f[maxa][maxa];
+ll res = 1e18;
+
+void Solve();
+void Output();
+void Input() {
+    cin >> n >> t;
+    for (int i = 1; i <= n; i++) {
+        cin >> p[i].fi >> p[i].se;
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j <= t; j++) {
+            f[i][j] = +oo;
+        }
+    }
+    f[0][0] = 0;
+    sort(p + 1,p + 1 + n,[](pair<ll,ll> x, pair<ll,ll> y) {
+        return x.fi > y.fi;
+    });
+}
+
+void Solve() {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j <= t; j++) {
+            f[i][j] = f[i - 1][j];
+        }
+        for (int j = t; j >= p[i].fi; j--) {
+            f[i][j] = min(f[i][j], f[i - 1][j - p[i].fi] + p[i].se);
+        }
+    }
+    p[0].fi = 2002; p[0].se = 2002;
+    //p[n + 1].fi = 2002; p[n + 1].se = 2002;
+    for (int i = n + 1; i >= 0; i--) {
+        // sumt += p[i].fi;
+        // sump += p[i].se;
+        for (int j = 0; j <= t; j++) {
+            ll x;
+            //cout << res << " ";
+            if (j + p[i].fi + sumt > t) {
+                x = (i == 0) ? 0 : f[i - 1][j];
+                res = min(res, x + sump);
+            }
+            //cout << res << " " << x + sump << " " << x << " " << sump << el;
+        }
+        sumt += p[i].fi;
+        sump += p[i].se;
+        cout << sumt << " " << sump << el;
+    }
+}
+
+void Output() {
+    cout << res;
+}
+
+int main() {
+    atami;
+    if (fopen("FAIRPLAY.INP","r")) {
+        freopen("FAIRPLAY.INP","r",stdin);
+        freopen("FAIRPLAY.OUT","w",stdout);
+    }
+    Input();
+    Solve();
+    Output();
+}
