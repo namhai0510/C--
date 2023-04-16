@@ -1,0 +1,57 @@
+https://www.hackerrank.com/challenges/encryption/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+char a[maxa][maxa];
+string s;
+ll low,up,it;
+ll ceil (ll x, ll y) {
+    ll tmp = x /y;
+    if (tmp * y == x) return x/y;
+    else return x/y + 1;
+}
+void Input() {
+    cin >> s;
+    low = floor(sqrt(s.size()));
+    up = ceil(sqrt(s.size()));
+    if (low * up < s.size()) low++;
+    it = 0;
+    for (int i = 1; i <= low; i++) {
+        for (int j = 1; j <= up; j++) {
+            a[i][j] = '0';
+        }
+    }
+    for (int i = 1; i <= low; i++) {
+        for (int j = 1; j <= up; j++) {
+            a[i][j] = s[it];
+            if (it + 1 >= s.size()) break;
+            it++;
+        }
+    }
+}
+void Solve() {
+    for (int j = 1; j <= up; j++) {
+        for (int i = 1; i <= low; i++) {
+            if (a[i][j] != '0') cout << a[i][j];
+        }
+        cout << " ";
+    }
+}
+
+void Output() {
+
+}
+int main() {
+    faster;
+    Input();
+    Solve();
+    Output();
+}
