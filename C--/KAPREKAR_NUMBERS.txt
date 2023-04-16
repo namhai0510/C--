@@ -1,0 +1,61 @@
+https://www.hackerrank.com/challenges/kaprekar-numbers/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll p,q;
+ll cnt = 0;
+void Input() {
+    cin >> p >> q;
+    if (p == 1) cout << "1 ";
+}
+void Solve() {
+    for (ll i = p; i <= q; i++) {
+        ll t = i * i;
+        string s1 = to_string(i);
+        string s2 = to_string(t);
+        string p1 = "", p2 = "";
+        int k1 = s1.size(), k2 = s2.size();
+        //cout << s2 << el;
+        //cout << k1 << " " << k2 << " ";
+        for (int j = k2 - 1; ;j--) {
+            if (k2 - j - 1 == k1) {
+                //cout << k2 - j << " ";
+                break;
+            }
+            p1 = p1 + s2[j];
+            //cout << p1 << " " << s2[j] << el;;
+        }
+        reverse(p1.begin(),p1.end());
+        for (int j = k2 - k1 - 1; j >= 0; j--) {
+            p2 = p2 + s2[j];
+        }
+        reverse(p2.begin(),p2.end());
+        ll nb1,nb2;
+        stringstream f1(p1); f1 >> nb1;
+        stringstream f2(p2); f2 >> nb2;
+        if (nb1 + nb2 == i && nb1 != 0 && nb2 != 0) {
+            //cout << s2 << " " << p1 << " " << p2 << el;
+            cnt++;
+            cout << i << " ";
+        }
+    }
+}
+
+void Output() {
+    if (cnt == 0) cout << "INVALID RANGE";
+    //if (p == 1) cnt++;
+    //cout << cnt;
+}
+int main() {
+    faster;
+    Input();
+    Solve();
+    Output();
+}
