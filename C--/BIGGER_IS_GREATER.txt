@@ -1,0 +1,40 @@
+https://www.hackerrank.com/challenges/bigger-is-greater/problem?isFullScreen=true&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+char a[maxa][maxa];
+string s,s2;
+vector<string> save;
+ll t;
+void Solve();
+void Input() {
+    cin >> t;
+    while (t--) {
+        save.clear();
+        //save.pb("no answer");
+        cin >> s;
+        s2 = s;
+        Solve();
+    }
+}
+void Solve() {
+    if (next_permutation(s.begin(),s.end())) cout << s.c_str() << el;
+    else cout << "no answer" << el;
+}
+
+void Output() {
+}
+int main() {
+    faster;
+    Input();
+    //Solve();
+    Output();
+}
