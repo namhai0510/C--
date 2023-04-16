@@ -1,0 +1,38 @@
+https://www.hackerrank.com/challenges/halloween-sale/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll p,d,m,s,cnt = 0;
+void Input() {
+    cin >> p >> d >> m >> s;
+}
+void Solve() {
+    while (1) {
+        if (s - p >= 0) {
+            s -= p;
+            cnt++;
+            if (p - d >= m) p -= d;
+            else p = m;
+        }
+        else return;
+        //cout << s << " " << p << " " << d << " " << m << el;
+    }
+}
+
+void Output() {
+    cout << cnt;
+}
+int main() {
+    faster;
+    Input();
+    Solve();
+    Output();
+}
