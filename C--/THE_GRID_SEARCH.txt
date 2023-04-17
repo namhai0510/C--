@@ -1,0 +1,59 @@
+https://www.hackerrank.com/challenges/the-grid-search/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll t,R,r,C,c,check;
+string a[maxn],s[maxn];
+
+void Solve();
+void Output();
+void Input() {
+    cin >> t;
+    while (t--) {
+        cin >> R >> C;
+        for (int i = 0; i < R; i++) {
+            cin >> s[i];
+        }
+        cin >> r >> c;
+        for (int i = 0; i < r; i++) {
+            cin >> a[i];
+        }
+        Solve();
+        Output();
+    }
+}
+void Solve() {
+    check = 0;
+    for (int i = 0; i <= R - r; i++) {
+        for (int j = 0; j <= C - c; j++) {
+            int it1 = 0, it2 = i;
+            while(s[it2].substr(j,c) == a[it1].substr(0,c)) {
+                if(it2 - i + 1 == r) {
+                    check = 1;
+                    break;
+                }
+                it1++;it2++;
+            }
+        }
+    }
+}
+void Output() {
+    if (check == 1) cout << "YES" << el;
+    else cout << "NO" << el;
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    //Solve();
+    //Output();
+}
