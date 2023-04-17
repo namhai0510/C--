@@ -1,0 +1,69 @@
+https://www.hackerrank.com/challenges/happy-ladybugs/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll t,n,cnt = 0;
+ll check;
+char a[maxn];
+map<char,int> mark;
+void Solve();
+void Output();
+void Input() {
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        mark.clear();
+        for (int i = 1; i <= n; i++) {
+            cin >> a[i];
+            mark[a[i]]++;
+        }
+        Solve();
+        Output();
+    }
+}
+void Solve() {
+    check = 1;
+    for (int i = 'A'; i <= 'Z'; i++) {
+        if (mark[i] == 1) {
+            //cout << "1 ";
+            check = 0;
+        }
+    }
+    if (check == 1 && mark['_'] != 0) {
+        cout << "YES" << el;
+        return;
+    }
+    for(int i = 1; i <= n; i++) {
+        bool ok = false;
+        if (i - 1 >= 1 && a[i] == a[i - 1]) ok = true;
+        if (i + 1 <= n && a[i] == a[i + 1]) ok = true;
+        if (ok == false) {
+            check = 0;
+        }
+    }
+    if (check == 0) {
+        //cout << "3 ";
+        cout << "NO" << el;
+        return;
+    }
+    cout << "YES" << el;
+}
+void Output() {
+    
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    //Solve();
+    //Output();
+}
