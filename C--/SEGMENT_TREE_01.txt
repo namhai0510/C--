@@ -1,0 +1,84 @@
+Dòng đầu tiên là số n là số các gói mì (1 <= n <= 1e5)
+Dòng 2 là n số nguyên là độ ngon của các gói mì (|a[i]| <= 1e9)
+Dòng 3 là 1 số q là số truy vấn (1 <= q <= 1e5)
+Có 2 loại truy vấn:
++ Loại 1 có dạng 1 x y: Nấu gói mì ở vị trí x và mua gói mỳ có độ ngon y thay vào vị trí đó
++ Loại 2 có dạng 2 l r: In ra độ ngon lớn nhất của các gói mì từ vị trí l đến r (1 <= l <= r <= n)
+q dòng sau, mỗi dòng là một truy vấn thuộc một trong hai loại trên.
+------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+#define ll long long
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll n, a[maxn], q, st[4 * maxn];
+
+void Build (ll id, ll l, ll r) {
+    if (l == r) {
+        st[id] = a[l];
+        return;
+    }
+    int mid = l + r >> 1;
+    Build(2 * id, l, mid);
+    Build(2 * id + 1, mid + 1, r);
+    st[id] = max(st[2 * id], st[2 * id + 1]);
+}
+
+void update(ll id, ll l, ll r, ll i, ll val) {
+    if (l > i || r < i) return;
+    if (l == r) {
+        st[id] = val;
+        return;
+    }
+    int mid = l + r >> 1; // (l + r) / 2
+    update(2 * id, l, mid, i, val);
+    update(2 * id + 1, mid + 1, r, i, val);
+    st[id] = max(st[2 * id], st[2 * id + 1]);
+}
+
+ll get (ll id, ll l, ll r, ll u, ll v) {
+    if (l >  v || r <  u) return (-1e9); 
+    if (l >= u && r <= v) return st[id];
+    ll mid = (l + r) >> 1; // (l + r) / 2
+    ll get1 = get(2 * id, l, mid, u, v);
+    ll get2 = get(2 * id + 1, mid + 1, r, u, v);
+    return max(get1, get2);
+}
+
+void Input() {
+    cin >> n;
+    for (ll i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    Build(1, 1, n);
+    cin >> q;
+    while (q--) {
+        ll k,l,r;
+        cin >> k >> l >> r;
+        if (k == 1) {
+            update(1, 1, n, l, r);
+        }
+        else {
+            cout << get(1, 1, n, l, r) << el;
+        }
+    }
+}
+void Solve() {
+
+}
+void Output() {
+
+}
+int main() {
+    //freopen("SS.INP","r",stdin);
+    atami;
+    Input();
+    Solve();
+    Output();
+}
