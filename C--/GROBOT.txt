@@ -1,0 +1,84 @@
+Để khuyến khích các bạn trẻ nghiên cứu và chế tạo robot, Thành Đoàn Hà Nội đã tổ chức một hoạt động
+có tên “ROBOT tặng quà” dành cho các bạn thí sinh của kỳ thi Tin học trẻ. Hoạt động đó diễn ra như sau:
+Trên trục số có một robot đặt tại điểm 0 và n bạn đánh số từ 1 tới n, bạn thứ i đứng tại điểm ai trên trục số
+(có thể có nhiều bạn đứng cùng một vị trí). Người chơi chính được lựa chọn một số nguyên d (d>1) và
+thiết đặt bước nhảy của robot là d. Khi đó, từ một vị trí, robot có thể nhảy tiến hoặc nhảy lùi một khoảng
+cách đúng bằng d trên trục số, tức là nếu robot đang ở vị trí 𝑥, robot chỉ có thể nhảy sang một trong hai vị
+trí 𝑥 + 𝑑 hoặc 𝑥 − 𝑑.
+Một bạn sẽ được robot tặng quà nếu tồn tại cách di chuyển robot nhảy từ điểm 0 tới vị trí bạn đó sau một
+số hữu hạn lần nhảy. Với mong muốn có nhiều bạn được robot tặng quà, em hãy giúp người chơi chính
+chọn tham số nguyên 𝑑 > 1 để có nhiều bạn được robot tặng quà nhất, cho biết số bạn được robot tặng
+quà.
+Dữ liệu:
+- Dòng đầu chứa số nguyên dương 𝑇 ≤ 105
+là số bộ dữ liệu
+- 𝑇 nhóm dòng tiếp theo, mỗi nhóm gồm hai dòng mô tả một bộ dữ liệu:
++ Dòng thứ nhất chứa số nguyên dương 𝑛 ≤ 106
+; -
++ Dòng thứ hai chứa 𝑛 số nguyên cách nhau bởi dấu cách (|ai| ≤ 106 với 1 ≤ 𝑖 ≤ 𝑛). Tổng các giá trị
+trong các bộ dữ liệu vào không vượt quá 106
+.
+Kết quả: Với mỗi bộ dữ liệu, ghi ra một số nguyên duy nhất trên một dòng là số bạn được robot tặng quà
+theo phương án tìm được. 
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr);
+using ll = long long;
+#define fi first
+#define se second
+#define el "\n"
+#define oo 1e9
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 3;
+int n,t,a[maxn];
+unordered_map<int,int> m;
+int res = -1e6;
+void Solve();
+void Output();
+void Input() {
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        m.clear();
+        for (int i = 1; i <= n; i++) {
+            cin >> a[i];
+        }
+        res = -1e6;
+        Solve();
+        Output();
+    }
+}
+void Solve() {
+    for (int i = 1; i <= n; i++) {
+        int x = abs(a[i]);
+        for (int j = 2; j <= sqrt(x); ++j) {
+            if (x % j == 0) {
+                m[j]++;
+                if (m[j] > res && j > 1) res = m[j];
+                while (!(x % j)) {
+                    x /= j;
+                }
+            }
+        }
+        if (x != 1) m[x]++;
+        if (m[x] > res && x > 1) res = m[x];
+    }
+}
+void Output() {
+    if (res == -1e6) {
+        if (m[0] == 0) cout << "0" << el;
+        else cout << m[0] << el;
+    }
+    else cout << res + m[0] << el;
+}
+int main() {
+    faster;
+    if (fopen("GROBOT.INP","r")) {
+        freopen("GROBOT.INP","r",stdin);
+        freopen("GROBOT.OUT","w",stdout);
+    }
+    Input();
+    //Solve();
+    //Output();
+}
