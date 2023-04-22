@@ -1,0 +1,96 @@
+Cho một dãy số A có � phần tử. Tìm số nguyên dương � nhỏ nhất thoả mãn: � là số chính phương và
+� chia hết cho tất cả các phần tử của dãy số A.
+Yêu cầu: In ra phần dư của phép chia khi chia � cho 10! + 7.
+Dữ liệu: Vào từ thiết bị vào chuẩn theo khuôn dạng sau:
+• Dòng đầu tiên chứa số nguyên dương N là số lượng phần tử của dãy số;
+• Dòng tiếp theo chứa � số nguyên dương �" là các phần tử của dãy số � (1 ≤ � ≤ �).
+Các số trên một dòng được ghi cách nhau bởi dấu cách.
+Kết quả: Ghi ra thiết bị ra chuẩn gồm một số nguyên duy nhất là kết quả của bài toán
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define el "\n"
+#define oo 1e9
+ull mod = 1e9 + 7;
+const int maxn = 1e7 + 5;
+const int maxa = 1e3 + 3;
+ull n, a[maxn];
+ull S = 1;
+bool check[maxn];
+vector<ull> save;
+map<ull,ull> mark, cnt;
+void Erastos() {
+    memset(check, 1, sizeof(check));
+    check[0] = 0; check[1] = 0;
+    for (int i = 2; i <= sqrt(maxn); i++) {
+        if (check[i]) {
+            save.push_back(i);
+            for (int j = i * i; j <= maxn; j += i) {
+                check[j] = 0; 
+            }
+        }
+    }
+}
+ull nhan(ull a,ull b, ull mod) {
+    if (b == 0) return 0;
+    ull t = nhan(a, b / 2, mod);      
+    t = (t + t) % mod; 
+    if (b % 2 == 1) t = (t + a) % mod;
+    return t;
+} 
+ull power(ull a,ull b, ull mod) {
+    if (b == 0) return 1;
+    ull t = power(a, b / 2, mod);         
+    t = nhan(t, t, mod); 
+    if (b % 2 == 1) t = nhan(t, a, mod);
+    return t;
+} 
+void Input() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        ull F = a[i];
+        mark.clear();
+        for (int j = 0; j < save.size(); j++) {
+            if (F % save[j] == 0) {
+                while (F % save[j] == 0) {
+                    mark[save[j]]++;
+                    F /= save[j];
+                }
+                cnt[save[j]] = max(cnt[save[j]],mark[save[j]]);
+            }
+        }
+    }
+    //cout << "INPUT COMPLETED" << el;
+}
+void Solve() {
+    for (auto it : cnt) {
+        if (it.se % 2 == 0) {
+            S *= power(it.fi, it.se, mod) % mod;
+        }
+        else {
+            S *= power(it.fi, it.se + 1, mod) % mod;
+        }
+        //cout << it.fi << " " << it.se << " " << S << el;
+    }
+}
+void Output() {
+    cout << S;
+}
+int main() {
+    faster;
+    Erastos();
+    if (fopen("sqrmul.IN","r")) {
+        freopen("sqrmul.IN","r",stdin);
+        freopen("sqrmul.OUT","w",stdout);
+    }
+    Input();
+    Solve();
+    Output();
+}
+
