@@ -38,25 +38,25 @@ void Erastos() {
 }
 ull nhan(ull a,ull b, ull mod) {
     if (b == 0) return 0;
-    ull t = nhan(a, b / 2, mod);      
-    t = (t + t) % mod; 
-    if (b % 2 == 1) t = (t + a) % mod;
-    return t;
+    ull t = nhan(a % mod, (b / 2) % mod, mod) % mod;      
+    t = (t % mod + t % mod) % mod; 
+    if (b % 2 == 1) t = (t % mod + a % mod) % mod;
+    return t % mod;
 } 
 ull power(ull a,ull b, ull mod) {
     if (b == 0) return 1;
-    ull t = power(a, b / 2, mod);         
-    t = nhan(t, t, mod); 
-    if (b % 2 == 1) t = nhan(t, a, mod);
-    return t;
+    ull t = power(a % mod, (b / 2) % mod, mod) % mod;         
+    t = nhan(t % mod, t % mod, mod) % mod; 
+    if (b % 2 == 1) t = nhan(t % mod, a % mod, mod) % mod;
+    return t % mod;
 } 
 void Input() {
     cin >> n;
-    for (int i = 1; i <= n; i++) {
+    for (ull i = 1; i <= n; i++) {
         cin >> a[i];
         ull F = a[i];
         mark.clear();
-        for (int j = 0; j < save.size(); j++) {
+        for (ull j = 0; j < save.size(); j++) {
             if (F % save[j] == 0) {
                 while (F % save[j] == 0) {
                     mark[save[j]]++;
@@ -71,16 +71,18 @@ void Input() {
 void Solve() {
     for (auto it : cnt) {
         if (it.se % 2 == 0) {
-            S *= power(it.fi, it.se, mod) % mod;
+            S = nhan(S % mod, power(it.fi, it.se, mod) % mod, mod);
+            S = S % mod;
         }
         else {
-            S *= power(it.fi, it.se + 1, mod) % mod;
+            S = nhan(S % mod, power(it.fi, it.se + 1, mod) % mod, mod);
+            S = S % mod;
         }
         //cout << it.fi << " " << it.se << " " << S << el;
     }
 }
 void Output() {
-    cout << S;
+    cout << S % mod;
 }
 int main() {
     faster;
@@ -93,4 +95,5 @@ int main() {
     Solve();
     Output();
 }
+
 
