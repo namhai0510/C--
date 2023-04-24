@@ -1,0 +1,53 @@
+https://www.hackerrank.com/challenges/3d-surface-area/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define el "\n"
+#define oo 1e9
+ull mod = 1e9 + 7;
+const int maxn = 1e7 + 5;
+const int maxa = 1e3 + 3;
+int h, w, a[maxa][maxa];
+ll ans = 0;
+void Solve();
+void Input() {
+    cin >> h >> w;
+    for (int i = 1; i <= h; i++) {
+        for (int j = 1; j <= w; j++) {
+            cin >> a[i][j];
+        }
+    }
+}
+void Solve() {
+    for (int i = 1; i <= h; i++) {
+        for (int j = 1; j <= w; j++) {
+            ans += 2;
+            if (i == 1) ans += a[i][j];
+            else ans += max(0, a[i][j] - a[i - 1][j]);
+            if (i == h) ans += a[i][j];
+            else ans += max(0, a[i][j] - a[i + 1][j]);
+            if (j == 1) ans += a[i][j];
+            else ans += max(0, a[i][j] - a[i][j - 1]);
+            if (j == w) ans += a[i][j];
+            else ans += max(0, a[i][j] - a[i][j + 1]);
+        }
+    }
+}
+void Output() {
+    cout << ans;
+}
+int main() {
+    faster;
+    if (fopen("sqrmul.IN","r")) {
+        freopen("sqrmul.IN","r",stdin);
+        freopen("sqrmul.OUT","w",stdout);
+    }
+    Input();
+    Solve();
+    Output();
+}
