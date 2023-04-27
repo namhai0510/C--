@@ -1,0 +1,84 @@
+Cho số nguyên x
+ (1≤x≤1012
+). Gọi S
+ là xâu các ký tự 0,1
+ thể hiện dạng biểu diễn nhị phân của x
+. Xâu S
+ xác định tập T
+ các số nguyên khác nhau mà dạng biểu diễn nhị phân của nó là xâu con của S
+.
+
+Ví dụ x=5
+, khi đó ta có S=′101′
+. Tập các xâu con của S
+ là {1,0,1,10,01,101
+}. Nếu coi các xâu con như như những số nhị phân và xóa các số giống nhau, ta sẽ có tập T
+ gồm các số {0,1,2,5
+}. Tổng các số của tập này là 8
+.
+
+Yêu cầu: Cho số x
+. Hãy tìm tổng các số trong tập T
+ của x
+.
+----------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+#define fi first
+#define se second
+#define el "\n"
+#define pb push_back
+#define oo 1e9
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll t;
+set<ll> f;
+string Binary (ll t) {
+    string res;
+    while (t != 0) {
+        if (t % 2 == 0) res = '0' + res;
+        else res = '1' + res;
+        t /= 2;
+    }
+    return res;
+}
+ll Decimal (string b) {
+    ll s = 0;
+    for(int i = 0; i < b.size(); i++) {
+        if(b[i] == '0') s = s * 2;
+        else s = s * 2 + 1;
+    } 
+    return s;
+}
+
+void Input() {
+    cin >> t;
+}
+void Solve() {
+    //cout << Binary(t) << el;
+    //cout << Decimal(Binary(t));
+    string res = Binary(t);
+    for (int i = 0; i < res.size(); i++) {
+        for (int j = 1; j < res.size() - i + 1; j++) {
+            string t = res.substr(i, j);
+            //cout << t << el;
+            f.insert(Decimal(t));
+        }
+    }
+}
+void Output() {
+    ll S = 0;
+    for (auto it : f) {
+        S += it;
+        //cout << it << el;
+    }
+    cout << S;
+}
+int main() {
+    faster;
+    Input();
+    Solve();
+    Output();
+}

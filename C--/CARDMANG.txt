@@ -1,0 +1,61 @@
+Vì ham thích công nghệ nên Bờm rất hay mua đồ điện tử về tích trữ, trong bộ sưu tập của Bờm có n
+ card mạng được đánh số lần lượt từ 1 tới n
+. Cứ định kỳ, Bờm tiến hành việc kiểm định chất lượng để xác định card liệu có bị hỏng bằng cách thực hiện k phép thử. Mỗi phép thử được thực hiện trên một cặp card bất kỳ bằng cách lắp chúng vào hai máy tính và thử xác lập quan hệ giữa hai máy đó. Nếu các máy liên lạc được với nhau có nghĩa cả hai card mạng chọn ra còn tốt, trong trường hợp ngược lại - một trong hai card hoặc cả hai đã bị hỏng. Tuy nhiên, Cuội, người được Bờm nhờ thực hiện công việc lần này lại không phải là người thật chu đáo và cẩn thận. Do vậy, anh ta đã chọn các cặp card mạng để tiến hành các phép thử trên không theo một trình tự nào, thậm chí có thể có những card mạng được thử đi thử lại nhiều lần. Rất may Cuội vẫn còn ghi lại kết quả cụ thể của từng phép thử.
+
+Yêu cầu: Theo kết quả của k
+ phép kiểm tra mà Cuội hãy cho biết tình trạng của các card có thể xác định chính xác.
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+#define fi first
+#define se second
+#define el "\n"
+#define pb push_back
+#define oo 1e9
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll n,k;
+ll mark[maxn];
+vector<pair<ll,pair<ll,ll>>> f;
+void Input() {
+    cin >> n >> k;
+    for (ll i = 1; i <= k; i++) {
+        ll p,q,v;
+        cin >> p >> q >> v;
+        f.pb(make_pair(v,make_pair(p,q)));
+    }
+    sort(f.begin(),f.end());
+    reverse(f.begin(),f.end());
+}
+void Solve() {
+    for (ll i = 1; i <= n; i++) {
+        mark[i] = 2;
+    }
+    for (ll i = 0; i < k; i++) {
+        ll p,q,v;
+        p = f[i].second.first;
+        q = f[i].second.second;
+        v = f[i].first;
+        if (v == 1) {
+            mark[p] = 1;
+            mark[q] = 1;
+        }
+        else if (v == 0) {
+            if (mark[p] == 1) mark[q] = 0;
+            else if (mark[q] == 1) mark[p] = 0;
+        }
+    }
+}
+void Output() {
+    for (int i = 1; i <= n; i++) {
+        cout << mark[i] << " ";
+    }
+}
+int main() {
+    faster;
+    Input();
+    Solve();
+    Output();
+}

@@ -1,0 +1,55 @@
+Xét dãy số nguyên dương a1,a2,...,an
+, trong đó. Với mỗi truy vấn số nguyên x
+, hãy xác định số cặp (ai,aj)
+ thỏa mãn các điều kiện: ai+aj≤x
+ (1≤i<j≤n)
+------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+#define fi first
+#define se second
+#define el "\n"
+#define pb push_back
+#define oo 1e9
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+int n,q,x;
+ll dem;
+int a[maxn];
+void Solve();
+void Input() {
+    cin >> n;
+    for (ll i = 1; i <= n; ++i) {
+        cin >> a[i];
+    }
+    sort(a + 1, a + 1 + n);
+    cin >> q;
+    while (q--) {
+        dem = 0;
+        cin >> x;
+        Solve();
+    }
+}
+void Solve() {
+    int l = 1, r = n;
+    for (l = 1; l <= n; ++l) {
+        while (r > l && a[l] + a[r] > x) {
+            r--;
+        }
+        if (r >= l) {
+            dem += r - l;
+        }
+    }
+    cout << dem << el;
+}
+void Output() {
+    
+}
+int main() {
+    faster;
+    Input();
+    //Solve();
+    Output();
+}

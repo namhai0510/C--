@@ -1,0 +1,64 @@
+Xét lưới ô vuông tạo thành từ n
+ đoạn thẳng nằm ngang (các đoạn này được đánh số từ 1 đến n
+ từ trên xuống dưới) và n
+ đoạn thẳng dọc (cũng được đánh số từ 1 đến n
+) theo chiều từ trái qua phải). Giao của đoạn thẳng nằm ngang thứ i
+ và đoạn thẳng dọc thứ j
+ có tọa độ (i,j
+).
+
+Cho một tập S
+ gồm n
+ đoạn thẳng, đoạn thứ i
+ nằm trên đoạn thẳng thứ i
+ của lưới xác định bởi hai điểm (i,li
+) và (i,ri
+).
+
+Yêu cầu: Xác định độ dài của đường đi ngắn nhất dọc theo các cạnh của lưới từ điểm (1,1
+) đến điểm (n,n
+) và thoả mãn các điều kiện:
+
+Chỉ đi sang phải, sang trái hoặc xuống dưới.
+
+Đi qua tất cả các điểm của các đoạn thẳng thuộc tập S đã cho.
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+#define fi first
+#define se second
+#define el "\n"
+#define pb push_back
+#define oo 1e9
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll l[maxn], g[maxn], f[maxn], r[maxn], n;
+void Input() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> l[i] >> r[i];
+    }
+}
+void Solve() {
+    f[1] = (r[1] - 1) + (r[1] - l[1]);
+    g[1] = r[1] - 1;
+    for (int i = 2; i <= n; i++) {
+        ll a = abs(r[i] - l[i - 1]) + 1 + (r[i] - l[i]);
+        ll b = abs(r[i - 1] - r[i]) + 1 + (r[i] - l[i]);
+        ll c = abs(l[i - 1] - l[i]) + 1 + (r[i] - l[i]);
+        ll d = abs(r[i - 1] - l[i]) + 1 + (r[i] - l[i]);
+        f[i] = min(f[i - 1] + a,g[i - 1] + b);
+        g[i] = min(f[i - 1] + c,g[i - 1] + d);
+    }
+}
+void Output() {
+    cout << g[n] + (n - r[n]);
+}
+int main() {
+    faster;
+    Input();
+    Solve();
+    Output();
+}
