@@ -1,0 +1,58 @@
+Trong giờ học, có n người xếp hàng dọc đánh số từ 0 đến n - 1, người thứ i có chiều cao là 
+h[i]. Người có chỉ số nhỏ hơn đứng trước.
+Sau khi xếp hàng, có một số người phàn nàn rằng anh ta bị người khác chắn tầm mắt.
+Cụ thể là người i bị người j chắn tầm mắt nếu:
++j < i (Người j đứng trước người i)
++h[j] > h[i]
++Người j đứng gần người i nhất (j lớn nhất có thể)
+Yêu cầu: Với mỗi người cho biết anh ta bị người nào chắn tầm mắt.
+Kết quả: Ghi ra một hàng n số k[0],k[1],...,k[n] cách nhau bởi dấu cách. Trong đó k[i] là
+số hiệu người chắn tầm mắt của người i. Nếu người i không bị ai chắn tầm mắt, thì quy ước
+k[i] = -1
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+using ll = long long;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+const int maxn = 1e7 + 5;
+stack<ll> s;
+ll a[maxn], lt = 0, n;
+void Input() {
+    cin >> n;
+    for (int i = 0; i <= n - 1; i++) {
+        cin >> a[i];
+    }
+}
+void Solve() {
+    cout << "-1" << " ";
+    s.push(0);
+    lt = a[0];
+    for (int i = 1; i <= n - 1; i++) {
+       if (a[i] >= lt) {
+            cout << "-1" << " ";
+            lt = a[i];
+            while(!s.empty()) {
+                s.pop();
+            }
+            s.push(i);
+        }
+        else {
+            ll j = s.top();
+            while (a[j] <= a[i]) {
+                s.pop();
+                j = s.top();
+            }
+            cout << j << " ";
+            s.push(i);
+        }
+    }
+}
+int main() {
+    faster;
+    if (fopen("LINEUP.INP","r")) {
+        freopen("LINEUP.INP","r",stdin);
+        freopen("LINEUP.OUT","w",stdout);
+    }
+    Input();
+    Solve();
+}
