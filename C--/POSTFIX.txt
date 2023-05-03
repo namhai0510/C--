@@ -1,0 +1,74 @@
+Cho một biểu thức hậu tố với số hạng là các số nguyên dương và ba toán tử +, -, *. Hãy tính giá trị của
+biểu thức hậu tố.
+Ví dụ: biểu thức hậu tố: 2 3 4 + * 5 - 2 2 * + có giá trị là 13 (vì 13 = 2* (3+4) – 5 + 2*2) .
+Dữ liệu: vào từ file Postfix.inp:
+- Gồm nhiều dòng thể hiện biểu thức hậu tố, mỗi dòng có một chuối các số hạng là một số nguyên dương trong
+phạm vi từ 1 đến 100. Giữa hai số hạng, hoặc giữa hai toán tử, hoặc giữa số hạng và toán tử, cách nhau một
+khoảng trắng. Chiều dài biểu thức không quá 100 ký tự.
+Dữ liệu đề bài cho đảm bảo biểu thức hậu tố là hợp lệ. Trong quá trình tính toán đảm bảo trị tuyệt đối các giá trị
+trung gian không vượt quá 10^9
+Dữ liệu: ghi ra file Postfix.OUT:
+- Mỗi dòng là giá trị của biểu thức hậu tố tương ứng với Input
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+using ll = long long;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+const int maxn = 1e7 + 5;
+stack<ll> s;
+string t;
+ll sa;
+void Solve();
+void Input() {
+    while(getline(cin,t)) {
+        Solve();
+    }
+}
+void Solve() {
+    //stack<ll> s;
+    string t2;
+    t = t + ' ';
+    for (int i = 0; i < t.size(); i++) {
+        if (t[i] != ' ' && t[i] != '+' && t[i] != '-' && t[i] != '*') {
+            t2 = t[i] + t2;
+        }
+        else if (t[i] == ' ') {
+            ll f = 0;
+            reverse(t2.begin(),t2.end());
+            stringstream str(t2);
+            str >> f;
+            if (f != 0) s.push(f);
+            t2 = "";
+            //cout << f << "\n";
+        }
+        else {
+            ll f1 = s.top();
+            s.pop();
+            ll f2 = s.top();
+            s.pop();
+            if (t[i] == '+') {
+                s.push(f2 + f1);
+            }
+            else if (t[i] == '-') {
+                s.push(f2 - f1);
+            }
+            else if (t[i] == '*') {
+                s.push(f2 * f1);
+            }
+        }
+    }
+    cout << s.top() << "\n";
+    // while (!s.empty()) {
+    //     s.pop();
+    // }
+    //s.pop();
+}
+int main() {
+    faster;
+    if (fopen("postfix.INP","r")) {
+        freopen("postfix.INP","r",stdin);
+        freopen("postfix.OUT","w",stdout);
+    }
+    Input();
+    //Solve();
+}
