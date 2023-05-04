@@ -1,0 +1,67 @@
+Trên đường cao tốc dẫn đến bến cảng có rất nhiều xe lưu thông. Các xe khi rời cảng được 
+kiểm soát chặt không để xảy ra hiện tượng chở quá tải, nhưng các xe chở hàng tới có thể vi
+phạm các quy định về tải trọng. Để phát hiện và bắt giữ các xe vi phạm người ta bố trí trên
+đường m thiết bị cân tự động, thiết bị thứ i đặt ở ki lô mét b[i] 
+(0 <= b[i] <= b[i + 1],i = 1 -> m)
+Nếu xe có tải trọng lớn hơn mức được phép đi qua cân, các cảm biến sẽ được kích hoạt, các 
+má phanh bật lên ôm sát bánh buộc xe phải dừng lại. Mỗi cân chỉ được kích hoạt tự động một
+lần, muốn tháo cân trả về trạng thái ban đầu phải có sự can thiệp trực tiếp.
+Có n xe quá tải lưu thông trên đường, xe thứ j vào đường cao tốc ở ở km a[j]
+(0 <= a[j] <= a[j + 1], j = 1 -> n)
+Nếu một xe đang ở vị trí km x và vẫn đi được thì sau một đơn vị thời gian xe sẽ ở vị trí 
+x + 1.
+Yêu cầu: Với mỗi xe hãy xác định nó sẽ bị cân nào phát hiện. Nếu xe không bị phát hiện thì
+đưa ra số -1
+Dòng đầu: 2 số n,m (1 <= n,m <= 1e5)
+Dòng hai: n số a[j] (j = 1 -> n)
+Dòng ba: m số b[i] (i = 1 -> m)
+Kết quả: n số nguyên, mỗi số trên một dòng, số thứ j xác định số thứ tự của cân phát hiện
+xe j; j = 1 -> n;
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+using ll = long long;
+#define faster ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+const int maxn = 1e7 + 5;
+// stack<ll> s;
+ll n,m,a[maxn],b[maxn];
+vector<ll> ans;
+void Solve();
+void Input() {
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    for (int j = 1; j <= m; j++) {
+        cin >> b[j];
+    }
+}
+void Solve() {
+    stack<ll> c;
+    for (int i = n; i >= 1; i--) {
+        while (m > 0 && a[i] <= b[m]) {
+            c.push(m);
+            m--;
+        }
+        if (c.empty()) {
+            a[i] = -1;
+            //continue;
+        }
+        else {
+            a[i] = c.top();
+            c.pop();
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        cout << a[i] << "\n";
+    }
+}
+int main() {
+    faster;
+    if (fopen("OVERLOAD.INP","r")) {
+        freopen("OVERLOAD.INP","r",stdin);
+        freopen("OVERLOAD.OUT","w",stdout);
+    }
+    Input();
+    Solve();
+}
