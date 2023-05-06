@@ -1,0 +1,68 @@
+Cho 2 số tự nhiên A và B. Có vô số mảnh giấy hình chữ nhật trên đó ghi số A hoặc số B. Việc
+của các bạn học sinh là tìm cách dùng một vài mảnh giấy trong đó và xếp chúng lại với nhau
+theo thứ tự để số tạo thành sau khi ghép (đọc từ trái sang phải) là số nhỏ nhất mà chia hết cho 9.
+Điều kiện bắt buộc là mỗi loại số A và B đều phải được sử dụng ít nhất 1 lần.
+------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+#define in insert
+#define pu push
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+#define oo 1e9
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+string A,B;
+ll a,b;
+ll lengA = +oo, lengB = +oo;
+ll tcs(string X) {
+    ll T = 0;
+    for (int i = 0; i < X.size(); i++) {
+        T += ll(X[i]);
+    }
+    return T;
+}
+ll sls(string X) {
+    return X.size();
+}
+void Input() {
+    cin >> A >> B;
+    a = stoi(A);
+    b = stoi(B);
+}
+void Solve() {
+    for (int i = 1; i <= 9; i++) {
+        for (int j = 1; j <= 9; j++) {
+            if ((a * i + b * j) % 9 == 0) {
+                if (lengA + lengB > i + j || (lengA + lengB == i + j && A + B < B + A && lengA < i) || (lengA + lengB == i + j && A + B > B + A && lengB < j)) {
+                    lengA = i;
+                    lengB = j;
+                }
+            }
+        }
+    }
+}
+void Output() {
+    string stA = "", stB = "";
+    for (int i = 1; i <= lengA; i++) {
+        stA += A;
+    }
+    for (int i = 1; i <= lengB; i++) {
+        stB += B;
+    }
+    cout << min(stA + stB, stB + stA);
+}
+int main() {
+    if(fopen("ORANGE.INP","r")) {
+        freopen("ORANGE.INP","r",stdin);
+        freopen("ORANGE.OUT","w",stdout);
+    }
+    atami;
+    Input();
+    Solve();
+    Output();
+}
