@@ -1,0 +1,86 @@
+Với một dãy nhị phân bất kỳ, ta biến đổi dãy nhị phân như sau:
+• 1 → 01
+• 0 → 10
+Như vậy, với dãy bắt đầu là 1, sau bước biến đổi thứ nhất, ta sẽ thu được dãy 01.
+Sau phép biến đổi thứ 2, ta thu được 1001.
+Sau phép biến đổi thứ 3, ta thu được 01101001.
+…
+Người ta muốn tính xem, sau � bước biến đổi, sẽ thu được dãy gồm có bao nhiêu cặp 2 số 0 đứng
+liên tiếp.
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+#define in insert
+#define pu push
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+#define oo 1e9
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+ll n;
+struct big_num {
+	static const int base = 100000000;
+	vector<int> D;
+	big_num() { 
+	    D.push_back(0);
+	}
+	void operator+=(big_num t) {
+		int rem = 0;
+		for (int i = 0; i < D.size() && i < t.D.size(); ++i) {
+			D[i] += t.D[i] + rem;
+			if (D[i] < base) rem = 0;
+			else
+				D[i] -= base, rem = 1;
+		}
+		if (rem) D.push_back(1);
+	}
+	void operator++() {
+		int i = 0;
+		while (i < D.size() && D[i] == base - 1) D[i++] = 0;
+		if (i == D.size()) D.push_back(1); else D[i]++;
+	}
+	void operator--() {
+		int i = 0;
+		while (i < D.size() && D[i] == 0) D[i++] = base - 1;
+		D[i]--;
+	}
+	void print() {
+		cout << D.back();
+		for (int i = D.size() - 2; i >= 0; --i) {
+			for (int j = D[i] * 10; j < base; j *= 10) cout << "0";
+			cout << D[i];
+		}
+		cout << "\n";
+	}
+} F[1010];
+void Solve();
+void Input() {
+    Solve();
+    while (cin >> n) {
+        F[n].print();
+    }
+}
+void Solve() {
+    for (int i = 2; i <= 1000; ++i) {
+		F[i] = F[i - 1];
+		F[i] += F[i - 1];
+		if (i % 2 == 0) ++F[i];
+		if (i % 2 == 1) --F[i];
+	}
+}
+void Output() {
+}
+int main() {
+    if(fopen("BITRANS.INP","r")) {
+        freopen("BITRANS.INP","r",stdin);
+        freopen("BITRANS.OUT","w",stdout);
+    }
+    atami;
+    Input();
+    Solve();
+    Output();
+}
