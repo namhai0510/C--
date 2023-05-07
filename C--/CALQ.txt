@@ -1,0 +1,177 @@
+Tính toán phân số
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+#define in insert
+#define pu push
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+#define oo 1e9
+//#define front top
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+const int Oxy[][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+string T;
+string Postfix = "";
+stack<pair<ll,ll>> a;
+stack<string> Op;
+ll mark = 1;
+void Solve();
+ll STOI(string X) {
+    stringstream str(X);
+    ll num = 0;
+    str >> num;
+    return num;
+}
+void Tinhtoan(ll t, ll b, ll c, ll d, char op) {
+    int i = 1;
+    ll up,dn;
+    if (op == '+') {
+        up = c * b + t * d;
+        dn = b * d;
+        if (up < 0) i = -1;
+        ll it = __gcd(abs(up),abs(dn));
+        up /= it; dn /= it;
+        up *= i;
+    }
+    else if (op == '-') {
+        up = c * b - t * d;
+        dn = b * d;
+        if (up < 0) i = -1;
+        ll it = __gcd(abs(up),abs(dn));
+        up /= it; dn /= it;
+        up *= i;
+    }
+    else if (op == '*') {
+        up = t * c;
+        dn = b * d;
+        if (up < 0) i = -1;
+        ll it = __gcd(abs(up),abs(dn));
+        up /= it; dn /= it;
+        up *= i;
+    }
+    else if (op == ':') {
+        up = c * b;
+        dn = t * d;
+        if (up < 0) i = -1;
+        ll it = __gcd(abs(up),abs(dn));
+        up /= it; dn /= it;
+        up *= i;
+    }
+    //cout << up << " " << dn << " " << i << el;
+    if (i == -1) up *= i;
+    a.pu({up,dn});
+}
+ll PrD(char x) {
+	if (x == '+' || x == '-') return 1;
+	if (x == '*' || x == ':') return 2;
+	return 3;
+}
+void Convert(string X) {
+    X = X + ' ';
+    string T3 = "";
+    vector<ll> x;
+    for (int i = 0; i < X.size(); i++) {
+        if (X[i] == ' ' || X[i] == '/') {
+            x.pb(STOI(T3));
+            T3 = "";
+        }
+        else {
+            T3 = T3 + X[i];
+        }
+    }
+    if (mark == -1) {
+        mark = 0;
+        x[0] *= -1;
+    }
+    //cout << x[0] << " " << x[1] << el;
+    a.pu({x[0],x[1]});
+}
+void Solve();
+void PF() {
+    string T2 = "";
+    stack<char> Operator;
+    for (int i = 0; i <= T.size() - 1; i++) {
+        if (T[i] == '+' || T[i] == '-' || T[i] == '*' || T[i] == ':' || T[i] == ' ') {
+            //Convert(T2);
+            Postfix = Postfix + '(' + T2 + ')';
+            T2 = "";
+            //Postfix = Postfix + '(' + T2 + ')';
+            if ((Operator.empty() || PrD(T[i]) > PrD(Operator.top())) && T[i] != ' ')
+                    Operator.pu(T[i]);
+            else if (T[i] != ' ' && !Operator.empty()) {
+                while (!Operator.empty() && PrD(T[i]) <= PrD(Operator.top())) {
+                    Postfix = Postfix + Operator.top();
+                    Operator.pop();
+                }
+                Operator.pu(T[i]);
+            }
+        } 
+        else {
+            T2 = T2 + T[i];
+        }
+    }
+    while (!Operator.empty()) {
+        Postfix = Postfix + Operator.top();
+        Operator.pop();
+    }
+    //cout << Postfix;
+    Solve();
+}
+void Input() {
+    cin >> T;
+    T = T + ' ';
+    if (T[0] != '-') {
+        PF();
+    }
+    else {
+        string S = T;
+        T = S.substr(1,S.size() - 1);
+        mark = -1;
+        PF();
+    }
+}
+
+void Solve() {
+    //cout << Postfix << el;
+    string T2 = "";
+    for (int i = 0; i < Postfix.size(); i++) {
+        if (Postfix[i] == ')') {
+            Convert(T2);
+            T2 = "";
+        }
+        else if (Postfix[i] == '(') T2 = "";
+        else if (Postfix[i] == '+' || Postfix[i] == '-' || Postfix[i] == '*' || Postfix[i] == ':') {
+            ll x[2],y[2];
+            x[0] = a.top().fi; y[0] = a.top().se;
+            a.pop();
+            x[1] = a.top().fi; y[1] = a.top().se;
+            a.pop();
+            //cout << x[0] << " " << y[0] << " " << x[1] << " " << y[1] << " " << Postfix[i] << el;
+            Tinhtoan(x[0],y[0],x[1],y[1],Postfix[i]);
+        }
+        else {
+            T2 = T2 + Postfix[i];
+        }
+    }
+}
+void Output() {
+    if (a.top().fi == a.top().se) cout << "1";
+    else if (a.top().fi == -a.top().se) cout << "-1";
+    else if (a.top().fi == 0) cout << "0";
+    else cout << a.top().fi << "/" << a.top().se;
+}
+int main() {
+    if (fopen("CALQ.INP","r")) {
+        freopen("CALQ.INP","r",stdin);
+        freopen("CALQ.OUT","w",stdout);
+    }
+    atami;
+    Input();
+    //Solve();
+    Output();
+}
