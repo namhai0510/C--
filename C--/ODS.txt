@@ -1,0 +1,51 @@
+Tìm tổng ước lẻ lớn nhất của từng số trong khoảng A - B
+------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 3e6 + 5;
+const int maxa = 1e3 + 5;
+ll sk[31] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824};
+ll t;
+ll square(ll n) { 
+    return n * n; 
+}
+ll sum(ll n) {
+    if (n == 0) return 0;
+	if (n % 2 == 1) { 
+		return square((n + 1) / 2) + sum(n / 2);	
+	}
+	else { 
+		return square(n / 2) + sum(n / 2);
+	}
+}
+void Input() {
+    cin >> t;
+    while (t--) {
+        ll A, B;
+        cin >> A >> B;
+        cout << sum(B) - sum(A - 1) << el;
+    }
+}
+void Solve() {
+    
+}
+
+int main() {
+    if (fopen("ODS.INP","r")) {
+        freopen("ODS.INP","r",stdin);
+        freopen("ODS.OUT","w",stdout);
+    }
+    atami;
+    Input();
+    Solve();
+
+}
