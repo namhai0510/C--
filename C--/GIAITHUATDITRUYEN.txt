@@ -1,0 +1,105 @@
+Các giải thuật di truyền (GA) là một trong các phương pháp của trí tuệ nhân tạo. GA dựa trên cơ sở chọn lọc tự nhiên – nguyên lý do Darwin đề xuất, đó là một trong số các dạng tổ chức tính toán tiến hóa.
+
+Hoạt động của GA được duy trì bởi một tập các lời giải chấp nhận được gọi là thế hệ. Nhiệm vụ của GA là tạo một thế hệ mới bằng hai phép "biến dạng" và 'lai ghép". Biến dạng là phép tạo ra một thay đổi nhỏ trong lời giải, còn lai ghép là xây dựng một hoặc hai lời giải mới từ hai lời giải đã có.
+
+Một trong những ứng dụng của GA là giải bài toán người bán hàng rong. Lời giải chấp nhận được của bài toán này là các hoán vị các số tự nhiên từ 1
+ đến n
+. Một số GA giải bài toán người bán hàng rong thực hiện việc lai ghép bằng cách tạo ra các hoán vị đồng bộ. Với hai hoán vị cho trước, hoán vị thứ ba được gọi là đồng bộ với hai hoán vị đầu, nếu với mọi cặp (i,j
+) ở hai hoán vị đầu, i
+ đứng trước j
+ thì ở hoán vị thứ 3 i
+ cũng đứng trước j
+. Để phân tích giải thuật người ta thường phải tính số lượng hoán vị đồng bộ. Bản thân mỗi hoán vị của cặp cũng được coi là một hoán vị đồng bộ.
+
+Yêu cầu: Cho n
+ và hai hoán vị các số từ 1 đến n
+. Hãy tính số hoán vị đồng bộ.
+
+Input
+• Dòng đầu tiên chứa số nguyên n(1≤n≤20)
+,
+
+• Hai dòng tiếp theo, mỗi dòng chứa n
+ số nguyên xác định một hoán vị.
+
+Output
+Một số nguyên – số lượng hoán vị đồng bộ.
+
+Scoring
+60% số điểm có n≤10
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+#define oo 1e9
+const ll mod = 1e9 + 7;
+const int maxn = (1 << 20) + 1;
+const int maxa = 5e5 + 5;
+// const ll maxf = (1 << 15) + 1;
+ll n, a[maxn], b[maxn], f[maxn];
+ll after[maxa], before[maxn];
+ll posa[maxn], posb[maxn];
+ll re;
+
+void Solve();
+void Input() {
+    cin >> n;
+    memset(f, - 1, sizeof(f));
+    re = (1 << n);
+    for (ll i = 1; i <= n; i++) {
+        cin >> a[i];
+        // a[i]--;
+    }
+    for (ll i = 1; i <= n; i++) {
+        cin >> b[i];
+        // b[i]--;
+    }
+    for (ll i = 1; i <= n; i++){
+		posa[a[i]] = i;
+		posb[b[i]] = i;
+	}
+    for (ll i = 1; i <= n; i++){
+        for(ll j = 1; j <= n; j++){
+            if (i == j) continue;
+            if (posa[i] <= posa[j] && posb[i] <= posb[j]) {
+                after[i] |= (1 << (j - 1)); // after[i] = after[i] | (1 << (j - 1))
+                before[j] |= (1 << (i - 1));
+            }
+        }
+    }
+}
+
+void Solve() {
+    
+}
+
+ll Sol(ll ma){
+    if (!ma) return 1;
+    ll &ans = f[ma];
+    if (ans >= 0) return ans;
+    ans = 0;
+    for (ll i = 1; i <= n; i++) {
+        if ((ma >> (i - 1)) & 1 && (before[i] & ma) == before[i] && (after[i] & (((1 << n) - 1) ^ ma)) == after[i]){
+            ans += Sol(ma ^ (1 << (i - 1)));
+        }
+    }
+    return ans;
+}
+int main() {
+    if (fopen("ODS.INP","r")) {
+        freopen("ODS.INP","r",stdin);
+        freopen("ODS.OUT","w",stdout);
+    }
+    atami;
+    Input();
+    cout << Sol(re - 1);
+    Solve();
+
+}
