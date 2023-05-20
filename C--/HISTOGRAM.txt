@@ -1,0 +1,84 @@
+Histogram là một cách biểu diễn hình ảnh dưới dạng các cột có tỷ lệ (một đa giác gồm nhiều hình chữ nhật ghép lại). Các cột này cùng song song với 1 đường thẳng căn bản nào đó. Ví dụ với hình đã cho, tất cả các hình chữ nhật đều có chiều rộng 1 đơn vị. Tuy nhiên chiều cao lại khác nhau. 1 số cách sắp xếp cột khác nhau có thể cho ra chu vị của Histogram cao hơn. Bạn phải tìm được chu vi lớn nhất có thể và số cách cho ra chu vi đó
+
+Input
+Gồm nhiều trường hợp. Mỗi trường hợp bắt đầu bằng 1 số N
+ (2≤N≤15
+), thể hiện số hình chữ nhật tạo nên hình. Dòng tiếp theo gồm N
+ số nguyên phân biệt là độ cao của các hình chữ nhật, không quá 100. N=0
+ đánh dấu Input kết thúc.
+
+Output
+Với mỗi trường hợp đưa ra 1 dòng gồm chu vi lớn nhất và số cách tạo, cách nhau 1 dấu cách
+--------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define atami ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+#define oo 1e9
+const ll mod = 1e9 + 7;
+const int maxn = (1 << 15) + 1;
+const int maxa = 5e5 + 5;
+ll n;
+ll f[maxn][18], m[maxn][18];
+void Input() {
+    while (cin >> n) {
+        if (n == 0) break;
+        memset(f, 0, sizeof(f));
+        memset(m, 0, sizeof(f));
+        ll re = 1 << n;
+        ll a[maxn];
+        for (int i = 1; i <= n; i++) {
+            cin >> a[i];
+            f[1 << (i - 1)][i] = 2 + 2 * a[i];
+            m[1 << (i - 1)][i] = 1;
+        }
+        for (int x = 1; x < re; x++) {
+            for (int i = 1; i <= n; i++) {
+                if ((x & (1 << (i - 1))) == 0) continue;
+                for (int j = 1; j <= n; j++) {
+                    if (i == j || (x & (1 << (j - 1)))) continue;
+                    if (f[x | (1 << (j - 1))][j] < f[x][i] + 2 + 2 * a[j] - 2 * min(a[i], a[j])) {
+                        f[x | (1 << (j - 1))][j] = f[x][i] + 2 + 2 * a[j] - 2 * min(a[i], a[j]);
+                        m[x | (1 << (j - 1))][j] = m[x][i];
+                    }
+                    else {
+                        if (f[x | (1 << (j - 1))][j] == f[x][i] + 2 + 2 * a[j] - 2 * min(a[i], a[j])) {
+                            m[x | (1 << (j - 1))][j] += m[x][i];
+                        }
+                    }
+                }
+            }
+        }
+        ll ans = 0, cnt = 0;
+        for (int i = 1; i <= n; i++) {
+            if (ans < f[re - 1][i]) {
+                ans = f[re - 1][i];
+                cnt = m[re - 1][i];
+            }
+            else if (ans == f[re - 1][i]) {
+                cnt += m[re - 1][i];
+            }
+        }
+        cout << ans << " " << cnt << el;
+    }
+
+}
+
+void Solve() {
+    
+}
+
+int main() {
+    if (fopen("ODS.INP","r")) {
+        freopen("ODS.INP","r",stdin);
+        freopen("ODS.OUT","w",stdout);
+    }
+    atami;
+    Input();
+}
