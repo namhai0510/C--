@@ -1,0 +1,50 @@
+Cho lưới kích thước 2 x n, mỗi ô của lưới được tô màu đen hoặc trắng. Hai ô A và B thuộc
+cùng một thành phần liên thông nếu chúng đi được tới nhau thông qua các ô kề cạnh cùng
+màu.
+Yêu cầu: Gọi s là số cách tô màu để có đúng k thành phần liên thông, tính s % (1e9 + 7)
+-------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define pb push_back
+const int N = 1e3 + 6;
+const int mod = 1e9 + 7;
+int n, k, dp[N][2 * N][4];
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);cout.tie(NULL);
+    if(fopen("sss.inp","r"))
+    {
+        freopen("sss.inp","r",stdin);
+        freopen("sss.out","w",stdout);
+    }
+    cin >> n >> k;
+    dp[1][1][0] = dp[1][1][3] = dp[1][2][1] = dp[1][2][2] = 1;
+    for(int i = 1; i < n; ++i)
+    {
+        for(int j = 0; j <= 2 * i; ++j)
+        {
+            for(int t = 0; t <= 3; ++t)
+            {
+                for(int p = 0; p <= 3; ++p)
+                {
+                    int c = 0;
+                    if(p == 3 - t)c++;
+                    if(p == 1 || p == 2)c++;
+                    if(p == t)c = 0;
+                    dp[i + 1][j + c][p] += dp[i][j][t];
+                    dp[i + 1][j + c][p] %= mod;
+                }
+            }
+        }
+    }
+    int ans = 0;
+    for(int t = 0; t <= 3; ++t)
+    {
+        ans += dp[n][k][t];
+        ans %= mod;
+    }
+    cout << ans;
+}

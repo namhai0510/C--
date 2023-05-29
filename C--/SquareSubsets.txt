@@ -1,0 +1,73 @@
+Cho dãy số nguyên dương a1, a2, .. an, cần đếm số lượng cách chọn một tập con không rỗng
+các phần tử của dãy sao cho tích của chúng là số chính phương. Hai cách được coi là khác
+nhau nếu tập các chỉ số của các phần tử được chọn là khác nhau.
+Yêu cầu: Gọi s là số cách chọn, tính s % (1e9 + 7)
+------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define oo 1e9
+const ll modd = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 3;
+ll n;
+ll a[maxn], dp[2][1 << 20], f[2][100], ma[100];
+vector<ll> Prime;
+bool check[maxn];
+void Erastos() {
+    memset(check, 1, sizeof(check));
+    check[0] = 0; check[1] = 0;
+    for (int i = 1; i <= sqrt(100); i++) {
+        if (check[i]) {
+            Prime.pb(i);
+            for (int j = i * i; j <= 100; j += i) {
+                check[j] = 0;
+            }
+        }
+    }
+}
+int main() {
+    nothing
+    if (fopen("DD.INP","r")) {
+        freopen("DD.INP","r",stdin);
+        freopen("DD.OUT","w",stdout);
+    }
+    Erastos();
+	for (int i = 0; i < 72; i++) f[0][i] = 1;
+    int cnt = 0;
+    for (int i = 2; i < 72; i++) {
+        if (!check[i]) continue;
+        for (int j = 1; j < 72; j++) {
+			int x = j;
+			while (x % i == 0) {
+				x /= i;
+				ma[j] ^= (1 << cnt);
+			}
+		}
+		cnt++;
+    }
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        f[0][a[i]] = f[1][a[i]] = (f[0][a[i]] + f[1][a[i]]) % modd;
+    }
+    dp[0][0] = 1;
+    for (int i = 0; i <= 70; i++) {
+		int nt = (i + 1) % 2;
+		int tmp = i % 2;
+		for (int m = 0; m < (1 << 20); m++)
+		{
+			dp[nt][m ^ ma[i]] = dp[nt][m ^ ma[i]] + dp[tmp][m] * f[1][i] % modd;
+			dp[nt][m] = dp[nt][m] + dp[tmp][m] * f[0][i] % modd;
+		}
+		for (int m = 0; m < (1 << 20); m++)
+			dp[tmp][m] = 0;
+	}
+	cout << (dp[1][0] - 1 + modd) % modd;
+}
