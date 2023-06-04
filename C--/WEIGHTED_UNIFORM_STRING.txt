@@ -1,0 +1,47 @@
+https://www.hackerrank.com/challenges/weighted-uniform-string/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define oo 1e9
+const ll modd = 1e9 + 7;
+const int maxn = 1e3 + 5;
+const int maxa = 4e2 + 10;
+const int dx[4] = {0, 0, 1, -1}, dy[4] = {1, -1, 0, 0};
+
+int main() {
+    nothing
+    if (fopen("SS.INP","r")) {
+        freopen("SS.INP","r",stdin);
+        freopen("SS.OUT","w",stdout);
+    }
+    map<ll,ll> mark;
+    string str; getline(cin, str);
+    ll sum = 0, q;
+    cin >> q;
+    ll last = 0;
+    for (int i = 0; i < str.size(); i++) {
+        if (i != 0 && str[i] == str[i - 1]){
+            last += str[i] - 'a' + 1;
+            mark[last] = 1;
+        }
+        else {
+            last = str[i] - 'a' + 1;
+            mark[last] = 1;
+        }
+    }
+    while (q--) {
+        ll t; cin >> t;
+        if (mark[t]) {
+            cout << "Yes" << endl;
+        }
+        else cout << "No" << endl;
+    }
+}
+
