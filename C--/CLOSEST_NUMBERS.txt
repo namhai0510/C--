@@ -1,0 +1,34 @@
+https://www.hackerrank.com/challenges/closest-numbers/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define oo 1e18
+const ll modd = 1e9 + 7;
+const int maxn = 2e6 + 5;
+const int maxa = 4e2 + 10;
+const int dx[4] = {0, 0, 1, -1}, dy[4] = {1, -1, 0, 0};
+ll a[2 * maxn + 5];
+
+int main() {
+    nothing
+    if (fopen("SS.INP","r")) {
+        freopen("SS.INP","r",stdin);
+        freopen("SS.OUT","w",stdout);
+    }
+    ll n; cin >> n;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    sort(a + 1, a + 1 + n);
+    ll dif = +oo;
+    for (int i = 1; i + 1 <= n; i++) dif = min(dif, a[i + 1] - a[i]);
+    for (int i = 1; i + 1 <= n; i++) 
+        if (a[i + 1] - a[i] == dif) 
+            cout << a[i] << " "<< a[i + 1] << " ";
+}
+

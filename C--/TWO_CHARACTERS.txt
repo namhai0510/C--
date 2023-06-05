@@ -1,0 +1,51 @@
+https://www.hackerrank.com/challenges/two-characters/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define oo 1e9
+const ll modd = 1e9 + 7;
+const int maxn = 1e3 + 5;
+const int maxa = 4e2 + 10;
+const int dx[4] = {0, 0, 1, -1}, dy[4] = {1, -1, 0, 0};
+ll MATRIX[26][26];
+
+int main() {
+    nothing
+    if (fopen("SS.INP","r")) {
+        freopen("SS.INP","r",stdin);
+        freopen("SS.OUT","w",stdout);
+    }
+    string a = "abcdefghijklmnopqrstuvwxyz";
+    ll leng; cin >> leng;
+    string str; cin >> str;
+    ll max_leng = 0;
+    for (int i = 0; i < 26; i++) {
+        for (int j = i + 1; j < 26; j++) {
+            char x = a[i], y = a[j];
+            string save = "";
+            for (int k = 0; k < leng; k++) {
+                if (str[k] == x || str[k] == y) {
+                    save = save + str[k];
+                }
+            }
+            bool ok = true;
+            for (int k = 0; k + 1 < save.size(); k++) {
+                if (save[k] == save[k + 1]) {
+                    ok = false;
+                    break;
+                }
+            }
+            ll size_str = save.size();
+            if (ok && size_str > 1) max_leng = max(max_leng, size_str);
+        }
+    }
+    cout << max_leng;
+}
+
