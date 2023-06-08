@@ -1,0 +1,53 @@
+https://www.hackerrank.com/challenges/richie-rich/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define oo 1e18
+
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 10;
+const int dx[4] = {0, 0, 1, -1}, dy[4] = {1, -1, 0, 0};
+
+int main() {
+    nothing
+    if (fopen("SS.INP","r")) {
+        freopen("SS.INP","r",stdin);
+        freopen("SS.OUT","w",stdout);
+    }
+    bool changed[maxn]; memset(changed, 0, sizeof(changed));
+    ll n, k; cin >> n >> k;
+    string str; cin >> str;
+    ll l = 0, r = n - 1, it = -1;;
+    while (l < r) {
+        if (str[l] != str[r]) {
+            k--;
+            char c = max(str[l], str[r]);
+            str[l] = c; str[r] = c; 
+            changed[l] = 1; changed[r] = 1;
+        }
+        l++; r--;
+    }
+    if (k < 0) {
+        cout << "-1";
+        return 0;
+    }
+    while (k > 0 && ++it < n / 2) {
+        // cout << it << endl;
+        if (str[it] != '9' && ((changed[it] && k > 0) || (k > 1 && !changed[it]))) {
+            str[it] = '9'; str[n - it - 1] = '9';
+            if (changed[it] == 0) k -=2;
+            else k--;
+        }
+        // cout << str << " " << k << endl;
+    }
+    if (n % 2 == 1 && k > 0) str[n / 2] ='9';
+    cout << str;
+}
