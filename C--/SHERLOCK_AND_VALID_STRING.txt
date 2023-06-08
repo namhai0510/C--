@@ -1,0 +1,62 @@
+https://www.hackerrank.com/challenges/sherlock-and-valid-string/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define oo 1e18
+
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 10;
+const int dx[4] = {0, 0, 1, -1}, dy[4] = {1, -1, 0, 0};
+// ll a[maxn + 5], dp[maxn + 5];
+
+bool cmp(pair<ll,ll> A, pair<ll,ll> B) {
+    return (A.se < B.se || (A.se == B.se && A.fi < B.fi));
+}
+int main() {
+    nothing
+    if (fopen("SS.INP","r")) {
+        freopen("SS.INP","r",stdin);
+        freopen("SS.OUT","w",stdout);
+    }
+    string str; cin >> str;
+    ll mark[26]; memset(mark, 0, sizeof(mark));
+    map<ll, ll> counter;
+    vector<pair<ll,ll>> cnt;
+    ll MIN = LLONG_MAX/2, MAX = LLONG_MIN/2;
+    for (int i = 0; i < str.size(); i++) {
+        mark[str[i] - 'a']++;
+    }
+    ll type = 0;
+    for (int i = 0; i < 26; i++) {
+        if (mark[i] != 0) {
+            counter[mark[i]]++;
+            type++;
+        }
+    }
+    for (auto it : counter) {
+        cnt.pb({it.fi, it.se});
+    }
+    sort(cnt.begin(), cnt.end(), cmp);
+    // cout << cnt.size() << endl;
+    // for (int i = 0; i < cnt.size(); i++) {
+    //     cout << cnt[i].fi << " " << cnt[i].se << endl;
+    // }
+    if (cnt.size() == 1) {
+        cout << "YES";
+    }
+    else if (cnt.size() >= 3) {
+        cout << "NO";
+    }
+    else {
+        if (cnt[0].se == 1 && (cnt[0].fi == 1 || abs(cnt[1].fi - cnt[0].fi) == 1)) cout << "YES";
+        else cout << "NO";
+    }
+}
