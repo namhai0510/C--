@@ -1,0 +1,48 @@
+https://www.hackerrank.com/challenges/separate-the-numbers/problem?isFullScreen=true&h_r=next-challenge&h_v=zen
+--------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define oo 1e18
+
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 10;
+const int dx[4] = {0, 0, 1, -1}, dy[4] = {1, -1, 0, 0};
+
+
+int main() {
+    nothing
+    if (fopen("SS.INP","r")) {
+        freopen("SS.INP","r",stdin);
+        freopen("SS.OUT","w",stdout);
+    }
+    ll q; cin >> q;
+    while (q--) {
+        string str; cin >> str;
+        ll leng = 1; bool check = false;
+        while (leng * 2 <= str.size()) {
+            string ans = str.substr(0, leng);
+            string str2 = "";
+            ll ans_leng = atol(ans.c_str());
+            do {
+                str2 = str2 + to_string(ans_leng);
+                ans_leng++;
+            }
+            while (str2.size() < str.size());
+            if (str2 == str) {
+                cout << "YES" << " " << ans << endl;
+                check = true;
+                break;
+            }
+            leng++;
+        }
+        if (!check) cout << "NO" << endl;
+    }
+}
