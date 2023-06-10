@@ -1,0 +1,93 @@
+https://www.hackerrank.com/challenges/bear-and-steady-gene/problem?isFullScreen=true&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define oo 1e18
+
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 10;
+const int dx[4] = {0, 0, 1, -1}, dy[4] = {1, -1, 0, 0};
+ll cnt[100], eliminated[100];
+
+int main() {
+    nothing
+    if (fopen("SS.INP","r")) {
+        freopen("SS.INP","r",stdin);
+        freopen("SS.OUT","w",stdout);
+    }
+    ll n; cin >> n;
+    string str; cin >> str;
+    for (int i = 0; i < str.size(); i++) {
+        switch (str[i]) {
+            case 'A': cnt['A']++; break;
+            case 'T': cnt['T']++; break;
+            case 'G': cnt['G']++; break;
+            case 'C': cnt['C']++; break;
+        }
+    }
+    
+    // cout << cnt['A'] << " " << cnt['T'] << " " << cnt['G'] << " " << cnt['C'] << endl;
+    ll change = 0; char c = 'A';
+    switch (c) {
+        case 'A': change += max(cnt['A'] - n / 4, 1LL * 0); eliminated['A'] = max(cnt['A'] - n / 4, 1LL * 0); c = 'T';
+        case 'T': change += max(cnt['T'] - n / 4, 1LL * 0); eliminated['T'] = max(cnt['T'] - n / 4, 1LL * 0); c = 'G';
+        case 'G': change += max(cnt['G'] - n / 4, 1LL * 0); eliminated['G'] = max(cnt['G'] - n / 4, 1LL * 0); c = 'C';
+        case 'C': change += max(cnt['C'] - n / 4, 1LL * 0); eliminated['C'] = max(cnt['C'] - n / 4, 1LL * 0);
+    }
+    // cout << change << endl;
+    if (change == 0) {
+        cout << "0";
+        return 0;
+    }
+    
+    bool stabled = false;
+    ll best = str.size(), total_cnt = 0;
+    list<char> l;
+    vector<ll> gene (100,0);
+    
+    for (int i = 0; i < str.size(); i++) {
+        char now = str[i];
+        l.push_front(now);
+        
+        if (gene[now] < eliminated[now]) {
+            cout << gene[now] << " " << eliminated[now] << endl;
+            total_cnt++;
+            if (total_cnt == change) {
+                stabled = true;
+            }
+        }
+        gene[now]++;
+        
+        while (!l.empty()) {
+            char last = *l.rbegin();
+            // cout << last << endl;
+            if (gene[last] > eliminated[last]) {
+                l.pop_back();
+                gene[last]--;
+            }
+            else break;
+        }
+        
+        if(stabled) best = min(best, (ll)(l.size()));
+    }
+    
+    cout << best;
+    return 0;
+}
+
+// Duyệt tất cả kí tự xem có thừa ra không, nếu không thừa cout 0 return
+// Nếu có thừa, duyệt từng kí tự trong xâu, nếu số lượng cần xóa của loại kí tự đó lớn hơn số đã xóa của loại đó
+// -> số đã xóa của loại đó++ && tổng số kí tự đã xóa++
+// Nếu tổng kí tự đã xóa == số kí tự cần thay đổi để thành xâu hợp lệ -> Có thể chuyển thành xâu hợp lệ (stabled = true)
+// Số kí tự cần xóa của xâu hiện tại++
+// Duyệt xâu đã tạo dựng bởi list từ cuối về đâu, nếu số kí tự đã xóa của loại kí tự lớn hơn số cần xóa -> số đã xóa-- && bỏ đi kí tự cuối
+// Nếu không xóa được nữa thì break
+// Nếu có thể tạo thành xâu hợp lệ -> Tính best (Độ dài tốt nhất)
