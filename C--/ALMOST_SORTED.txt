@@ -1,0 +1,56 @@
+https://www.hackerrank.com/challenges/almost-sorted/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define oo 1e18
+
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 16;
+const int maxa = 1e3 + 10;
+const int dx[4] = {0, 0, 1, -1}, dy[4] = {1, -1, 0, 0};
+ll a[maxn];
+pair<ll,ll> libra[maxn];
+
+int main() {
+    nothing
+    if (fopen("SS.INP","r")) {
+        freopen("SS.INP","r",stdin);
+        freopen("SS.OUT","w",stdout);
+    }
+    ll n; cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        libra[i].fi = a[i]; libra[i].se = i;
+    }
+    sort(libra + 1, libra + 1 + n);
+    ll di = 0, l = 0, r = 0, ch = 0, i = 1;
+    for (i = 1; i <= n; i++) {
+        ll k = libra[i].se;
+        if (ch) {
+            if (k + 1 == l) l = k;
+            else if (i == k) ch = 0;
+            else break;
+        }
+        else if (i != k) {
+            ch = ++di;
+            if (di == 1) l = r = k;
+            if (di > 2 || l != r) break;
+            l = k;
+        }
+    }
+    if (i <= n) {
+        cout << "no";
+        return 0;
+    }
+    cout << "yes" << endl;
+    if (di == 1 && r - l == 1) di++;
+    if (di == 1) cout << "reverse " << l << " " << r;
+    if (di == 2) cout << "swap " << l << " " << r;
+}
