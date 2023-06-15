@@ -1,0 +1,39 @@
+https://www.hackerrank.com/challenges/big-sorting/problem?isFullScreen=true
+------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define oo 1e9
+const ll modd = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 3;
+ll n; 
+vector<string> ans;
+
+bool cmp(string a, string b) {
+    a.insert(1LL * 0, max(1LL * 0, (ll)(b.length() - a.length())), '0');
+    b.insert(1LL * 0, max(1LL * 0, (ll)(a.length() - b.length())), '0');   
+    if (a >= b) return false;
+    return true;
+}
+
+int main() {
+    nothing
+    if (fopen("DD.INP","r")) {
+        freopen("DD.INP","r",stdin);
+        freopen("DD.OUT","w",stdout);
+    }
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        string s; cin >> s;
+        ans.push_back(s);
+    }
+    sort(ans.begin(), ans.end(), cmp);
+    for (int i = 0; i < n; i++) cout << ans[i] << endl;
+}
