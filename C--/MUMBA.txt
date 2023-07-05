@@ -1,0 +1,52 @@
+Mỗi từ trong ngôn ngữ của bộ tộc Mumba hình thành từ các ký tự a và b theo quy tắc sau:
+• Không chứa 2 ký tự b liên tiếp,
+• Không có ba từ con giống nhau đứng liên tiếp trong một từ, như vậy aaa không phải là một 
+từ (có 3 từ con a liên tiếp), aabababa cũng không phải là một từ (có 3 từ con ab liên tiếp).
+Tất cả các xâu thỏa mãn những điều kiện trên đều là từ trong ngôn ngữ Mumba.
+Yêu cầu: Cho số nguyên k (1 ≤ k ≤ 105
+). Hãy xác định số từ trong ngôn ngữ Mumba có độ dài 
+đúng bằng k
+------------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define bit(x, i) ((x >> i)&1)
+const int maxn = 1e5 + 2;
+
+int main() {
+    int n; cin >> n;
+    if (n == 1) {
+        cout << 2;
+        return 0;
+    }
+    if (n >= 25) {
+        cout << 0;
+        return 0;
+    }
+    int res = 0;
+    for (int mask = 1; mask < (1 << n); mask++) {
+        bool flag = true;
+        string s;
+        for (int i = 0; i < n; i++) {
+            if (bit(mask, i)) {
+                s = s + 'a';
+            }
+            else s = s + 'b';
+        }
+        //cout << s << " ";
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == 'b' && s[i + 1] == 'b') {
+                flag = false;
+            }
+            for (int j = i; j < s.size(); j++) {
+                string x = s.substr(i, j - i + 1);
+                x = x + x + x;
+                if (s.find(x) != -1) flag = false;
+            }
+        }
+        if (flag) res++;
+    }
+    cout << res;
+}
