@@ -1,0 +1,60 @@
+https://www.hackerrank.com/challenges/overload-operators/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll modd = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+string a, b;
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    cin >> a >> b;
+    a = a + "*"; b = b + "*";
+    vector<int> fir, sec;
+    string sa = ""; bool st = false;
+    
+    for (int i = 0; i < a.size(); i++) {
+        if (a[i] >= '0' && a[i] <= '9') {
+            sa += a[i];
+            st = true;
+        }
+        else {
+            if (st) {
+                int s = 0;
+                stringstream str(sa); str >> s; fir.pb(s); sa = ""; st = false;
+            }
+        }
+    }
+    // for (auto it : fir) cout << it << " ";
+    
+    st = false; sa = "";
+    for (int i = 0; i < b.size(); i++) {
+        if (b[i] >= '0' && b[i] <= '9') {
+            sa += b[i];
+            st = true;
+        }
+        else {
+            if (st) {
+                int s = 0;
+                stringstream str(sa); str >> s; sec.pb(s); sa = ""; st = false;
+            }
+        }
+    }
+    // for (auto it : sec) cout << it << " ";
+    
+    cout << fir[0] + sec[0] << "+i" << fir[1] + sec[1];
+}
