@@ -1,0 +1,47 @@
+https://www.hackerrank.com/challenges/overloading-ostream-operator/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll modd = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+class Person {
+    public:
+        Person(const string& first_name, const string& last_name) : first_name_(first_name), last_name_(last_name) {}
+        const string& get_first_name() {
+            return first_name_;
+        }
+        const string& get_last_name() {
+            return last_name_;
+        }
+    private:
+        string first_name_;
+        string last_name_;
+};
+
+ostream& operator << (ostream& Output, Person& p) {
+    Output << "first_name=" << p.get_first_name() << "," << "last_name=" << p.get_last_name();
+    return Output;
+}
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    string first_name, last_name, event;
+    cin >> first_name >> last_name >> event;
+    auto p = Person(first_name, last_name);
+    cout << p << " " << event << endl;
+    return 0;
+}
