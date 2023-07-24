@@ -1,0 +1,91 @@
+https://www.hackerrank.com/challenges/messages-order/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll modd = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+class Message {
+    public:
+        Message() {}
+        Message(const int& pID, const string& pText) : mText(pText), mID(pID) {}
+        const string& get_text() {
+             return mText;
+        }
+        const int& get_id() const {
+            return mID;
+        }
+    private:
+        string mText;
+        int mID;
+};
+bool operator<(const Message& lhs, const Message& rhs) {
+    return lhs.get_id() < rhs.get_id();
+}
+
+class MessageFactory {
+    public:
+        MessageFactory() {}
+        Message create_message(const string& pText) {
+        return {mID++, pText};
+        }
+    private :
+        int mID = 0;
+};
+
+class Recipient {
+    public:
+        Recipient() {}
+        void receive(const Message& msg) {
+            messages_.push_back(msg);
+        }
+        void print_messages() {
+            fix_order();
+            for (auto& msg : messages_) {
+                cout << msg.get_text() << endl;
+            }
+            messages_.clear();
+        }
+    private:
+        void fix_order() {
+            sort(messages_.begin(), messages_.end());
+        }
+        vector<Message> messages_;
+};
+class Network {
+    public:
+        static void send_messages(vector<Message> messages, Recipient& recipient) {
+            random_shuffle(messages.begin(), messages.end());
+            for (auto msg : messages) {
+                recipient.receive(msg);
+            }
+        }
+};
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    MessageFactory message_factory;
+    Recipient recipient;
+    vector<Message> messages;
+    
+    string text;
+    while (getline(cin, text)) {
+        messages.push_back(message_factory.create_message(text));
+    }
+    
+    Network::send_messages(messages, recipient);
+    recipient.print_messages();
+}
