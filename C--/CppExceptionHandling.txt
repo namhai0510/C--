@@ -1,0 +1,51 @@
+https://www.hackerrank.com/challenges/cpp-exception-handling/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+-------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
+using ll = long long;
+using ull = unsigned long long;
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll modd = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+int largest_proper_divisor (int n) {
+    if (n == 0) {
+        throw invalid_argument("largest proper divisor is not defined for n=0");
+    }
+    if (n == 1) {
+        throw invalid_argument("largest proper divisor is not defined for n=1");
+    }
+    for (int i = n/2; i >= 1; --i) {
+        if (n % i == 0) {
+            return i;
+        }
+    }
+    return 1;
+}
+
+void solve(int n) {
+    try {
+        int d = largest_proper_divisor(n);
+        cout << "result=" << d << endl;
+    }
+    catch (invalid_argument& e) {
+        cout << e.what() << endl;
+    }
+    cout << "returning control flow to caller" << endl;
+}
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    int n; cin >> n;
+    solve(n);
+}
