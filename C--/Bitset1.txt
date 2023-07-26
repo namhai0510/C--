@@ -1,0 +1,39 @@
+https://www.hackerrank.com/challenges/bitset-1/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+const ll oo = 0x3f3f3f3f;
+const ll MOD = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+uint32_t n, s, p, q;
+vector<bool> mark(1LL << 31, false);
+int main() {
+    nothing
+    // if (fopen("kbin.inp", "r")) {
+    //     freopen("kbin.inp", "r", stdin);
+    //     freopen("kbin.out", "w", stdout);
+    // }
+    uint32_t cnt = 1;
+    cin >> n >> s >> p >> q;
+    mark[s % (1LL << 31)] = 1;
+    for (int i = 1; i < n; ++i) {
+        s = (s * p + q) % (1LL << 31);
+        if (!mark[s]) {
+            mark[s] = 1;
+            cnt++;
+        }
+    }
+    cout << cnt;
+    return 0;
+}
+
+
+
