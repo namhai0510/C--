@@ -1,0 +1,42 @@
+https://www.hackerrank.com/challenges/inheritance-introduction/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+const ll oo = 0x3f3f3f3f;
+const ll MOD = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+
+class Triangle{
+    public:
+        void triangle(){
+            cout << "I am a triangle" << endl;
+        }
+};
+
+class Isosceles : public Triangle{
+    public:
+        void isosceles(){
+            cout << "I am an isosceles triangle" << endl;
+            cout << "In an isosceles triangle two sides are equal" << endl;
+        }
+};
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    Isosceles isc;
+    isc.isosceles();
+    isc.triangle();
+    return 0;
+}
