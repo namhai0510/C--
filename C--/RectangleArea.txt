@@ -1,0 +1,26 @@
+https://www.hackerrank.com/challenges/rectangle-area/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+const ll oo = 0x3f3f3f3f;
+const ll modd = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+int main() {
+    nothing
+    if (fopen("kbin.inp", "r")) {
+        freopen("kbin.inp", "r", stdin);
+        freopen("kbin.out", "w", stdout);
+    }
+    int a, b; cin >> a >> b;
+    cout << a << " " << b << endl << a * b;
+}
+
