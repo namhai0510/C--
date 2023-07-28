@@ -1,0 +1,71 @@
+Hôm nay An được học về số palindrome. Số palindrome là số mà nếu viết biểu diễn thập phân của
+nó (không có chữ số 0 ở đầu) ở dạng ngược lại thì ta vẫn được cùng một số. Ví dụ 1221 là một số
+palindrome trong khi 123 thì không phải. An tò mò không biết trong đoạn từ L tới R có tất cả bao
+nhiêu số palindrome mà tổng chữ số ở dạng thập phân của nó là số nguyên tố. Hãy giúp An nhé.
+-------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+const ll oo = 0x3f3f3f3f;
+const ll MOD = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+ll l, r;
+int sz_min, sz_max;
+ll cnt = 0;
+
+bool SangNT[maxn];
+void SNT() {
+    memset(SangNT, true, sizeof(SangNT));
+    SangNT[0] = false; SangNT[1] = false;
+    
+    for (int i = 2; i * i <= maxn; i++) {
+        if (SangNT[i]) {
+            for (int j = i * i; j <= maxn; j += i) {
+                SangNT[j] = false;
+            }
+        }
+    }
+}
+
+ll dup(ll x, bool KT) {
+    ll kq = x;
+    if (KT) {
+        x = x / 10;
+    }
+    while (x > 0) {
+        kq = kq * 10 + x % 10;
+        x = x / 10;
+    }
+    return kq;
+}
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    SNT();
+    cin >> l >> r;
+    
+    for (ll x = 1; x <= 999999; x++) {
+        for (int k = 0; k <= 1; k++) {
+            ll res = dup(x, k);
+            if (res > r || res < l) continue;
+            
+            string s = to_string(res); ll sum = 0;
+            for (int j = 0; j < s.size(); j++) {
+                sum += (s[j] - '0');
+            }
+            
+            if (SangNT[sum]) cnt++;
+        }
+    }
+    cout << cnt;
+}
