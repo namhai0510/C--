@@ -1,0 +1,71 @@
+Một dãy a1, a2, …, an được gọi là dãy superseq độ dài n nếu như:
+
+a1 = 0
+
+an = H
+
+|ai - ai + 1|≤K∀i = 1, 2, …, n - 1
+
+0≤ai≤H∀i = 1, 2, …, n
+
+Yêu cầu: Với n, H, K cho trước hãy đếm số lượng dãy superseq theo modulo 666013
+-------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 666013;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+using matrix = vector<vector<ll>>;
+matrix unit (int m, int n) {
+	return matrix (m, vector<ll> (n));
+} 
+
+matrix operator * (const matrix &a, const matrix &b) {
+	int m = a.size(), n = b[0].size(), p = b[0].size();
+	matrix c = unit (m, n);
+	
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			for (int k = 0; k < p; k++) {
+				c[i][j] = (c[i][j] + a[i][k] * b[k][j]) % mod;
+			}
+		}
+	}
+	return c;
+}
+
+matrix operator << (const matrix &a, const ll x) {
+	if (x == 1) return a;
+	matrix t = a << (x / 2);
+	t = t * t;
+	if (x & 1) t = t * a;
+	return t;
+}
+
+ll n, h, k;
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    cin >> n >> h >> k;
+    matrix dp = unit(h + 1, h + 1);
+	for (int i = 0; i <= h; i++) {
+		for (int j = 0; j <= h; j++) {
+			if (abs(i - j) <= k) dp[i][j] = 1;
+		}
+	}
+	dp = dp << (n - 1);
+	cout << dp[h][0];	
+}
