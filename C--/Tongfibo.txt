@@ -1,0 +1,47 @@
+Xét dãy số Fibonacci theo định nghĩa: F0 = F1 = 1 Fn = Fn - 1 + Fn - 2∀n > 1 Cho số n, hãy tính tổng S = F0 + F1 + F2 + ⋯ + Fn và đưa ra số dư của S chia cho 109 + 7.
+-------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define hydrogen ios_base::sync_with_stdio(0); cin.tie(nullptr);
+#define ll long long
+const ll mod = 1e9 + 7;
+ll n;
+struct MATRIX {
+    ll a[2][2] = {{0,1},{1,1}};
+};
+
+MATRIX operator * (MATRIX a, MATRIX b) {
+    MATRIX c;
+    for (int i = 0; i <= 1; i++) {
+        for (int j = 0; j <= 1; j++) {
+            c.a[i][j] = 0;
+            for (int k = 0; k <= 1; k++) {
+                c.a[i][j] = (c.a[i][j] + a.a[i][k] * b.a[k][j]) % mod;
+            }
+        }
+    }
+    return c;
+}
+
+MATRIX fibo (ll n) {
+    MATRIX c;
+    if (n == 1) return c;
+    MATRIX t = fibo (n / 2);
+    if (n%2) return t*t*c;
+    else return t*t;
+}
+void Input() {
+    cin >> n;
+}
+
+void Solve() {
+    Input(); 
+    MATRIX kq = fibo(n + 1);
+    cout << ((kq.a[1][0] + kq.a[1][1]) - 1)%mod;
+}
+
+int main() {
+    hydrogen;
+    Solve();
+    return 0;
+}

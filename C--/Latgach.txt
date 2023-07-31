@@ -1,0 +1,60 @@
+Đường viền trang trí ở nền nhà có kích thước 2×N
+ được lát bằng 2 loại gạch: loại kích thước 1×2
+ và loại 2×2
+. Hãy xác định số cách lát khác nhau có thể thực hiện.
+------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+struct matrix{
+    ll a[2][2]={{0,2},{1,1}};
+};
+
+matrix operator*(matrix a, matrix b){
+	matrix c;
+	for (int i = 0; i < 2; i++){
+		for (int j = 0; j < 2; j++){
+			c.a[i][j] = 0;
+			for (int k = 0; k < 2; k++){
+				c.a[i][j] = (c.a[i][j] + a.a[i][k] * b.a[k][j]) % mod;
+			}
+		}
+	}
+	return c;
+}
+
+matrix pow(long long n){
+    matrix c;
+	if (n == 1) return c;
+	matrix t = pow(n / 2);
+	if (n % 2) return t * t * c;
+	return t * t;
+}
+
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    ll T, n;
+    cin >> T;
+    while (T--) {
+        cin >> n;
+    	matrix ans = pow(n);
+    	cout << ans.a[1][1] << endl;
+    }
+    return 0;
+}
