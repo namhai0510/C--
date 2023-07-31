@@ -1,0 +1,67 @@
+https://www.hackerrank.com/challenges/maximum-palindromes/problem?isFullScreen=true
+-------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e5 + 5;
+const int maxa = 2e3 + 5;
+
+string s;
+int q;
+
+ll a[maxn][30];
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    cin >> s >> q;
+    
+    s = "#" + s;
+    memset(a, 0, sizeof(a));
+    
+    for (int i = 1; i < s.size(); i++) {
+        for (int j = 'a'; j <= 'z'; j++) {
+            a[i][j - 'a' + 1] += a[i - 1][j - 'a' + 1];
+        }
+        a[i][s[i] - 'a' + 1] += 1;
+    }
+    
+    // for (int i = 1; i < s.size(); i++) {
+    //     for (int j = 'a'; j <= 'z'; j++) {
+    //         cout << a[i][j - 'a' + 1] << " ";
+    //     }
+    //     cout << endl;
+    // }
+    
+    while (q--) {
+        int l, r; cin >> l >> r;
+        string res = "", res2 = "";
+        for (int j = 'a'; j <= 'z'; j++) {
+            ll cnt = a[r][j - 'a' + 1] - a[l - 1][j - 'a' + 1];
+            for (int k = 1; k <= cnt / 2; k++) res += char(j);
+            for (int k = 1; k <= cnt % 2; k++) res2 += char(j);
+        }
+        // cout << res << " " << res2 << endl;
+        sort(res.begin(), res.end());
+        ll cnt = 0;
+        do {
+            cnt++;
+            cnt %= mod;
+        }
+        while (next_permutation(res.begin(), res.end()));
+        
+        if (res2 != "") cout << cnt * res2.size() << endl;
+        else cout << cnt << endl;
+    }
+}
