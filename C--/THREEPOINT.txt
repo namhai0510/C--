@@ -1,0 +1,48 @@
+Cho 3 điểm 6(8#, =#), J(8$, =$), H(8+, =+). Xét xem điểm C có nằm trên đường
+thẳng đi qua A, B hay không? Nếu C nằm trên đường thẳng A, B thì C thuộc đoạn
+AB hay không? Nếu C không nằm trên đường thẳng đi qua A, B tính diện tích, chu
+vi tam giác ABC.
+------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    double xa, ya, xb, yb, xc, yc;
+    cin >> xa >> ya >> xb >> yb >> xc >> yc;
+    if (abs(xa - xb) / abs(xa - xc) == abs(ya - yb) / abs(ya - yc)){
+        if ((xa - xc) *(xc - xb) > 0 || (ya - yc) * (yc - yb) > 0) {
+            cout << "1" << endl;
+            return 0;
+        }
+        else {
+            cout << "2" << endl;
+            return 0;
+        }
+    }
+    else {
+        double a = ya - yb, b = xb - xa, c = xa * yb - xb * ya, a1 = ya - yc, a2 = yb - yc, b1 = xb - xc, b2 = xc - xa;
+        double h = abs(a * xc + b * yc + c) / sqrt(a * a + b * b);
+        double d = sqrt(a * a + b * b);
+        cout << fixed << setprecision(3) << d * h / 2 << endl;
+        double d1 = sqrt(a1 * a1 + b2 * b2);
+        double d2 = sqrt(a2 * a2 + b1 * b1);
+        cout << fixed << setprecision(3) << d + d1 + d2 << endl;
+    }
+}
