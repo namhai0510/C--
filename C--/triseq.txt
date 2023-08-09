@@ -1,0 +1,58 @@
+Cho dãy a gồm n số nguyên. Tìm dãy con dài nhất (Không nhất thiết phải liên tiếp) của dãy a sao cho 3 số nguyên bất
+kì trong dãy con đều có thể là 3 cạnh của một tam giác
+-------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 5e3 + 5;
+int n;
+pair<int, int> a[maxn];
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].first;
+        a[i].second = i;
+    }
+    if (n == 1) {
+        cout << 1 << endl << 1;
+        return 0;
+    }
+    sort(a + 1, a + 1 + n);
+    
+    int length = 0, st, en;
+    for (int i = 1; i <= n; i++) {
+        int fir = a[i].first, sec = a[i + 1].first;
+        
+        auto it = lower_bound(a + i, a + 1 + n, make_pair(fir + sec, 0)) - a;
+        
+        if (it - 1 - i + 1 > length) {
+            length = it - 1 - i + 1;
+            st = i; en = it - 1;
+        }
+    }
+    
+    cout << length << endl;
+    vector<int> x;
+    for (int i = st; i <= en; i++) {
+        x.push_back(a[i].second);
+    }
+    sort(x.begin(), x.end());
+    for (auto it : x) {
+        cout << it << " ";
+    }
+}
