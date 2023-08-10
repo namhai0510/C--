@@ -1,0 +1,69 @@
+Cho bảng vuông A kích thước nn ô đơn vị. Một số ô của bảng có chướng ngại và được đánh
+dấu là 1. Những ô còn lại là các ô trống và được đánh dấu 0. Rô bốt chỉ được di chuyển trong
+bảng và có thể đi từ ô trống này sang ô trống khác kề cạnh. Hai ô trống gọi là có đường đi tới
+nhau, nếu rô bốt có thể di chuyển từ một ô tới ô kia. Đường đi nối 2 ô là đường di chuyển của rô
+bốt trong đó không có ô nào phải đi qua quá một lần.
+Bảng A được gọi là mê cung, nếu giữa 2 ô trống bất kỳ của bảng có đúng một đường đi.
+Yêu cầu: Cho n và trạng thái các ô của A (1 ≤ n ≤ 3000). Hãy xác định A có là mê cung hay
+không và đưa ra câu trả lời tương ứng Yes hoặc No.
+------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e3 + 1;
+const int X[4] = {-1,0,0,1};
+const int Y[4] = {0,-1,1,0};
+int n, a[maxa][maxa], D[maxa][maxa], timedfs = 0;
+
+void Dfs(int x, int y, int xx, int yy) {
+    if (timedfs == 2 || D[x][y] == 1) {
+        cout << "No";
+        exit(0);
+    }
+    
+    D[x][y] = timedfs;
+    int dx, dy;
+    for (int i = 0; i < 4; ++i) {
+        dx = x + X[i]; dy = y + Y[i];
+        
+        if (dx < 1 || dy < 1|| dx > n || dy > n || a[dx][dy] == -1 || (dx == xx && dy == yy) ) continue;
+       
+        Dfs(dx, dy, x, y);
+    }
+}
+
+int main() {
+    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+    string s;
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> s;
+        s = '#' + s;
+        for (int j = 1; j <= n; ++j) {
+            a[i][j] = s[j] - '0';
+            if (a[i][j] == 1) a[i][j] = -1;
+        }
+    }
+
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            if (a[i][j] == 0 && D[i][j] == 0) {
+                timedfs++;
+                Dfs(i, j, -1, -1);
+            }
+        }
+    }
+    
+    cout << "Yes";
+    exit(0);
+}
