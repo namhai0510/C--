@@ -1,0 +1,66 @@
+Cho ma trận 𝑎 gồm 𝑚 hàng và 𝑛 cột, các hàng đánh số từ trên xuống dưới, các cột đánh số
+từ trái sang phải. Ô ở hàng 𝑖 cột 𝑗 có giá trị nguyên 𝑎𝑖,𝑗 (|𝑎𝑖,𝑗
+| ≤ 10^9
+). Với mỗi ma trận vuông
+𝑘 × 𝑘 định nghĩa nửa dưới của nó là tất cả các ô nằm trên đường chéo chính và dưới đường chéo
+chính trái trên – phải dưới.
+Yêu cầu: Tìm hình vuông cỡ 𝑘 × 𝑘 sao cho tổng các số ở nửa dưới của nó đạt giá trị lớn nhất.
+Dữ liệu: Vào từ file văn bản TRIANGLE.INP
+- Dòng đầu ghi 3 số 𝑚, 𝑛, 𝑘 (𝑚, 𝑛 ≤ 2000, 𝑘 ≤ min(𝑚, 𝑛))
+- 𝑚 dòng tiếp theo, mỗi dòng gồm 𝑛 số là ma trận 𝑎.
+Kết quả: Đưa ra file văn bản TRIANGLE.OUT
+Ghi 1 số nguyên duy nhất là kết quả tìm được.
+
+---------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+const ll oo = 0x3f3f3f3f;
+const ll MOD = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+int n, m, k;
+ll a[maxa][maxa], ngang[maxa][maxa], cheo[maxa][maxa], doc[maxa][maxa], d[maxa][maxa];
+ll ans = -oo;
+int main() {
+    nothing
+    if (fopen("triangle.inp", "r")) {
+        freopen("triangle.inp", "r", stdin);
+        freopen("triangle.out", "w", stdout);
+    }
+    cin >> n >> m >> k;
+    n++; m++;
+    for (int i = 2; i <= n; i++) {
+        for (int j = 2; j <= m; j++) {
+            cin >> a[i][j];
+        }
+    }
+    
+    for (int i = 2; i <= n; i++) {
+        for (int j = 2; j <= m; j++) {
+            cheo[i][j] = cheo[i - 1][j - 1] + a[i][j];
+            ngang[i][j] = ngang[i][j - 1] + cheo[i][j];
+            doc[i][j] = doc[i - 1][j] + cheo[i][j];
+        }
+    }
+    
+    for (int i = 2; i <= n - k + 1; i++) {
+        for (int j = 2; j <= m - k + 1; j++) {
+            d[i][j] = ngang[i + k - 1][j + k - 1] - ngang[i + k - 1][j - 1] - doc[i + k - 2][j - 1] + doc[i - 2][j - 1];
+            ans = max(ans, d[i][j]);
+        }
+    }
+    // for (int i = 1; i <= n; i++) {
+    //     for (int j = 1; j <= m; j++) {
+    //         cout << d[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+    cout << ans;
+}
