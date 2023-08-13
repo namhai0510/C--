@@ -1,0 +1,97 @@
+Cho n
+ điểm có tọa độ nguyên trên mặt phẳng (3≤n≤2.105
+). Tọa độ của mỗi điểm có giá trị tuyệt đối không vượt quá 109
+. Có thể có những điểm trùng nhau, tuy vậy, bao giờ cũng tìm được ít nhất 3 điểm không thẳng hàng.
+
+Yêu cầu: Xác định đa giác lồi có diện tích nhỏ nhất chứa tất cả các điểm đã cho và không có 3 đỉnh nào của đa giác lối là thẳng hàng. Chỉ ra các đỉnh của đa giác theo trình tự duyệt ngược chiều kim đồng hồ, tính chu vi và diện tích của đa giác (ghi ra 3 chữ số sau dấu phảy).
+-------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+const ll oo = 0x3f3f3f3f;
+const ll MOD = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+struct Coordinate {
+    int x, y, id;
+};
+
+Coordinate a[maxn], b[maxn];
+int n, m, num;
+
+bool Cmp (Coordinate p, Coordinate q) {
+    return (p.x < q.x || (p.x == q.x && p.y < q.y));
+}
+
+pair<int,int> vctr (Coordinate p, Coordinate q) {
+    return (make_pair(q.x - p.x, q.y - p.y));
+}
+
+ll CCW (Coordinate p, Coordinate q, Coordinate r) {
+    pair<int,int> u = vctr(p,q);
+    pair<int,int> v = vctr(q,r);
+    return (1ll * u.fi * v.se - 1ll * u.se * v.fi);
+}
+
+
+bool Cmp2 (Coordinate p, Coordinate q) {
+    ll CW = CCW(a[1], p, q);
+    if (CW == 0) return (Cmp(p, q));
+    return (CW > 0);
+}
+
+void Convex_Hull(Coordinate a[], int n, Coordinate b[], int &m) {
+    sort (a + 1, a + n + 1, Cmp); // lấy phần tử thấp nhất
+    sort (a + 2, a + n + 1, Cmp2); // sort theo góc quay
+    b[m = 1] = a[1];
+    for (int i = 2; i <= n; i++){
+        while (m > 1 && CCW(b[m - 1], b[m], a[i]) <= 0) m--;
+        b[++m] = a[i];
+    }
+}
+
+double Distance (Coordinate p, Coordinate q) {
+    ll hx = p.x - q.x;
+    ll hy = p.y - q.y;
+    return sqrt(hx * hx + hy * hy);
+}
+
+int main() {
+    nothing
+    if (fopen("ch.inp", "r")) {
+        freopen("ch.inp", "r", stdin);
+        freopen("ch.out", "w", stdout);
+    }
+    cin >> n;
+    
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].x >> a[i].y;
+        a[i].id = i;
+    }
+    
+    Convex_Hull(a, n, b, m);
+    
+    cout << m << endl;
+    
+    b[m + 1] = b[1];
+    
+    ll S = 0; 
+    double P = 0.0;
+    
+    for (int i = 1; i <= m; i++) {
+        S += 1ll*(b[i].x - b[i + 1].x) * (b[i].y + b[i + 1].y);
+        P += Distance(b[i], b[i + 1]);
+    }
+    
+    cout << setprecision(3) << fixed << P << endl;
+    cout << S / 2 << (S % 2 == 0 ? ".000" : ".500");
+    
+    return 0;
+}
