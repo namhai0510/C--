@@ -1,0 +1,68 @@
+Yêu cầu: Cho tọa độ của n gốc cây táo trong nông trại. Hãy chỉ ra 2 cây táo được chọn để làm hàng rào sao cho chia 
+nông trại thành 2 phần bằng nhau về số lượng cây táo.
+
+Input
+Dòng đầu chứa số nguyên chẵn n (2 <= n <= 1e6) (Số lượng cây táo)
+Dòng thứ i trong n dòng tiếp theo chứa cặp số nguyên xi, yi (|xi|, |yi| <= 1e6) – tọa độ của gốc cây táo thứ i
+(1 <= i <= n)
+Dữ liệu đảm bảo không có 2 tọa độ trùng nhau, không có 3 gốc cây nằm trên cùng một đường thẳng.
+Output
+In ra 2 số nguyên là thứ tự của 2 cây táo được chọn. Nếu có nhiều phương án thực hiện thì đưa ra một phương án bất 
+kỳ.
+------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+const ll oo = 0x3f3f3f3f;
+const ll MOD = 1e9 + 7;
+const int maxn = 2e6 + 5;
+const int maxa = 2e3 + 5;
+
+struct Coordinate {
+    int x, y, id;
+};
+
+Coordinate a[maxn];
+int n;
+
+bool Cmp (Coordinate p, Coordinate q) {
+    return (p.x < q.x || (p.x == q.x && p.y < q.y));
+}
+
+pair<int,int> vctr (Coordinate p, Coordinate q) {
+    return (make_pair(q.x - p.x, q.y - p.y));
+}
+
+ll CCW (Coordinate p, Coordinate q, Coordinate r) {
+    pair<int,int> u = vctr(p,q);
+    pair<int,int> v = vctr(q,r);
+    return (1ll * u.fi * v.se - 1ll * u.se * v.fi);
+}
+
+bool Cmp2 (Coordinate p, Coordinate q) {
+    ll CW = CCW(a[1], p, q);
+    if (CW == 0) return (Cmp(p, q));
+    return (CW > 0);
+}
+
+
+int main() {
+    nothing
+    cin >> n;
+    
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].x >> a[i].y;
+        a[i].id = i;
+    }
+    
+    sort(a + 1, a + 1 + n, Cmp);
+    sort(a + 2, a + 1 + n, Cmp2);
+    
+    cout << a[1].id << " " << a[n / 2 + 1].id << endl;
+}
