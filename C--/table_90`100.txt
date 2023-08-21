@@ -1,0 +1,58 @@
+Cho bảng số nguyên không âm gồm n dòng m cột. Hãy xác định bảng vuông con lớn nhất có tổng không vượt quá
+k.
+-------------------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 5e3 + 5;
+
+ull n, m, k;
+ull a[maxa][maxa], S[maxa][maxa];
+
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    cin >> n >> m >> k;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> a[i][j];
+        }
+    }
+    
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            S[i][j] = S[i - 1][j] + S[i][j - 1] - S[i - 1][j - 1] + a[i][j];
+        }
+    }
+    
+    ll ans = 1;
+    
+    // tinh tong cac ptu nam trong hinh chu nhat co goc tren trai la (x1, y1) va goc duoi phai la (x2, y2)
+    // = S[x2][y2] - S[x1 - 1][y2] - S[x2][y1 - 1] + S[x1 - 1][y1 - 1]
+    for (int i = 1; i <= n - 1; ++i) {
+        for (int j = 1; j <= m - 1; ++j) {
+            for (int kk = 1; kk <= min(n - i, m - j); ++kk) {
+                ll x1 = i, y1 = j, x2 = i + kk, y2 = j + kk;
+                ll res = S[x2][y2] - S[x1 - 1][y2] - S[x2][y1 - 1] + S[x1 - 1][y1 - 1];
+                if (res <= k) {
+                    ans = max(ans, 1LL * kk + 1);
+                }
+            }
+        }
+    }
+    
+    cout << ans << endl;
+}
