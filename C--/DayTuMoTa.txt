@@ -1,0 +1,75 @@
+Giá trị phần tử thứ n chính là số lần xuất hiện số n trong dãy. Quả thật chỉ có đúng một dãy số không giảm có tính chất tuyệt vời này. Nhưng phần tử thứ n bằng bao nhiêu?".
+
+Yêu cầu: Cho số nguyên dương n(n≤2×109) . Hãy xác định giá trị phần tử thứ n của dãy.
+-----------------------------------------------------------------------------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 1e4 + 5;
+const int maxa = 1e5 + 5;
+
+string S;
+
+signed main() {
+    nothing
+    if (fopen("ss.inp","r")) {
+        freopen("ss.inp","r",stdin);
+        freopen("ss.out","w",stdout);
+    }
+    cin >> S;
+    
+    string x1, y1, x2, y2;
+    int l, r, m1, m2;
+    bool check1, check2;
+    
+    x1 = S.substr(0, S.size() / 2); y1 = S.substr(S.size() / 2, S.size() / 2 + 1);
+    // cout << x1 << " " << y1 << endl;
+    l = 0; r = 0;
+    while (r < y1.size()) {
+        if (x1[l] == y1[r]) {
+            l++; r++;
+        }
+        else {
+            r++;
+            m1 = l;
+        }
+    }
+    
+    y1.erase(y1.begin() + m1);
+    // cout << y1 << endl;
+    
+    if (y1 == x1) check1 = true;
+    else check1 = false;
+    
+    x2 = S.substr(0, S.size() / 2 + 1); y2 = S.substr(S.size() / 2 + 1, S.size() / 2);
+    // cout << x2 << " " << y2 << endl;
+    l = 0; r = 0;
+    while (l < x2.size()) {
+        if (x2[l] == y2[r]) {
+            l++; r++;
+        }
+        else {
+            l++;
+            m2 = r;
+        }
+    }
+    
+    x2.erase(x2.begin() + m2);
+    // cout << x2 << endl;
+    
+    if (x2 == y2) check2 = true;
+    else check2 = false;
+    
+    if (check1 == false && check2 == false) cout << "NOT POSSIBLE";
+    else if (check1 && check2 && x1 != y2) cout << "NOT UNIQUE";
+    else if (check1 == true) cout << x1 << endl;
+    else cout << y2 << endl;
+}
