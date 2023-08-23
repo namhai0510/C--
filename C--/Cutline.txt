@@ -1,0 +1,67 @@
+Cho một ma trận gồm m
+ hàng và n
+ cột (2≤m,n≤103
+). Mỗi phần tử của ma trận là một chữ cái la tinh thường. Các cột của ma trận khác nhau từng đôi một. Hãy tìm cách xóa nhiều nhất có thể các hàng đầu tiên của ma trận, sao cho phần còn lại vẫn đảm bảo các cột khác nhau từng đôi một.
+
+Yêu cầu: Cho m,n
+ và ma trận các ký tự. Hãy xác định số dòng tối đa có thể xóa được từ đầu ma trận.
+----------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 1e4 + 5;
+const int maxa = 1e3 + 5;
+
+ll n, m;
+char a[maxa][maxa];
+vector<string> v;
+vector<int> d;
+
+signed main() {
+    nothing
+    if (fopen("ss.inp","r")) {
+        freopen("ss.inp","r",stdin);
+        freopen("ss.out","w",stdout);
+    }
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> a[i][j];
+        }
+    }
+    
+    string s;
+    for (int j = 1; j <= m; j++) {
+        s = "";
+        for (int i = n; i >= 1; i--) {
+            s += a[i][j];
+        }
+        v.pb(s);
+    }
+    
+    sort(v.begin(), v.end());
+    // for (auto it : v) cout << it << endl;
+    
+    for (int i = 0; i < v.size() - 1; i++) {
+        int c = 0;
+        for (int j = 0; j < v[i].size(); j++) {
+            if (v[i][j] == v[i + 1][j]) c++;
+            else break;
+        }
+        d.pb(c);
+    }
+    
+    int MAX = 0;
+    // for (auto it : d) cout << it << endl;
+    for (int i = 0; i < d.size(); i++) MAX = max(MAX, d[i]);
+    
+    cout << (n - MAX - 1) << endl;
+}

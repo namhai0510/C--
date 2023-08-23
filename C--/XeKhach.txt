@@ -1,0 +1,45 @@
+2 nhà xe Hoàng Vinh và Phượng Hoàng cũng khai thác tuyến đường đi QL39A Hưng Yên - Hà Nội. Tại bến Hưng Yên, 1 xe Phượng Hoàng đi ngay trước 1 chiếc xe Hoàng Vinh. 2 xe đi tiếp nối nhau. Một xe chỉ được phép vượt xe còn lại khi xe kia dừng lại đón khách. Có n
+ điểm đón khách trên đường đi theo thứ tự 1,2,3,…,n
+. Điểm thứ i
+ có ai
+ người đang đứng. Tại mỗi điểm, xe nào tới trước sẽ chắc chắn đón được khách và không được phép bỏ qua bất kỳ hành khách nào. Xe còn lại có thể đợi xe kia đón khách xong rồi tiếp tục bám đuôi hoặc có thể vượt trong lúc xe kia đón khách. Giả sử 2 lái xe đều biết được trước số lượng khách ở từng điểm và biết cách giành nhiều khách nhất có thể. Xác định số khách tối đa mà xe Phượng Hoàng có thể đón trong lượt đi này.
+----------------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 1e3 + 5;
+
+ll n, a[maxn], f[maxn], sum[maxn];
+
+signed main() {
+    nothing
+    if (fopen("ss.inp","r")) {
+        freopen("ss.inp","r",stdin);
+        freopen("ss.out","w",stdout);
+    }
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    
+    for (int i = n; i >= 1; i--) {
+        sum[i] = sum[i + 1] + a[i];
+    }
+    
+    f[n] = a[n];
+    for (int i = n - 1; i >= 1; i--) {
+        f[i] = a[i] + min(sum[i + 1] - f[i + 1], f[i + 1]);
+    }
+    
+    cout << f[1];
+    return 0;
+}
