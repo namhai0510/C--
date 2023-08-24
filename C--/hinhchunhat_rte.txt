@@ -1,0 +1,91 @@
+Cho n
+ hình chữ nhật trong hệ trục tọa độ Đề các. Tính diện tích vùng bị phủ bởi ít nhất một 1 hình chữ nhật.
+
+Input
+Dòng đầu chứa số nguyên dương n
+ là số hình chữ nhật
+
+n
+ dòng tiếp theo, mỗi dòng chứa 4 số nguyên x1,x2,y1,y2(n≤2.105,x1<x2,y1<y2)
+. Các số nguyên không âm không vượt quá 109
+. Với (x1,y1
+) là tọa độ đỉnh trái dưới, (x2,y2
+) là tọa độ đỉnh phải trên của hình chữ nhật.
+-----------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e4 + 5;
+
+struct Coordinates {
+    ll x, l, r, type;
+};
+
+bool cmp(Coordinates A, Coordinates B) {
+    return (A.x < B.x || (A.x == B.x && A.type <= B.type));
+}
+
+struct Segment {
+    ll cnt, len;
+};
+
+ll n, m = 0, k;
+ll ans;
+Coordinates a[maxn + 5];
+Segment t[maxn * 4 + 20];
+
+void upd(int k, int l, int r, int u, int v, int ty) {
+	if (u > v || r < u || v < l) return;
+	if (u <= l && r <= v) {
+		t[k].cnt += ty;
+		if (ty == 1) t[k].len = r - l + 1;
+		else if (t[k].cnt == 0) {
+			if (l < r) {
+				t[k].len = t[k * 2].len + t[k * 2 + 1].len;
+			}
+			else {
+				t[k].len = 0;
+			}
+		}
+		return;
+	}
+	
+	int mid = (l + r) / 2;
+	upd(k * 2, l, mid, u, v, ty);
+	upd(k * 2 + 1, mid + 1, r, u, v, ty);
+	if (t[k].cnt == 0 && l < r) t[k].len = t[k * 2].len + t[k * 2 + 1].len;
+}
+
+signed main() {
+    nothing
+    if (fopen("ss.inp","r")) {
+        freopen("ss.inp","r",stdin);
+        freopen("ss.out","w",stdout);
+    }
+    cin >> n;
+	for (int i = 1; i <= n; i++) {
+		int x, y, xx, yy;
+		cin >> x >> xx >> y >> yy;
+		a[++m] = {x, y + 1, yy, 1};
+		a[++m] = {xx, y + 1, yy, -1};
+		k = max(k, 1LL * yy);
+	}
+
+	sort(a + 1, a + 1 + m, cmp);
+
+	for (int i = 1; i <= m; i++) {
+		ans += t[1].len * (a[i].x - a[i - 1].x);
+		upd(1, 1, k, a[i].l, a[i].r, a[i].type);
+	}
+
+    cout << ans << endl;
+}
