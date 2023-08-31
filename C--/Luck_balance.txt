@@ -1,0 +1,51 @@
+https://www.hackerrank.com/challenges/luck-balance/problem?isFullScreen=true
+-------------------------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+ll n, k;
+vector<ll> im, uim;
+int main() {
+    nothing
+    if (fopen("ss.inp", "r")) {
+        freopen("ss.inp", "r", stdin);
+        freopen("ss.out", "w", stdout);
+    }
+    cin >> n >> k;
+    
+    for (int i = 1; i <= n; i++) {
+        ll val, type;
+        cin >> val >> type;
+        if (type == 1) im.pb(val);
+        else uim.pb(val);
+    }
+    
+    sort(im.begin(), im.end());
+    reverse(im.begin(), im.end());
+    
+    ll Luck = 0;
+    for (auto it : uim) Luck += it;
+    
+    for (auto it : im) {
+        if (k > 0) {
+            Luck += it;
+            k--;
+        }
+        else Luck -= it;
+    }
+    
+    cout << Luck << endl;
+    return 0;
+}
