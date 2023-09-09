@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+ll n, k, a[maxa], dp[maxa + 2][maxa + 2], ans = +oo;
+
+int main() {
+    nothing
+    if (fopen("research.inp", "r")) {
+        freopen("research.inp", "r", stdin);
+        freopen("research.out", "w", stdout);
+    }
+    cin >> n >> k;
+    for (int i = 1; i <= n; ++i) cin >> a[i];
+    
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 0; j <= k; ++j) dp[i][j] = +oo;
+        dp[i][i - 1] = a[i];
+    }
+    
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j < i; ++j) {
+            for (int u = 0; u < j; ++u) {
+                // cout << i << " " << j << " " << u << " " << u + i - j - 1 << endl;
+                dp[i][u + i - j - 1] = min(dp[i][u + i - j - 1], dp[j][u] + max(1LL * 0, a[i] - a[j]));
+            }
+        }
+    }
+    
+    for (int i = 1; i <= n; ++i) {
+        if (n - i <= k) 
+            ans = min(ans, dp[i][k + i - n]);
+    }
+    
+    if (k == n) cout << 0;
+    else cout << ans;
+    
+    return 0;
+}
