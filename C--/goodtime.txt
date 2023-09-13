@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n;
+long long f[1000005];
+string s;
+vector<pair<long long, long long>> info;
+
+int main() {
+    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+    if (fopen("goodtime.inp", "r")) {
+        freopen("goodtime.inp", "r", stdin);
+        freopen("goodtime.out", "w", stdout);
+    }
+    for (int i = 0; i <= 23; ++i) {
+        for (int j = 0; j <= 59; ++j) {
+            string x = to_string(i);
+            string y = to_string(j);
+            if (x.size() == 1) x = '0' + x;
+            if (y.size() == 1) y = '0' + y;
+
+            string yy = y; reverse(yy.begin(), yy.end());
+            if (x == yy) {
+                info.push_back({i, j});
+            }
+        }
+    }
+
+    // for (auto it : info) cout << it.first << " " << it.second << "\n";
+    // cout << info.size() << endl;
+
+    for (int i = 0; i < info.size(); ++i){
+		f[i] = info[i].first * 60 + info[i].second;
+	}
+
+	cin >> n;
+	for (int i = 1; i <= n; ++i){
+	 	int x = 0, y = 0;
+	 	string s; cin >> s;
+	 	x += (s[0] - '0') * 10 + s[1] - '0';
+	 	y += (s[3] - '0') * 10 + s[4] - '0';
+	 	if (x * 60 + y >= f[info.size() - 1]) {
+	 		cout << "00:00" << "\n";
+	 		continue;
+		}
+	 	for (int j = 1; j < info.size(); ++j) {
+	 		if (f[j] > x * 60 + y){
+	 			if (info[j].first < 10) cout << "0";
+	 			cout << info[j].first << ":";
+	 			if (info[j].second < 10) cout<< "0";
+	 			cout << info[j].second << "\n";
+	 			break;
+			}
+		}
+	}
+	
+	return 0;
+}
