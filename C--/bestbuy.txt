@@ -1,0 +1,69 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e4 + 5;
+
+ll c1, c2, n, m, T = 0, res = 0;
+ll a[maxn], t[maxn], u[maxn], v[maxn];
+struct Data {
+    ll tm, type, x;
+};
+
+Data A[maxn];
+
+bool cmp (Data x, Data y) {
+    return (x.tm < y.tm || (x.tm == y.tm && x.type < y.type));
+}
+
+map<ll, bool> buy;
+
+int main() {
+    nothing
+    if (fopen("ss.inp","r")) {
+        freopen("ss.inp","r",stdin);
+        freopen("ss.out","w",stdout);
+    }
+    cin >> c1 >> c2;
+    cin >> n;
+    int it = 1;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i] >> t[i];
+        A[it] = {t[i], 0, a[i]};
+        it++;
+    }
+    cin >> m;
+    for (int i = 1; i <= m; i++) {
+        cin >> u[i] >> v[i]; 
+        A[it] = {u[i], 1, i};
+        it++;
+        A[it] = {v[i], 2, i};
+        it++;
+    }
+    
+    sort(A + 1, A + it, cmp);
+    
+    
+    for (int i = 1; i <= n + 2 * m; i++) {
+        if (A[i].type == 0) T += A[i].x;
+        else if (A[i].type == 1 && T >= c1) {
+            T -= c1;
+            buy[A[i].x] = 1;
+            res++;
+        }
+        else if (T >= c2 && buy[A[i].x] == 0) {
+            T -= c2;
+            res++;
+        }
+    }
+    
+    cout << res;
+}

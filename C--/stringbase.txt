@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e4 + 5;
+
+string s, t;
+ll n;
+
+int main() {
+    nothing
+    if (fopen("ss.inp","r")) {
+        freopen("ss.inp","r",stdin);
+        freopen("ss.out","w",stdout);
+    }
+    cin >> s >> t;
+    n = __gcd(s.size(), t.size());
+    
+    string sb = s.substr(0, n), tb = t.substr(0, n);
+    string ss = "", tt = "";
+    
+    for (int j = 1; j <= s.size() / n; j++) ss += sb;
+    for (int j = 1; j <= t.size() / n; j++) tt += tb;
+    
+    if (sb == tb && ss == s && tt == t) cout << sb;
+    else cout << "NO";
+    
+    return 0;
+}
