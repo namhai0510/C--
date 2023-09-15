@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e4 + 5;
+
+ll n, k, a[maxn];
+ll c[maxn], sum[maxn];
+
+bool check[maxn + 2];
+vector<ll> prime;
+void Sieve() {
+    memset(check, 1, sizeof(check));
+    check[0] = 0; check[1] = 0;
+    
+    for (int i = 2; i * i < maxn; i++) {
+        if (check[i]) {
+            for (int j = i * i; j < maxn; j += i) {
+                check[j] = false;
+            }
+        }
+    }
+    
+    for (int i = 2; i < maxn; i++) if (check[i]) prime.pb(i);
+}
+
+int main() {
+    nothing
+    if (fopen("tprime.inp","r")) {
+        freopen("tprime.inp","r",stdin);
+        freopen("tprime.out","w",stdout);
+    }
+    Sieve();
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    
+    for (int i = 1; i <= n; i++) {
+        ll it = lower_bound(prime.begin(), prime.end(), a[i]) - prime.begin();
+        if (it == 0) c[i] = abs(a[i] - prime[it]);
+        else c[i] = min(abs(a[i] - prime[it]), abs(a[i] - prime[it - 1]));
+    }
+    
+    for (int i = 1; i <= n; i++) {
+        sum[i] = sum[i - 1] + c[i];
+    }
+    
+    ll ans = (ll)1e18;
+    for (int i = 1; i <= n - k + 1; i++) {
+        ans = min(ans, sum[i + k - 1] - sum[i - 1]);
+    }
+    cout << ans;
+    return 0;
+}
