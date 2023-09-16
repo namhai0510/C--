@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e4 + 5;
+int n, t[maxn * 4], a[maxn];
+ll res = 0;
+void Init(int id, int l, int r) {
+    if (l == r) {
+        t[id] = 1;
+        return;
+    }
+    
+    int mid = (l + r) / 2;
+    Init(id * 2, l, mid);
+    Init(id * 2 + 1, mid + 1, r);
+    t[id] = t[id * 2] + t[id * 2 + 1];
+}
+
+void Del(int x, int id, int l, int r) {
+    if (l == r) {
+        t[id] = 0;
+        return;
+    }
+    
+    int mid = (l + r) / 2;
+    if (x <= mid) Del(x, id * 2, l, mid);
+    else Del(x, id * 2 + 1, mid + 1, r);
+    
+    t[id] = t[id * 2] + t[id * 2 + 1];
+}
+
+int get(int pos, int id, int l, int r) {
+    if (l == r) return l;
+    
+    int mid = (l + r) / 2;
+    if (t[id * 2] >= pos) return get(pos, id * 2, l, mid);
+    else return get(pos - t[id * 2], id * 2 + 1, mid + 1, r);
+}
+
+int main() {
+    nothing
+    if (fopen("marbles.inp","r")) {
+        freopen("marbles.inp","r",stdin);
+        freopen("marbles.out","w",stdout);
+    }
+    cin >> n;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    Init(1, 1, n);
+    
+    for (int i = 1; i <= n - 2; i++) {
+        int x; cin >> x;
+        int y = get(x + 1, 1, 1, n);
+        int z = get(x - 1, 1, 1, n);
+        x = get(x, 1, 1, n);
+        res += (ll)a[x] * (a[y] + a[z]);
+        Del(x, 1, 1, n);
+    }
+    
+    cout << res;
+    
+    return 0;
+}
+
+// 6 
+// 2 5 7 3 8 1 
+// 3 4 3 2
