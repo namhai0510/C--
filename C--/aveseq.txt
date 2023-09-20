@@ -1,0 +1,75 @@
+Cho dãy số nguyên A=a1,a2,…,an
+ và số nguyên dương x
+. Hãy xác định đoạn con liên tiếp dài nhất của dãy A
+ có giá trị trung bình không nhỏ hơn x
+.
+
+Input
+Dòng đầu chứa 2 số nguyên dương n,q
+Dòng thứ 2 chứa n
+ số nguyên không âm a1,a2,…,an(ai≤105)
+q
+ dòng tiếp theo, dòng thứ i
+ chứa số nguyên dương là giá trị x
+ trong truy vấn thứ i
+----------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll oo = 1e18;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e4 + 5;
+
+ll n, q, x, a[maxn], b[maxn], s[maxn];
+ll res = -oo, smin[maxn];
+
+int main() {
+    nothing
+    if (fopen("ss.inp","r")) {
+        freopen("ss.inp","r",stdin);
+        freopen("ss.out","w",stdout);
+    }
+    cin >> n >> q;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    
+    while (q--) {
+        cin >> x;
+        s[0] = 0; smin[0] = 0; res = -oo;
+        for (int i = 1; i <= n; i++) {
+            b[i] = a[i] - x;
+            s[i] = s[i - 1] + b[i];
+            smin[i] = min(smin[i - 1], s[i]);
+        }
+        
+        int u, v = n;
+        for (int u = n; u >= 0; u--) {
+            if (s[u] == smin[u]) {
+                while (s[v] < s[u]) v--;
+                res = max(res, (ll)(v - u));
+            }
+        }
+        
+        // for (int i = 1; i <= n; i++) {
+        //     cout << b[i] << " ";
+        // }
+        // cout << endl;
+        // for (int i = 1; i <= n; i++) {
+        //     cout << s[i] << " ";
+        // }
+        // cout << endl;
+        // for (int i = 1; i <= n; i++) {
+        //     cout << smin[i] << " ";
+        // }
+        // cout << endl;
+        
+        cout << res << endl;
+    }
+}
