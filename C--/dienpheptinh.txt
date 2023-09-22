@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e4 + 5;
+
+ll a, b;
+
+int main() {
+    nothing
+    if (fopen("dienpheptinh.inp","r")) {
+        freopen("dienpheptinh.inp","r",stdin);
+        freopen("dienpheptinh.out","w",stdout);
+    }
+    cin >> a >> b;
+    if (a != 0 && ((b - a) / a) == a) {
+        cout << "*" << endl << "+";
+        // a * a + a == b
+    }
+    else if (a != 0 && ((b + a) / a) == a) {
+        cout << "*" << endl << "-";
+        // a * a - a == b
+    }
+    else if (a != 0 && b % a == 0) {
+        ll res = b / a;
+        if (res / a == a) cout << "*" << endl << "*";
+        // a * a * a == b
+    }
+    else if (a != 0 && a > b && (a - b) / a == a) {
+        // a - a * a == b;
+        cout << "-" << endl << "*";
+    }
+    else if (a == b) {
+        cout << "+" << endl << "-";
+        // a + a - a == b
+    }
+    else if (a + a + a == b) cout << "+" << endl << "+";
+    
+    return 0;
+}
+// * +
+// * -
+// * *
+// + +
+// + -

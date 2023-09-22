@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll oo = 1e18;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e4 + 5;
+
+ll n, k, cnt[512];
+string s;
+vector<pair<char, char>> change;
+
+int main() {
+    nothing
+    if (fopen("amnhac.inp","r")) {
+        freopen("amnhac.inp","r",stdin);
+        freopen("amnhac.out","w",stdout);
+    }
+    cin >> n >> k >> s;
+    for (int i = 0; i < n; ++i) {
+        cnt[s[i]]++;
+    }
+    for (int i = 0; i < 256; i++) cnt[i] *= k;
+    
+    ll res = -oo;
+    change.pb({s[0], s[n - 1]});
+    change.pb({s[0], s[1]});
+    change.pb({s[n - 1], s[0]});
+    change.pb({s[n - 1], s[n - 2]});
+    for (int i = 1; i < n - 1; i++) {
+        change.pb({s[i], s[i + 1]});
+        change.pb({s[i], s[i - 1]});
+    }
+    
+    for (auto it : change) {
+        res = max(res, cnt[it.fi] + cnt[it.se]);
+    }
+    cout << res;
+    return 0;
+}

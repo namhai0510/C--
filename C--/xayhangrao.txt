@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll oo = 1e18;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e4 + 5;
+
+ll n, q, k, f[maxn], wh = -1, B_max[maxn], sum[maxn];
+struct Data {
+    ll a, b, c;
+};
+Data x[maxn];
+
+bool cmp(Data A, Data B) {
+    return(A.a > B.a || (A.a == B.a && A.b > B.b) || (A.a == B.a && A.b == B.b && A.c > B.c));
+}
+
+int main() {
+    nothing
+    if (fopen("xayhangrao.inp","r")) {
+        freopen("xayhangrao.inp","r",stdin);
+        freopen("xayhangrao.out","w",stdout);
+    }
+    cin >> n >> q;
+    for (int i = 1; i <= n; i++) {
+        cin >> x[i].a;
+    }
+    for (int i = 1; i <= n; i++) {
+        cin >> x[i].b;
+        // B_max = max(B_max, x[i].b);
+        x[i].c = x[i].b - x[i].a;
+    }
+    sort(x + 1, x + 1 + n, cmp);
+    
+    f[0] = 0;
+    for (int i = 1; i <= n; i++) {
+        f[i] = max(f[i - 1], x[i].c);
+        sum[i] = sum[i - 1] + x[i].a;
+        // B_max = max(B_max, x[i].b);
+        // if (x[i].b == B_max) wh = i;
+    }
+    
+    for (int i = n; i >= 1; i--) {
+        B_max[i] = max(B_max[i + 1], x[i].b);
+    }
+    
+    while (q--) {
+        cin >> k;
+        cout << max(sum[k - 1] + B_max[k], sum[k] + f[k]) << " ";
+    }
+    return 0;
+}
