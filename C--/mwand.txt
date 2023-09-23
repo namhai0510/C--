@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL);
+using ll = long long;
+using ull = unsigned long long;
+#define in insert
+#define fi first
+#define se second
+#define pb push_back
+#define el "\n"
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 3e4 + 5;
+
+ll n, a[maxn], cnt = 0;
+map<ll, ll> l, r;
+int main() {
+    nothing
+    if (fopen("dienpheptinh.inp","r")) {
+        freopen("dienpheptinh.inp","r",stdin);
+        freopen("dienpheptinh.out","w",stdout);
+    }
+    cin >> n;
+    
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        r[a[i]]++;
+    }
+    
+    for (int j = 1; j <= n; j++) {
+        r[a[j]]--;
+        if (a[j] % 3 != 0) {
+            l[a[j]]++;
+            continue;
+        }
+        cnt += r[a[j] * 3] * l[a[j] / 3];
+        cnt %= mod;
+        l[a[j]]++;
+        // cout << j << " " << a[j] / 3 << " " << l[a[j] / 3] << " " << a[j] * 3 << " " << r[a[j] * 3] << endl;
+    }
+    
+    cout << cnt;
+    return 0;
+}
