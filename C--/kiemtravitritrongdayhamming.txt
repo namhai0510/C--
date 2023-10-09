@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+vector<ull> hamming;
+
+void create_hamming_sequence() {
+    ull p2 = 1, p3 = 1, p5 = 1;
+    for (int i = 0; i <= 61; ++i) {
+        p3 = 1;
+        for (int j = 0; j <= 39; ++j) {
+            p5 = 1;
+            for (int k = 0; k <= 28; ++k) {
+               
+                hamming.pb(p2 * p3 * p5);
+                if (p2 * p3 * p5 <= (ll) 1e18 / 5) p5 *= 5;
+                else break;
+            }
+            if ( p2 * p3 <= (ll) 1e18 / 3) p3 *= 3; 
+            else break;
+        }
+        if (p2 <= (ll) 1e18 / 2) p2 *= 2; 
+        else break;
+    }
+}
+
+int main() {
+    nothing
+    if (fopen("hamming.inp", "r")) {
+        freopen("hamming.inp", "r", stdin);
+        freopen("hamming.out", "w", stdout);
+    }
+    hamming.pb(0);
+    create_hamming_sequence();
+    sort(hamming.begin(), hamming.end());
+    // cout << hamming[0] << " " << hamming[1] << endl;
+    // for (int i = 0; i < 15; ++i) cout << hamming[i] << " ";
+    cout << endl;
+    ll t, x;
+    cin >> t;
+    while (t--) {
+        cin >> x; 
+        ll it = lower_bound(hamming.begin(), hamming.end(), x) - hamming.begin();
+        if (hamming[it] == x) cout << it << endl;
+        else cout << "Not in sequence" << endl;
+    }
+}

@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 5e2 + 5;
+
+ll m, n, a[maxa][maxa], psum[maxa][maxa];
+
+ll get (int u, int d, int l, int r) {
+	return psum[d][r] - psum[d][l - 1] - psum[u - 1][r] + psum[u - 1][l - 1];
+}
+
+
+int main() {
+    nothing
+    if (fopen("mrect.inp", "r")) {
+        freopen("mrect.inp", "r", stdin);
+        freopen("mrect.out", "w", stdout);
+    }
+    // memset(psum, 0, sizeof(psum));
+    
+    cin >> n >> m;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= m; ++j) {
+            cin >> a[i][j];
+            psum[i][j] = psum[i - 1][j] + psum[i][j - 1] - psum[i - 1][j - 1] + a[i][j];
+        }
+    }
+    
+    ll ans = 0, min_s = 0;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = i; j <= n; ++j) {
+            min_s = 0;
+            for (int k = 1; k <= m; ++k) {
+                ll val = get(i, j, 1, k);
+                ans = max(ans, val - min_s);
+                min_s = min(min_s, val);
+            }
+        }
+    }
+    cout << ans;
+    return 0;
+}
