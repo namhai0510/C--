@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+ll n, a[maxn], maxL[maxn], maxR[maxn], minL[maxn], minR[maxn], res = 0;
+stack<int> st1, st2, st3, st4;
+
+void Input() {
+    cin >> n;
+    for(int i = 1; i<=n; ++i) {
+        maxR[i] = n + 1;
+        minR[i] = n + 1;
+    }
+    for(int i = 1; i <= n; ++i) {
+        cin >> a[i];
+    }
+}
+
+void Solve() {
+    for (int i = 1; i <= n; ++i) {
+        while (!st1.empty() && a[st1.top()] > a[i]) st1.pop();
+        while (!st2.empty() && a[st2.top()] < a[i]) st2.pop();
+        if (!st1.empty()) minL[i] = st1.top();
+        if (!st2.empty()) maxL[i] = st2.top();
+        st1.push(i);
+        st2.push(i);
+    }
+    
+    for (int i = n; i >= 1; --i) {
+        while (!st3.empty() && a[st3.top()] >= a[i]) st3.pop();
+        while (!st4.empty() && a[st4.top()] <= a[i]) st4.pop();
+        if (!st3.empty()) minR[i] = st3.top();
+        if (!st4.empty()) maxR[i] = st4.top();
+        st3.push(i);
+        st4.push(i);
+    }
+    
+    for (int i = 1; i <= n; ++i) {
+        res = res + a[i] * (i - maxL[i]) * (maxR[i] - i);
+        res = res - a[i] * (i - minL[i]) * (minR[i] - i);
+    }
+    
+    cout << res;
+}
+
+int main() {
+    nothing
+    if (fopen("DEFERENT.inp", "r")) {
+        freopen("DEFERENT.inp", "r", stdin);
+        freopen("DEFERENT.out", "w", stdout);
+    }
+    Input();
+    Solve();
+}
