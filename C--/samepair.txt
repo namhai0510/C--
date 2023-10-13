@@ -1,0 +1,79 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 5e2 + 5;
+
+ll l, r, ans = 0;
+ll c[maxn + 1];
+set<ll> f;
+
+bool check[maxn + 1];
+vector<ll> prime;
+void Sieve() {
+    memset(check, 1, sizeof(check));
+    check[0] = 0; check[1] = 0;
+    
+    for (int i = 2; i * i < maxn; ++i) {
+        if (check[i]) {
+            for (int j = i * i; j < maxn; j += i) check[j] = 0;
+        }
+    }
+    
+    for (int i = 2; i <= maxn; ++i) if (check[i]) prime.pb(i);
+}
+
+int main() {
+    nothing
+    if (fopen("xb.inp", "r")) {
+        freopen("xb.inp", "r", stdin);
+        freopen("xb.out", "w", stdout);
+    }
+    Sieve();
+    
+    cin >> l >> r;
+    for (int i = l; i <= r; ++i) {
+        ll val = i, res = 1, j = 0;
+        
+        if (check[val]) {
+            f.insert(val);
+            c[val]++;
+            continue;
+        }
+        
+        while (val != 1 && prime[j] * prime[j] <= val) {
+            if (val % prime[j] == 0) {
+                res *= prime[j];
+                while (val % prime[j] == 0) {
+                    val /= prime[j];
+                    
+                }
+            }
+            j++;
+            // cout << i << " " << val << " " << res << endl;
+        }
+        
+        res *= val;
+        
+        c[res]++;
+        f.insert(res);
+        // cout << val << " " << res << endl;
+    }
+    
+    for (auto it : f) {
+        ans += c[it] * (c[it] - 1) / 2;
+        // cout << it << " " << c[it] << endl;
+    }
+    cout << ans;
+    
+    return 0;
+}

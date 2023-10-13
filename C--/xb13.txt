@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 5e2 + 5;
+
+ll n, m, k, row[maxn + 2], column[maxn + 2];
+pair<ll, ll> black[maxn + 2];
+
+int main() {
+    nothing
+    if (fopen("coprime.inp", "r")) {
+        freopen("coprime.inp", "r", stdin);
+        freopen("coprime.out", "w", stdout);
+    }
+    cin >> n >> m >> k;
+    
+    for (int i = 1; i <= k; ++i) {
+        cin >> black[i].fi >> black[i].se;
+        row[black[i].fi] = 1;
+        column[black[i].se] = 1;
+    }
+    
+    if (k == 1) {
+        cout << 1;
+        exit(0);
+    }
+    
+    ll r = 0, c = 0;
+    for (int i = 1; i <= n; ++i) {
+        if (row[i] == 1) r++;
+    }
+    for (int i = 1; i <= m; ++i) {
+        if (column[i] == 1) c++;
+    }
+    
+    cout << r * c;
+   
+    return 0;
+}
