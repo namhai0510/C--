@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
+const int maxa = 2e3 + 5;
+
+string s;
+set<string> ss;
+
+int main() {
+    nothing
+    if (fopen("substring.inp", "r")) {
+        freopen("substring.inp", "r", stdin);
+        freopen("substring.out", "w", stdout);
+    }
+    cin >> s;
+    
+    for (int l = 0; l < s.size(); ++l) {
+        for (int leng = 1; leng <= s.size() - l; ++leng) {
+            string t = s.substr(l, leng);
+            ss.insert(t);
+            
+            // cout << s.substr(l, leng) << " " << l << " " << leng << endl;
+        }
+    }
+    cout << ss.size() << endl;
+    
+    // for (auto it : ss) {
+    //     cout << it.fi << endl;
+    // }
+    
+    return 0;
+}
