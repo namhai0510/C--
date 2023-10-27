@@ -29,37 +29,21 @@ int main() {
     }
     psum[n + 1] = +oo;
     
-    ll sum = psum[n];
+    ll sum;
     
-    for (int i = 1; i <= sqrt(sum); ++i) {
-    	if (sum % i == 0) {
-    		divisor.pb(i);
-    		if (sum / i != i) divisor.pb(sum / i);
+    for(int i = 1; i <= n; ++i){
+    	if (psum[i] > psum[n] / 2) break;
+        sum = 0;
+    	for (int j = 1; j <= n; ++j){
+    		if (sum < psum[i]) sum += a[j];
+    		if (sum == psum[i]) sum = 0;
+    		if (sum > psum[i]) break;
     	}
-    }
-    sort(divisor.begin(), divisor.end());
-    
-    ll ans;
-    for (int i = 0; i < divisor.size(); ++i) {
-    	// cout << divisor[i] << endl;
-    	ll l = 1, val = divisor[i];
-    	while (1) {
-    		ll it = lower_bound(psum + l, psum + n, val) - psum;
-    		
-    		// cout << it << " " << psum[it] << " " << val << endl;
-    		
-    		if (psum[it] != val) {
-    			break;
-    		} 
-    		else {
-    			if (it == sum / val) {
-					cout << val;
-					return 0;
-				}
-    			l = it + 1;
-    		}
+    	if (sum == 0){
+    		cout << psum[i];
+    		return 0;
     	}
-    }
+	}
     
     return 0;
 }
