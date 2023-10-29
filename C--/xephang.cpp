@@ -8,13 +8,14 @@ using namespace std;
 #define se second
 #define pb push_back
 #define endl "\n"
-const ll oo = 0x3f3f3f3f;
+const ll oo = LLONG_MAX / 2;
 const ll mod = 1e9 + 7;
 const int maxn = 1e6 + 5;
 const int maxa = 2e3 + 5;
 
-ll n, a[maxn + 2], psum[maxn + 4];
-vector<ll> divisor;
+ll n;
+ull a[maxn + 2], psum[maxn + 4];
+map<ull, ll> pos;
 
 int main() {
     nothing
@@ -23,27 +24,30 @@ int main() {
         freopen("xephang.out", "w", stdout);
     }
     cin >> n;
+    psum[0] = 0;
     for (int i = 1; i <= n; ++i) {
     	cin >> a[i];
     	psum[i] = psum[i - 1] + a[i];
+    	pos[psum[i]] = 1;
     }
-    psum[n + 1] = +oo;
     
-    ll sum;
-    
-    for(int i = 1; i <= n; ++i){
-    	if (psum[i] > psum[n] / 2) break;
-        sum = 0;
-    	for (int j = 1; j <= n; ++j){
-    		if (sum < psum[i]) sum += a[j];
-    		if (sum == psum[i]) sum = 0;
-    		if (sum > psum[i]) break;
+    bool check = true;
+    for (int i = 1; i <= n; ++i) {
+    	if (psum[n] % psum[i] != 0) continue;
+    	
+    	check = true;
+    	for (ull val = psum[i] * 2; val <= psum[n]; val += psum[i]) {
+    		if (pos[val] == 0) {
+    			check = false;
+    			break;
+    		}
     	}
-    	if (sum == 0){
-    		cout << psum[i];
+    	
+    	if (check) {
+    		cout << psum[i] << endl;
     		return 0;
     	}
-	}
+    }
     
     return 0;
 }
