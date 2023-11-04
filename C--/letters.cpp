@@ -13,7 +13,7 @@ const ll mod = 1e9 + 7;
 const int maxn = 1e6 + 5;
 const int maxa = 2e3 + 5;
 
-ll n, m, a[maxn + 2], sum[maxn + 2];
+ll n, m, a[maxn + 2], sum[maxn + 2], ite[maxn + 2];
 
 int main() {
     nothing
@@ -28,19 +28,15 @@ int main() {
     	cin >> a[i];
     	sum[i] = sum[i - 1] + a[i];
     }
+    for (int i = 1; i <= m; ++i) cin >> ite[i];
     
-    while (m--) {
-    	ll val; cin >> val;
+    int j = 1;
+    for (int i = 1; i <= m; ++i) {
+    	while (sum[j] < ite[i]) j++;
     	
-    	int it = lower_bound(sum + 1, sum + 1 + n, val) - sum;
-    	
-    	if (sum[it] == val) {
-    		cout << it << " " << a[it] << endl;
-    	}
-    	else { // val < sum[it]
-    		cout << it << " " << val - sum[it - 1] << endl;
-    	}
+    	cout << j << " " << ite[i] - sum[j - 1] << endl;
     }
+    
     
 	return 0;
 }
