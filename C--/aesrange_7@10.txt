@@ -1,0 +1,84 @@
+Cho dãy số nguyên A gồm N số a1, a2,…,an và một số nguyên dương K. Một dãy các phần tử liên
+tục nhau có trong dãy A gồm ai, ai+1, ai+2,…, aj (1<=i<j<=n) được gọi là một “đoạn con thẫm mỹ cấp K”
+nếu không tồn tại bất kì hai số nguyên u, v (i <=u ≠ v <= j) sao cho (au + av) chia hết có K và d=(j-i+1)
+được gọi là độ dài của đoạn con thẫm mỹ.
+Yêu cầu: Tìm đoạn con thẩm mỹ có độ dài dài nhất tồn tại trong dãy A đã cho, nếu trong dãy tồn tại
+nhiều dãy con thẩm mỹ cấp K có cùng độ dài thì cho biết đoạn con thẩm mỹ dài nhất tìm thấy đầu tiên
+tính từ phần tử thứ 1 đến phần tử thứ n của dãy.
+----------
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define nothing ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+#define ll long long
+#define ull unsigned long long
+#define fi first
+#define se second
+#define pb push_back
+#define endl "\n"
+const ll oo = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+const int maxn = 2e6 + 5;
+const int maxa = 2e3 + 5;
+
+ll n, k, a[maxn + 2], b[maxn + 2];
+map<ll, ll> mark, used;
+struct Data {
+	ll leng, st, en;
+};
+
+bool cmp (Data A, Data B) {
+	return ((A.leng < B.leng) || (A.leng == B.leng && A.st > B.st));
+}
+
+vector<Data> ans;
+
+int main() {
+    nothing
+    if (fopen("AESRANGE.inp", "r")) {
+        freopen("AESRANGE.inp", "r", stdin);
+        freopen("AESRANGE.out", "w", stdout);
+    }
+    cin >> n >> k;
+    for (int i = 1; i <= n; ++i) {
+    	cin >> a[i];
+    	b[i] = a[i] % k;
+    }
+    
+	ll l = 1, r = 1;
+	
+	while (r <= n) {			
+		if (used[r] == 0) {
+			mark[b[r]]++;
+			used[r] = 1;
+		}
+			
+		if (l == r) {
+			r++;
+			continue;
+		}
+		
+		if ((k - b[r] == b[r] && mark[k - b[r]] >= 2)
+			|| (b[r] == 0 && mark[b[r]] >= 2)
+			|| (2 * b[r] != k && b[r] != 0 && mark[k - b[r]] >= 1)) {
+			mark[b[l]]--;
+			l++;
+		}
+		else {
+			ans.pb({r - l + 1, l, r});
+			r++;
+		}
+	}
+	
+	sort(ans.begin(), ans.end(), cmp);
+	
+	cout << ans[ans.size() - 1].leng << endl;
+	for (int i = ans[ans.size() - 1].st; i <= ans[ans.size() - 1].en; ++i) 
+		cout << a[i] << " ";
+    
+    return 0;
+}
+
+// cout << l << " " << r << " " << endl;
+// for (auto it : mark) cout << it.fi << " " << it.se << endl;
+// cout << "---------" << endl;
