@@ -38,7 +38,7 @@ int main() {
     ll c = 0;
     for (int i = 1; i <= n; ++i) {
     	if (ps[i] * 3 == 2 * s) ans += c;
-    	else if (ps[i] * 3 == s) c++;
+    	if (ps[i] * 3 == s) c++;
     }
     
     if (s == 0) ans -= c - 1;
