@@ -31,35 +31,26 @@ int main() {
 	    	cin >> a[i];
 	    } 
 	    
-	    l[1] = 1; r[n] = n;
-	    while (d.size()) d.pop_front();
+	    d.clear();
     	
-    	for (int i = 2; i <= n; ++i) {
-    		if (a[i] > a[i - 1]) {
-    			l[i] = i;
-    			d.push_back(i - 1);
-    		}
-    		else {
-	    		while (d.size() && a[d.back()] >= a[i]) d.pop_back();
-				
-				if (d.size() == 0) l[i] = 1;
-				else l[i] = d.front() + 1;
-    		}
+    	for (int i = 1; i <= n; ++i) {
+    		while (d.size() && a[d.back()] >= a[i]) d.pop_back();
+			
+			if (d.size() == 0) l[i] = 1;
+			else l[i] = d.back() + 1;
+			
+			d.push_back(i);
     	}
     	
-    	while (d.size()) d.pop_front();
+    	d.clear();
     	
-    	for (int i = n - 1; i >= 1; --i) {
-    		if (a[i] > a[i + 1]) {
-    			r[i] = i;
-    			d.push_back(i + 1);
-    		}
-    		else {
-	    		while (d.size() && a[d.back()] >= a[i]) d.pop_back();
-				
-				if (d.size() == 0) r[i] = n;
-				else r[i] = d.front() - 1;
-    		}
+    	for (int i = n; i >= 1; --i) {
+    		while (d.size() && a[d.front()] >= a[i]) d.pop_front();
+			
+			if (d.size() == 0) r[i] = n;
+			else r[i] = d.front() - 1;
+			
+			d.push_front(i);
     	}
     	
     	ans = 0; st = +oo;
@@ -69,11 +60,15 @@ int main() {
     				st = l[i];
     				en = r[i];
     			}
+    			
+    			// cout << i << " " << l[i] << " " << r[i] << " " << a[i] << endl;
     		}
     		else if (ans < a[i] * (r[i] - l[i] + 1)) {
     			ans = a[i] * (r[i] - l[i] + 1);
     			st = l[i];
     			en = r[i];
+    			
+    			// cout << i << " " << l[i] << " " << r[i] << " " << a[i] << endl;
     		}
     	}
     	
