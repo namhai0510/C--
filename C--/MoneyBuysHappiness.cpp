@@ -10,14 +10,14 @@ using namespace std;
 #define pb push_back
 const ll oo = 1e13;
 const ll modd = 1e9 + 7;
-const int maxn = 1e6;
+const int maxn = 1e5;
 const int maxa = 2e3;
 const int base = 31;
 
 ll test;
 ll m, x, money;
-ll c[maxa + 2], h[maxa + 2];
-ll dp[60][maxa + 2], ps[maxa + 2];
+ll c[maxn + 2], h[maxn + 2];
+ll dp[60][maxn + 2], ps[maxn + 2];
 
 void Input() {
 	cin >> m >> x;
