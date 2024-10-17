@@ -23,7 +23,7 @@ ll GCD(ll a, ll b) {
 	
 	if (a % b == 0) return b;
 	
-	return (b, a % b);
+	return GCD(b, a % b);
 }
 
 int main() {
